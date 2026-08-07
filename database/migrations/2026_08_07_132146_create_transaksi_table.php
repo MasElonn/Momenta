@@ -12,8 +12,8 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksi', function (Blueprint $table) {
-            $table->id();
-            $table->foreignId('customer_id')->references('user_id')->on('customer');
+            $table->id('trans_id');
+            $table->foreignId('customer_id')->references('user_id')->on('users');
             $table->foreignId('paket_id')->references('paket_id')->on('paket');
             $table->string('midtrans_order_id')->unique();
             $table->string('snap_token')->nullable();
