@@ -3,8 +3,10 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
-    return view('home');
+    return view('Home');
 });
 
 
-Route::view('dash', 'userDashboard');
+Route::get('dash', function (){
+    return view('UserDashboard',['user' => 'Budi', 'role' => 'customer']);
+});
