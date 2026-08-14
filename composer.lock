@@ -4,7 +4,7 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "f2b75e92e064367c3f8ea14bf47cfd42",
+    "content-hash": "382c4664485e01aa63ae0a8e00cb23cb",
     "packages": [
         {
             "name": "blade-ui-kit/blade-icons",
@@ -1137,6 +1137,63 @@
                 }
             ],
             "time": "2026-07-17T13:53:03+00:00"
+        },
+        {
+            "name": "kolirt/laravel-openstreetmap",
+            "version": "1.0.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/kolirt/laravel-openstreetmap.git",
+                "reference": "dbfebb62e785c85d8f942cc56242f2596a39597f"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/kolirt/laravel-openstreetmap/zipball/dbfebb62e785c85d8f942cc56242f2596a39597f",
+                "reference": "dbfebb62e785c85d8f942cc56242f2596a39597f",
+                "shasum": ""
+            },
+            "require": {
+                "guzzlehttp/guzzle": "> 6.0.0"
+            },
+            "type": "library",
+            "extra": {
+                "laravel": {
+                    "aliases": {
+                        "Openstreetmap": "Kolirt\\Openstreetmap\\Facade\\Openstreetmap"
+                    },
+                    "providers": [
+                        "Kolirt\\Openstreetmap\\ServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "files": [
+                    "src/helpers.php"
+                ],
+                "psr-4": {
+                    "Kolirt\\Openstreetmap\\": "src"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "kolirt"
+                }
+            ],
+            "description": "Package for openstreetmap.org",
+            "keywords": [
+                "OpenStreetMap",
+                "laravel",
+                "map"
+            ],
+            "support": {
+                "issues": "https://github.com/kolirt/laravel-openstreetmap/issues",
+                "source": "https://github.com/kolirt/laravel-openstreetmap/tree/1.0.3"
+            },
+            "time": "2023-07-27T14:00:19+00:00"
         },
         {
             "name": "laravel/framework",

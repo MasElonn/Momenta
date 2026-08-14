@@ -10,6 +10,8 @@
 
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
+
+
 </head>
 <body>
 <div class=" w-screen flex flex-row" x-data="{tab: '{{request('tab', 'overview')}}', section: ''}">
@@ -24,44 +26,48 @@
         </div>
 
 
-        <nav  class="w-full space-y-3" >
+        <nav class="w-full flex flex-col justify-between h-full">
+            <div class="space-y-3">
 
-            <button @click="tab = 'overview'"
+                <button @click="tab = 'overview'"
+                        :class="tab === 'overview' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
+                        class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
+                    <x-lucide-layout-grid class="w-5 h-5" />
+                    Overview
+                </button>
 
-                    :class="tab === 'overview' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
-                <x-lucide-layout-grid class="w-5 h-5" />
-                Overview
-            </button>
+                <button @click="tab = 'booking'"
+                        :class="tab === 'booking' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
+                        class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg ">
+                    <x-lucide-calendar class="w-5 h-5" />
+                    My Booking
+                </button>
 
+                <button @click="tab = 'gallery'"
+                        :class="tab === 'gallery' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
+                        class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg" >
+                    <x-lucide-image class="w-5 h-5"></x-lucide-image>
+                    My Gallery
+                </button>
 
-            <button @click="tab = 'booking'"
-                    :class="tab === 'booking' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg ">
-                <x-lucide-calendar class="w-5 h-5" />
-                My Booking
-            </button>
+                <button @click="tab = 'account'"
+                        :class="tab === 'account' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
+                        class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg" >
+                    <x-lucide-user class="w-5 h-5"></x-lucide-user>
+                    My Account
+                </button>
+            </div>
 
-
-            <button @click="tab = 'gallery'"
-                    :class="tab === 'gallery' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg" >
-
-                <x-lucide-image class="w-5 h-5"></x-lucide-image>
-                My Galerry
-            </button>
-            <br>
-
-
-            <button @click="tab = 'account'"
-                    :class="tab === 'account' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg" >
-
-            <x-lucide-user class="w-5 h-5"></x-lucide-user>
-                My Account
-            </button>
+            <form action="{{ route('logout') }}" method="POST" class="w-full">
+                @csrf
+                <button type="submit" class="flex w-full py-3 px-4 items-center gap-x-2 text-sm font-medium rounded-lg border border-red-500 text-red-500 hover:border-red-400 hover:text-red-400 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
+                    <x-lucide-log-out class="w-5 h-5" />
+                    Logout
+                </button>
+            </form>
 
         </nav>
+
     </aside>
 
 
@@ -202,10 +208,11 @@
 
             <div x-show="section === 'booking'">
 
+                <!--header-->
                 <div class="flex justify-between">
                     <div class=" flex items-center gap-2">
                         <div @click="section = ''"
-                             class="border flex items-center justify-center shadow w-12 h-12 rounded-full">
+                             class="border border-gray-200 flex items-center justify-center shadow w-12 h-12 rounded-full">
                             <x-lucide-arrow-left class="w-6 h-6"></x-lucide-arrow-left>
                         </div>
 
@@ -222,40 +229,103 @@
                             </span>
                         </div>
                 </div>
-                <div class=" items-start gap-4 p-5 flex flex-row">
 
-                        <div class=" flex items-center flex-row w-full mt-2 p-3 border shadow rounded-xl">
-                            <div class="text-white text-2xl w-17 h-17 flex items-center justify-center shadow rounded-full bg-primary">
-                                M
+
+                <div class=" items-start gap-4 p-5 flex flex-row">
+                        <div class="w-full">
+                            <div class=" flex items-center flex-row w-full mt-2 p-3 border border-gray-200 shadow rounded-xl">
+                                <div class="text-white text-2xl w-17 h-17 flex items-center justify-center shadow rounded-full bg-primary">
+                                    M
+                                </div>
+                                <div class="ml-3 flex-1">
+                                    <h1 class=" text-blue-500 font-semibold">Your Fotografer</h1>
+                                    <h1 class="font-bold text-xl">Muhammad ATIEF</h1>
+                                </div>
+
                             </div>
-                            <div class="ml-3 flex-1">
-                                <h1 class=" text-blue-500 font-semibold">Your Fotografer</h1>
-                                <h1 class="font-bold text-xl">Muhammad ATIEF</h1>
+
+                            <div class="rounded-xl p-3  mt-3 border border-gray-200 shadow ">
+                                <div class="pb-3  border-b border-b-black/20 ">
+                                    <h1 class="font-bold text-xl">Session Schedule & Location</h1>
+                                </div>
+
+                                <div class="flex flex-col  m-2 gap-3">
+                                    <div class="flex gap-2 mt-2">
+                                        <div class="text-primary-500 bg-primary/15 w-fit border-gray-200 shadow h-fit p-2 rounded-full">
+                                            <x-lucide-calendar class="w-6 h-6"></x-lucide-calendar>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-xs font-semibold text-gray-500">Date</h5>
+                                            <h1 class="font-semibold">Thursday, Nov 12, 2026</h1>
+                                        </div>
+                                    </div>
+
+                                    <div class="flex gap-2">
+                                        <div class="text-primary-500 bg-primary/15 w-fit border-gray-200 shadow h-fit p-2 rounded-full">
+                                            <x-lucide-pin class="w-6 h-6"></x-lucide-pin>
+                                        </div>
+                                        <div>
+                                            <h5 class="text-xs font-semibold text-gray-500">Meeting Point</h5>
+                                            <h1 class="font-semibold">SMK PGRI 3 Malang</h1>
+                                        </div>
+                                    </div>
+
+                                    {{--placeholder for maps--}}
+                                    <iframe class="rounded-xl w-full" height="400"  src="https://google.com" title="Example Page"></iframe>
+
+
+                                </div>
                             </div>
                         </div>
 
 
+
+
                     <div class="w-full flex flex-col">
 
-                        <div class="mt-2 p-5 border shadow rounded-xl">
+                        <div class="bg-[#123ABB] mt-2 p-5 border border-gray-200 shadow rounded-xl">
                             <div class="flex justify-between">
-                                <h1 class="text-blue-500 font-semibold">Selected Package</h1>
-                                <span class=" px-3 py-1 rounded-full bg-blue-100 text-green-700 text-xs font-medium">
+                                <h1 class="text-amber-300 font-semibold">Selected Package</h1>
+                                <span class=" px-3 py-1 rounded-full bg-white/20 text-white text-xs font-medium">
                                         Paid
                                 </span>
                             </div>
 
-                            <div class="border-b-1  pb-2 ">
+                            <div class=" text-white border-b border-b-white/15 pb-2 ">
                                 <h1 class="font-bold mt-2 text-xl">Paket Letter C</h1>
-                                <h2 class="text-gray-400 text-sm">90 Menit - 25 Foto</h2>
+                                <h2 class="text-gray-300 text-sm">90 Menit - 25 Foto</h2>
                             </div>
 
-                            <div class="flex justify-between mt-2">
-                                <h1 class="text-gray-400 text-sm">Total Harga</h1>
+                            <div class=" text-white flex justify-between mt-2">
+                                <h1 class="text-gray-300 text-sm">Total Harga</h1>
                                 <h1 class="text-xl font-bold ">Rp 212.000</h1>
                             </div>
 
 
+
+
+                        </div>
+
+                        <div class="mt-3 border border-gray-200 shadow rounded-xl p-4">
+                            <h1 class="text-xl font-semibold">Description</h1>
+
+                            <p class="mt-1 text-gray-500">
+                                Lorem ipsum dolor it amet lorem ipsum dolor
+                                sit amet lorem Lorem ipsum dolor it amet lorem
+                                ipsum dolor sit amet lorem Lorem ipsum dolor
+                                it amet lorem ipsum dolor sit amet lorem Lorem
+                                ipsum dolor it amet lorem ipsum dolor sit amet lorem
+                            </p>
+
+                        </div>
+
+                        <div class="flex flex-col mt-3 <!--px-8--> gap-2">
+                            <button type="button" class="text-center py-3 px-full  items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden focus:bg-primary-focus  disabled:opacity-50 disabled:pointer-events-none" >
+                                Contact
+                            </button>
+                            <button type="button" class="text-center py-3 px-full  items-center gap-x-2 text-sm font-medium rounded-lg border border-red-500 text-red-500 hover:border-red-400 hover:text-red-400 focus:outline-hidden focus:border-red-400 focus:text-red-400 disabled:opacity-50 disabled:pointer-events-none">
+                                Cancel Booking
+                            </button>
                         </div>
                     </div>
                 </div>
@@ -267,15 +337,7 @@
         <div x-show="tab === 'gallery'">
             gallery
 
-            <div class=" flex flex-row items-center w-full mt-2 p-3 border shadow rounded-xl">
-                <div class="text-white text-2xl w-17 h-17 flex items-center justify-center shadow rounded-full bg-primary">
-                    M
-                </div>
-                <div class="ml-3 flex-1">
-                    <h1 class=" text-blue-500 font-semibold">Your Fotografer</h1>
-                    <h1 class="font-bold text-xl">Muhammad ATIEF</h1>
-                </div>
-            </div>
+
 
         </div>
 
@@ -297,3 +359,4 @@
 
 </body>
 </html>
+
