@@ -15,7 +15,7 @@
 </head>
 <body>
 <div class=" w-screen flex flex-row" x-data="{tab: '{{request('tab', 'overview')}}', section: ''}">
-    <aside class=" shadow-xl w-64 h-screen border-r border-gray-200 flex flex-col items-center py-10 px-4 ">
+    <aside class=" sticky shadow-xl w-64 h-screen border-r border-gray-200 flex flex-col items-center py-10 px-4 ">
 
         <div class="flex flex-col items-center mb-10">
             <div class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-medium mb-3">
@@ -49,6 +49,7 @@
                     <x-lucide-image class="w-5 h-5"></x-lucide-image>
                     My Gallery
                 </button>
+                <br>
 
                 <button @click="tab = 'account'"
                         :class="tab === 'account' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
@@ -83,8 +84,7 @@
                     <h2 class="py-2 text-xl font-semibold">Bookings</h2>
 
                     {{--                card            --}}
-                    <div @click="section = 'booking', tab = 'booking'"
-                        class="w-full rounded-lg border border-gray-200 shadow-sm p-4">
+                    <div class="w-full rounded-lg border border-gray-200 shadow-sm p-4">
 
                         {{--info--}}
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
@@ -122,11 +122,24 @@
                                     </span>
                                 </div>
 
-                                <div class="flex items-center gap-2 mt-3">
+                                <div class="flex  justify-between mt-3">
+                                    <div class="flex gap-1">
+                                        <x-lucide-user class="w-6 h-6 rounded-full"></x-lucide-user>
 
-                                    <x-lucide-user class="w-6 h-6 rounded-full"></x-lucide-user>
+                                        <span class="text-sm text-gray-600">iwan - Fotografer</span>
+                                    </div>
 
-                                    <span class="text-sm text-gray-600">iwan - Fotografer</span>
+                                    <div class="flex gap-2">
+                                        <button type="button" @click="section = 'booking', tab = 'booking'"
+                                                class="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden  disabled:opacity-50 disabled:pointer-events-none" >
+                                            Manage
+                                        </button>
+
+                                        <button type="button" @click="section = 'gallery', tab = 'gallery'"
+                                                class="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden  disabled:opacity-50 disabled:pointer-events-none" >
+                                            Gallery
+                                        </button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -136,13 +149,13 @@
                 <!--galeri-->
                 <div class="w-70 flex-auto  p-2">
                     <h2 class="py-2 text-xl font-semibold">Gallery</h2>
-                    <div class="border-2 shadow w-full h-40 rounded-lg ">
+                    <div class=" shadow w-full h-40 rounded-lg ">
                         <img class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
                     </div>
-                    <div class="mt-2 border-2 shadow w-full h-40 rounded-lg ">
+                    <div class="mt-2 shadow w-full h-40 rounded-lg ">
                         <img class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
                     </div>
-                    <div class="mt-2 border-2 shadow w-full h-40 rounded-lg ">
+                    <div class="mt-2  shadow w-full h-40 rounded-lg ">
                         <img class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
                     </div>
                 </div>
@@ -151,59 +164,69 @@
         </div>
 
         {{--booking section--}}
-        <div x-show="tab === 'booking'"
+        <div x-show="tab === 'booking'">
 
-        >
-            <!--booking card-->
-            <div @click="section = 'booking'"
-                 :class="section === 'booking' ? 'hidden' : ''"
-                 class="w-full rounded-lg border border-gray-200 shadow-sm p-4">
+            <div :class="section === 'booking' ? 'hidden' : ''">
+                <!--header-->
+                <div class="flex flex-col my-3 mb-4">
+                    <span class=" text-2xl font-semibold">My Booking</span>
 
-                {{--info--}}
-                <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
-                    <div class="flex items-center gap-2">
-                        <x-lucide-calendar-1 class="w-5 h-5"></x-lucide-calendar-1>
-                        <span class="font-semibold">Booking</span>
-                        <span class="text-gray-400 text-sm">ID Booking:</span>
-                        <span class="text-gray-500 text-sm">1234567</span>
-                    </div>
-                    <span class="text-gray-400 text-sm">31 Des 2024</span>
+                    <span class="text-gray-500">Manage All Your Sessions</span>
+
                 </div>
 
-                {{--isi--}}
-                <div class="flex items-start gap-4">
-                    <img class="rounded-lg w-25 h-25 "
-                         src="https://picsum.photos/150/150" alt="gambar">
+                <!--booking card-->
+                <div @click="section = 'booking'"
+                     :class="section === 'booking' ? 'hidden' : ''"
+                     class="w-full rounded-lg border border-gray-200 shadow-sm p-4">
 
-                    <div class="flex-1">
-                        <div class="flex items-start justify-between">
-                            <h1 class="font-semibold text-lg">Fotoshoot Perpisahan SMP</h1>
-                            <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
-                                        Upcoming
-                                    </span>
+                    {{--info--}}
+                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
+                        <div class="flex items-center gap-2">
+                            <x-lucide-calendar-1 class="w-5 h-5"></x-lucide-calendar-1>
+                            <span class="font-semibold">Booking</span>
+                            <span class="text-gray-400 text-sm">ID Booking:</span>
+                            <span class="text-gray-500 text-sm">1234567</span>
                         </div>
+                        <span class="text-gray-400 text-sm">31 Des 2024</span>
+                    </div>
 
-                        <div class="flex items-center gap-6 mt-2 text-sm text-gray-600">
-                                    <span class="flex items-center gap-1">
-                                        <x-lucide-circle-dollar-sign class="w-4 h-4 rounded-full"></x-lucide-circle-dollar-sign>
-                                        Harga: Rp 145000
-                                    </span>
+                    {{--isi--}}
+                    <div class="flex items-start gap-4">
+                        <img class="rounded-lg w-25 h-25 "
+                             src="https://picsum.photos/150/150" alt="gambar">
 
-                            <span class="flex items-center gap-1">
-                                        <x-lucide-package-2 class="w-4 h-4 rounded-full"></x-lucide-package-2>
-                                        Paket: Standard
-                                    </span>
-                        </div>
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between">
+                                <h1 class="font-semibold text-lg">Fotoshoot Perpisahan SMP</h1>
+                                <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+                                            Upcoming
+                                        </span>
+                            </div>
 
-                        <div class="flex items-center gap-2 mt-3">
+                            <div class="flex items-center gap-6 mt-2 text-sm text-gray-600">
+                                        <span class="flex items-center gap-1">
+                                            <x-lucide-circle-dollar-sign class="w-4 h-4 rounded-full"></x-lucide-circle-dollar-sign>
+                                            Harga: Rp 145000
+                                        </span>
 
-                            <x-lucide-user class="w-6 h-6 rounded-full"></x-lucide-user>
+                                <span class="flex items-center gap-1">
+                                            <x-lucide-package-2 class="w-4 h-4 rounded-full"></x-lucide-package-2>
+                                            Paket: Standard
+                                        </span>
+                            </div>
 
-                            <span class="text-sm text-gray-600">iwan - Fotografer</span>
+                            <div class="flex items-center gap-2 mt-3">
+
+                                <x-lucide-user class="w-6 h-6 rounded-full"></x-lucide-user>
+
+                                <span class="text-sm text-gray-600">iwan - Fotografer</span>
+                            </div>
                         </div>
                     </div>
                 </div>
             </div>
+
 
 
             <div x-show="section === 'booking'">
@@ -323,7 +346,7 @@
                             <button type="button" class="text-center py-3 px-full  items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden focus:bg-primary-focus  disabled:opacity-50 disabled:pointer-events-none" >
                                 Contact
                             </button>
-                            <button type="button" class="text-center py-3 px-full  items-center gap-x-2 text-sm font-medium rounded-lg border border-red-500 text-red-500 hover:border-red-400 hover:text-red-400 focus:outline-hidden focus:border-red-400 focus:text-red-400 disabled:opacity-50 disabled:pointer-events-none">
+                            <button type="button" class="text-red-400 text-center py-3 px-full  border-red-400 items-center gap-x-2 text-sm font-medium rounded-lg border hover:border-red-600 hover:text-red-600 focus:outline-hidden focus:text-red-400 disabled:opacity-50 disabled:pointer-events-none">
                                 Cancel Booking
                             </button>
                         </div>
@@ -334,15 +357,416 @@
 
         </div>
 
-        <div x-show="tab === 'gallery'">
-            gallery
+
+        <div x-show="tab === 'gallery'" x-data="{ modalOpen: false, selectedImage: null }" class="space-y-6">
 
 
+            <div :class="section === 'gallery' ? 'hidden' : ''">
+                <!--header-->
+                <div class="flex flex-col my-3 mb-4">
+                    <span class=" text-2xl font-semibold">My Gallery</span>
+
+                    <span class="text-gray-500">See All Your Compleated Sessions</span>
+
+                </div>
+
+                <div @click="section = 'gallery'"
+                    :class="section === 'gallery' ? 'hidden' : ''"
+                     class="w-full rounded-lg border border-gray-200 shadow-sm p-4">
+
+                    {{--info--}}
+                    <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
+                        <div class="flex items-center gap-2">
+                            <x-lucide-calendar-1 class="w-5 h-5"></x-lucide-calendar-1>
+                            <span class="font-semibold">Booking</span>
+                            <span class="text-gray-400 text-sm">ID Booking:</span>
+                            <span class="text-gray-500 text-sm">1234567</span>
+                        </div>
+                        <span class="text-gray-400 text-sm">31 Des 2024</span>
+                    </div>
+
+                    {{--isi--}}
+                    <div class="flex items-start gap-4">
+                        <img class="rounded-lg w-25 h-25 "
+                             src="https://picsum.photos/150/150" alt="gambar">
+
+                        <div class="flex-1">
+                            <div class="flex items-start justify-between">
+                                <h1 class="font-semibold text-lg">Fotoshoot Perpisahan SMP</h1>
+                                <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+                                            Upcoming
+                                        </span>
+                            </div>
+
+                            <div class="flex items-center gap-6 mt-2 text-sm text-gray-600">
+                                        <span class="flex items-center gap-1">
+                                            <x-lucide-circle-dollar-sign class="w-4 h-4 rounded-full"></x-lucide-circle-dollar-sign>
+                                            Harga: Rp 145000
+                                        </span>
+
+                                <span class="flex items-center gap-1">
+                                            <x-lucide-package-2 class="w-4 h-4 rounded-full"></x-lucide-package-2>
+                                            Paket: Standard
+                                        </span>
+                            </div>
+
+                            <div class="flex items-center gap-2 mt-3">
+
+                                <x-lucide-user class="w-6 h-6 rounded-full"></x-lucide-user>
+
+                                <span class="text-sm text-gray-600">iwan - Fotografer</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <!-- Gallery Header & Actions -->
+            <div x-show="section === 'gallery'">
+
+                <div class="flex justify-between">
+                    <div class=" flex items-center gap-2">
+                        <div @click="section = ''"
+                             class="border border-gray-200 flex items-center justify-center shadow w-12 h-12 rounded-full">
+                            <x-lucide-arrow-left class="w-6 h-6"></x-lucide-arrow-left>
+                        </div>
+
+                        <div class="flex flex-col">
+                            <span class="flex-row text-xl font-semibold">My Gallery</span>
+                            <span class="text-xs text-gray-400">ID Booking: 1234567</span>
+                        </div>
+
+
+                    </div>
+                    <div class="mr-5">
+                            <span class=" px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+                                    Upcoming
+                            </span>
+                    </div>
+                </div>
+
+                <div class="mt-2 mb-3 flex  justify-end gap-4 mr-5">
+                    <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden focus:bg-primary-focus  disabled:opacity-50 disabled:pointer-events-none" >
+                        Download All
+                    </button>
+
+
+                </div>
+
+                <!-- Pinterest Grid -->
+                <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
+
+                    <!--Tall-->
+                    <div class="break-inside-avoid relative group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300">
+                        <img src="https://picsum.photos/400/600?random=1"
+                             alt="Session Photo"
+                             loading="lazy"
+                             class="w-full h-auto object-cover block">
+
+
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-between">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
+                                    <x-lucide-download class="w-4 h-4" />
+                                </button>
+                                <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
+                                    <x-lucide-trash-2 class="w-4 h-4" />
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-end text-white">
+
+                                <button @click="modalOpen = true; selectedImage = 'https://picsum.photos/800/1200?random=1'"
+                                        class="text-xs bg-white text-gray-800 font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors shadow">
+                                    View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--landscape-->
+                    <div class="break-inside-avoid relative group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300">
+                        <img src="https://picsum.photos/400/300?random=2"
+                             alt="Session Photo"
+                             loading="lazy"
+                             class="w-full h-auto object-cover block">
+
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-between">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
+                                    <x-lucide-download class="w-4 h-4" />
+                                </button>
+                                <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
+                                    <x-lucide-trash-2 class="w-4 h-4" />
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-end text-white">
+                                <button @click="modalOpen = true; selectedImage = 'https://picsum.photos/1200/800?random=2'"
+                                        class="text-xs bg-white text-gray-800 font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors shadow">
+                                    View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!--medium-->
+                    <div class="break-inside-avoid relative group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300">
+                        <img src="https://picsum.photos/400/500?random=3"
+                             alt="Session Photo"
+                             loading="lazy"
+                             class="w-full h-auto object-cover block">
+
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-between">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
+                                    <x-lucide-download class="w-4 h-4" />
+                                </button>
+                                <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
+                                    <x-lucide-trash-2 class="w-4 h-4" />
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-end text-white">
+
+                                <button @click="modalOpen = true; selectedImage = 'https://picsum.photos/800/1000?random=3'"
+                                        class="text-xs bg-white text-gray-800 font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors shadow">
+                                    View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    {{--Tall one--}}
+                    <div class="break-inside-avoid relative group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300">
+                        <img src="https://picsum.photos/400/700?random=4"
+                             alt="Session Photo"
+                             loading="lazy"
+                             class="w-full h-auto object-cover block">
+
+                        <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-between">
+                            <div class="flex justify-end gap-2">
+                                <button class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
+                                    <x-lucide-download class="w-4 h-4" />
+                                </button>
+                                <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
+                                    <x-lucide-trash-2 class="w-4 h-4" />
+                                </button>
+                            </div>
+                            <div class="flex items-center justify-end text-white">
+
+                                <button @click="modalOpen = true; selectedImage = 'https://picsum.photos/800/1400?random=4'"
+                                        class="text-xs bg-white text-gray-800 font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors shadow">
+                                    View
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <!--modal popup-->
+                <div x-show="modalOpen"
+                     x-transition:enter="transition ease-out duration-300"
+                     x-transition:enter-start="opacity-0"
+                     x-transition:enter-end="opacity-100"
+                     x-transition:leave="transition ease-in duration-200"
+                     x-transition:leave-start="opacity-100"
+                     x-transition:leave-end="opacity-0"
+                     @keydown.escape.window="modalOpen = false"
+                     class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                     x-cloak>
+
+                    <!-- Modal Card -->
+                    <div @click.away="modalOpen = false" class="relative max-w-4xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col">
+                        <!-- Close Button -->
+                        <button @click="modalOpen = false" class="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors">
+                            <x-lucide-x class="w-5 h-5" />
+                        </button>
+
+                        <!-- Image View -->
+                        <div class="overflow-auto max-h-[85vh]">
+                            <img :src="selectedImage" alt="Expanded view" class="w-full h-auto object-contain">
+                        </div>
+                    </div>
+                </div>
+            </div>
 
         </div>
 
-        <div x-show="tab === 'account'">
-            account
+
+
+        <div x-show="tab === 'account'" x-data="{ editMode: false }">
+
+            <!--header-->
+            <div class="flex flex-col my-3 mb-4">
+                <span class="text-2xl font-semibold">My Account</span>
+                <span class="text-gray-500">Manage Your Profile and Account Settings</span>
+            </div>
+
+            <div class="flex flex-col lg:flex-row gap-4">
+
+
+                <div class="w-full lg:w-2/3 flex flex-col gap-4">
+
+                    <!-- profile info -->
+                    <div class="rounded-lg border border-gray-200 shadow-sm p-5">
+                        <div class="flex items-center justify-between pb-4 mb-4 border-b border-gray-100">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-medium">
+                                    R
+                                </div>
+                                <div>
+                                    <h1 class="font-bold text-xl">{{$user}}</h1>
+                                    <span class="text-xs uppercase font-semibold text-gray-500">{{$role}}</span>
+                                </div>
+                            </div>
+
+                            <button @click="editMode = !editMode" type="button"
+                                    class="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
+                                <x-lucide-pencil class="w-4 h-4"></x-lucide-pencil>
+                                <span x-text="editMode ? 'Cancel' : 'Edit Profile'"></span>
+                            </button>
+                        </div>
+
+                        <form action="#" method="POST" class="space-y-4">
+                            @csrf
+                            @method('PUT')
+
+                            <div>
+                                <label for="nama" class="block text-sm font-medium text-foreground mb-1.5">Full Name</label>
+                                <div class="relative">
+                                    <input type="text" id="nama" name="nama" value="" :disabled="!editMode"
+                                           class="peer py-2.5 sm:py-3 px-4 ps-11 block w-full bg-surface border-transparent rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:bg-layer focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
+                                           placeholder="Enter name">
+                                    <div class="absolute inset-y-0 inset-s-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
+                                        <x-lucide-user class="shrink-0 size-4 text-muted-foreground-1"></x-lucide-user>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="email" class="block text-sm font-medium text-foreground mb-1.5">Email Address</label>
+                                <div class="relative">
+                                    <input type="email" id="email" name="email" value="" :disabled="!editMode"
+                                           class="peer py-2.5 sm:py-3 px-4 ps-11 block w-full bg-surface border-transparent rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:bg-layer focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
+                                           placeholder="Enter email">
+                                    <div class="absolute inset-y-0 inset-s-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
+                                        <x-lucide-mail class="shrink-0 size-4 text-muted-foreground-1"></x-lucide-mail>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label for="no_hp" class="block text-sm font-medium text-foreground mb-1.5">Phone Number</label>
+                                <div class="relative">
+                                    <input type="text" id="no_hp" name="no_hp" value=" " :disabled="!editMode"
+                                           class="peer py-2.5 sm:py-3 px-4 ps-11 block w-full bg-surface border-transparent rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:bg-layer focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
+                                           placeholder="Enter phone number">
+                                    <div class="absolute inset-y-0 inset-s-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
+                                        <x-lucide-phone class="shrink-0 size-4 text-muted-foreground-1"></x-lucide-phone>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div x-show="editMode" class="flex justify-end gap-2 pt-2">
+                                <button type="button" @click="editMode = false"
+                                        class="py-2 px-4 text-sm font-medium rounded-lg border border-gray-200 hover:bg-gray-50 focus:outline-hidden">
+                                    Discard
+                                </button>
+                                <button type="submit"
+                                        class="py-2 px-4 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden">
+                                    Save Changes
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+
+
+                    <div class="rounded-lg border border-gray-200 shadow-sm p-5">
+                        <div class="flex items-center gap-2 pb-4 mb-4 border-b border-gray-100">
+                            <x-lucide-lock class="w-5 h-5"></x-lucide-lock>
+                            <h1 class="font-semibold text-lg">Change Password</h1>
+                        </div>
+
+                        <form action="#" method="POST" class="space-y-4">
+                            @csrf
+                            @method('PUT')
+
+
+                            <div class="flex gap-4">
+                                <div class="flex-1">
+                                    <label class="text-sm font-medium text-gray-600">New Password</label>
+                                    <input type="password" name="new_password" placeholder="••••••••"
+                                           class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-hidden focus:border-primary">
+                                </div>
+                                <div class="flex-1">
+                                    <label class="text-sm font-medium text-gray-600">Confirm New Password</label>
+                                    <input type="password" name="new_password_confirmation" placeholder="••••••••"
+                                           class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-hidden focus:border-primary">
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end pt-2">
+                                <button type="submit"
+                                        class="py-2 px-4 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden">
+                                    Update Password
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+
+                <div class="w-full lg:w-1/3 flex flex-col gap-4">
+
+                    <div class="rounded-lg border border-gray-200 shadow-sm p-5">
+                        <h1 class="font-semibold text-lg pb-4 mb-4 border-b border-gray-100">Account Information</h1>
+
+                        <div class="flex flex-col gap-4">
+                            <div class="flex items-center gap-3">
+                                <div class="text-primary-500 bg-primary/15 p-2 rounded-full">
+                                    <x-lucide-shield class="w-5 h-5"></x-lucide-shield>
+                                </div>
+                                <div>
+                                    <h5 class="text-xs font-semibold text-gray-500">Role</h5>
+                                    <h1 class="font-semibold capitalize">{{$role}}</h1>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="text-primary-500 bg-primary/15 p-2 rounded-full">
+                                    <x-lucide-calendar class="w-5 h-5"></x-lucide-calendar>
+                                </div>
+                                <div>
+                                    <h5 class="text-xs font-semibold text-gray-500">Member Since</h5>
+                                    <h1 class="font-semibold">1 Jan 2025</h1>
+                                </div>
+                            </div>
+
+                            <div class="flex items-center gap-3">
+                                <div class="text-primary-500 bg-primary/15 p-2 rounded-full">
+                                    <x-lucide-hash class="w-5 h-5"></x-lucide-hash>
+                                </div>
+                                <div>
+                                    <h5 class="text-xs font-semibold text-gray-500">User ID</h5>
+                                    <h1 class="font-semibold">#000001</h1>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="rounded-lg border border-red-200 shadow-sm p-5">
+                        <h1 class="font-semibold text-lg text-red-500 pb-4 mb-4 border-b border-red-100">Danger Zone</h1>
+                        <p class="text-sm text-gray-500 mb-4">
+                            Once you delete your account, there is no going back. Please be certain.
+                        </p>
+                        <button type="button"
+                                class="w-full py-2.5 px-4 text-sm font-medium rounded-lg border border-red-500 text-red-500 hover:bg-red-50 focus:outline-hidden">
+                            Delete Account
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
 
