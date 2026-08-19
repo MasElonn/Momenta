@@ -19,10 +19,10 @@
 
         <div class=" flex flex-col items-center mb-10">
             <div class="uppercase w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-medium mb-3">
-                {{substr(Auth::user()->name, 0, 1)}}
+                {{ substr($user->name ?? 'B', 0, 1) }}
             </div>
-            <h2 class="mt-1 text-xl font-bold ">{{Auth::user()->name }}</h2>
-            <span class="text-xs text-gray-500 uppercase font-semibold mt-0.5">{{Auth::user()->role}}</span>
+            <h2 class="mt-1 text-xl font-bold ">{{ $user->name ?? 'Guest' }}</h2>
+            <span class="text-xs text-gray-500 uppercase font-semibold mt-0.5">{{ $user->role ?? 'customer' }}</span>
         </div>
 
 
