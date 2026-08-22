@@ -13,8 +13,8 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id('trans_id');
-            $table->foreignId('customer_id')->references('user_id')->on('users');
-            $table->foreignId('paket_id')->references('paket_id')->on('paket');
+            $table->foreignId('customer_id')->constrained('users','user_id')->onDelete('cascade');
+            $table->foreignId('paket_id')->constrained('paket','paket_id')->onDelete('cascade');
             $table->string('midtrans_order_id')->unique();
             $table->string('snap_token')->nullable();
             $table->string('payment_type')->nullable();

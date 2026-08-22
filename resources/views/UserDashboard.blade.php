@@ -17,28 +17,28 @@
 <div class=" w-screen flex flex-row" x-data="{tab: '{{request('tab', 'overview')}}', section: ''}">
     <aside class=" sticky shadow-xl w-64 h-screen border-r border-gray-200 flex flex-col items-center py-10 px-4 ">
 
-        <div class="flex flex-col items-center mb-10">
-            <div class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-medium mb-3">
-                B
+        <div class=" flex flex-col items-center mb-10">
+            <div class="uppercase w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-medium mb-3">
+                {{substr(Auth::user()->name, 0, 1)}}
             </div>
-            <h2 class="mt-1 text-xl font-bold ">{{$user}}</h2>
-            <span class="text-xs text-gray-500 uppercase font-semibold mt-0.5">{{$role}}</span>
+            <h2 class="mt-1 text-xl font-bold ">{{Auth::user()->name }}</h2>
+            <span class="text-xs text-gray-500 uppercase font-semibold mt-0.5">{{Auth::user()->role}}</span>
         </div>
 
 
-        <nav class="w-full flex flex-col justify-between h-full">
+        <nav class=" w-full flex flex-col justify-between h-full">
             <div class="space-y-3">
 
                 <button @click="tab = 'overview'"
                         :class="tab === 'overview' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                        class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
+                        class=" w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
                     <x-lucide-layout-grid class="w-5 h-5" />
                     Overview
                 </button>
 
                 <button @click="tab = 'booking'"
                         :class="tab === 'booking' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                        class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg ">
+                        class=" w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg ">
                     <x-lucide-calendar class="w-5 h-5" />
                     My Booking
                 </button>
@@ -74,7 +74,7 @@
 
     <main class="flex-1 p-4">
         <div class="" x-show="tab === 'overview'">
-            <h1 class="pt-5 text-4xl font-semibold"  >Hello, {{$user}}!</h1>
+            <h1 class="pt-5 text-4xl font-semibold"  >Hello, {{ Auth::user()->name }}!</h1>
             <h2>Welcome back to your Momenta dashboard. Your next session is coming up soon.</h2>
 
             <div class="mt-5 flex  justify justify-between">
@@ -149,13 +149,13 @@
                 <!--galeri-->
                 <div class="w-70 flex-auto  p-2">
                     <h2 class="py-2 text-xl font-semibold">Gallery</h2>
-                    <div class=" shadow w-full h-40 rounded-lg ">
+                    <div class="  w-full h-40 rounded-lg ">
                         <img class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
                     </div>
-                    <div class="mt-2 shadow w-full h-40 rounded-lg ">
+                    <div class=" mt-2 shadow w-full h-40 rounded-lg ">
                         <img class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
                     </div>
-                    <div class="mt-2  shadow w-full h-40 rounded-lg ">
+                    <div class=" mt-2  shadow w-full h-40 rounded-lg ">
                         <img class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
                     </div>
                 </div>
@@ -611,12 +611,12 @@
                     <div class="rounded-lg border border-gray-200 shadow-sm p-5">
                         <div class="flex items-center justify-between pb-4 mb-4 border-b border-gray-100">
                             <div class="flex items-center gap-4">
-                                <div class="w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-medium">
-                                    R
+                                <div class="uppercase w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-medium">
+                                    {{substr(Auth::user()->name, 0, 1)}}
                                 </div>
                                 <div>
-                                    <h1 class="font-bold text-xl">{{$user}}</h1>
-                                    <span class="text-xs uppercase font-semibold text-gray-500">{{$role}}</span>
+                                    <h1 class="font-bold text-xl">{{Auth::user()->name}}</h1>
+                                    <span class="text-xs uppercase font-semibold text-gray-500"></span>
                                 </div>
                             </div>
 
@@ -728,7 +728,7 @@
                                 </div>
                                 <div>
                                     <h5 class="text-xs font-semibold text-gray-500">Role</h5>
-                                    <h1 class="font-semibold capitalize">{{$role}}</h1>
+                                    <h1 class="font-semibold capitalize">{{Auth::user()->role}}</h1>
                                 </div>
                             </div>
 
@@ -738,7 +738,7 @@
                                 </div>
                                 <div>
                                     <h5 class="text-xs font-semibold text-gray-500">Member Since</h5>
-                                    <h1 class="font-semibold">1 Jan 2025</h1>
+                                    <h1 class="font-semibold">{{Auth::user()->created_at->format('Y-m-d')}}</h1>
                                 </div>
                             </div>
 
@@ -748,7 +748,7 @@
                                 </div>
                                 <div>
                                     <h5 class="text-xs font-semibold text-gray-500">User ID</h5>
-                                    <h1 class="font-semibold">#000001</h1>
+                                    <h1 class="font-semibold">#{{Auth::user()->user_id}}</h1>
                                 </div>
                             </div>
                         </div>

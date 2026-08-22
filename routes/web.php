@@ -1,14 +1,15 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () {
     return view('home');
 });
-
-Route::get('/dashboard', function () {
-    return view('UserDashboard',["user" => 'Budi','role' => 'customer']);
+$user = User::get();
+Route::get('/dashboard', function () use ( $user) {
+    return view('UserDashboard',['user' => $user]);
 })->middleware(['auth', 'verified'])->name('UserDashboard');
 
 Route::middleware('auth')->group(function () {
