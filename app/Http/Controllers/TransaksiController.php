@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\trasaksi;
 use Illuminate\Http\Request;
 
-class TrasaksiController extends Controller
+class TransaksiController extends Controller
 {
     /**
      * Display a listing of the resource.

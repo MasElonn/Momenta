@@ -14,12 +14,12 @@
         </div>
 
         <div class="inline-flex flex-wrap gap-2 ">
-            <button type="button" class="py-1 px-6 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-layer-line text-muted-foreground-1 hover:border-primary-hover hover:text-primary-hover focus:outline-hidden focus:border-primary-focus focus:text-primary-focus  disabled:opacity-50 disabled:pointer-events-none" >
+            <a href="{{route('login')}}" type="button" class="py-1 px-6 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-layer-line text-muted-foreground-1 hover:border-primary-hover hover:text-primary-hover focus:outline-hidden focus:border-primary-focus focus:text-primary-focus  disabled:opacity-50 disabled:pointer-events-none" >
                 Dashboard
-            </button>
-            <button type="button" class="py-1 px-6 inline-flex items-center gap-x-2 text-sm font-normal rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden focus:bg-primary-focus  disabled:opacity-50 disabled:pointer-events-none" >
+            </a>
+            <a href="{{route('register')}}" type="button" class="py-1 px-6 inline-flex items-center gap-x-2 text-sm font-normal rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden focus:bg-primary-focus  disabled:opacity-50 disabled:pointer-events-none" >
                 Sign Up
-            </button>
+            </a>
         </div>
     </nav>
 </header>
