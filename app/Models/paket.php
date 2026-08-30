@@ -19,6 +19,8 @@ class Paket extends Model
     protected $casts = [
         'harga' => 'decimal:2',
     ];
+
+
     public function fotografer()
     {
         return $this->belongsTo(User::class, 'fotografer_id', 'user_id');

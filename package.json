@@ -17,6 +17,7 @@
         "vite": "^8.0.0"
     },
     "dependencies": {
+        "@preline/remove-element": "^5.0.0",
         "preline": "^4.2.0"
     }
 }

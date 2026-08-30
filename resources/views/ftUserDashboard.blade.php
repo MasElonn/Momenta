@@ -15,6 +15,7 @@
 
 </head>
 <body>
+<h1>fotograper</h1>
 
 <div class="w-screen h-screen flex" x-data="{tab: '{{ old('tab', request('tab', 'overview')) }}', section: ''}">
 

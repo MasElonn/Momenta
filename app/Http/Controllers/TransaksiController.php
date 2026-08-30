@@ -1,65 +1,76 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use App\Models\trasaksi;
+use App\Models\Transaksi;
+use App\Models\Paket;
+
 use Illuminate\Http\Request;
+
 
 class TransaksiController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * @throws \Exception
      */
-    public function index()
+    public function midtransCheckout(Request $req)
     {
-        //
+
+        $paket = Paket::findOrFail($req->paket_id);
+
+        $order = Transaksi::create([
+            'customer_id'       => $req->user()->user_id,
+            'paket_id'          => $paket->paket_id,
+            'midtrans_order_id' => 'ORD-'.now()->format('YmdHi').'-'.$paket->paket_id,
+            'status'            => 'pending',
+        ]);
+
+        $grossAmount = (int) $paket->harga;
+
+        $params = [
+            'transaction_details' => [
+                'order_id'     => $order->midtrans_order_id,
+                'gross_amount' => $grossAmount,
+            ],
+            'item_details' => [[
+                'id' => (string) $paket->paket_id,
+                'price' => $grossAmount,
+                'quantity' => 1,
+                'name' => $paket->judul,
+            ]],
+        ];
+
+        $snapToken = \Midtrans\Snap::getSnapToken($params);
+        $order->update(['snap_token' => $snapToken]);
+
+        return response()->json(['snapToken' => $snapToken, 'order_id' => $order->midtrans_order_id]);
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
+    public function midtransWebhook(Request $req)
     {
-        //
-    }
 
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
+        $payload = $req->all();
+        $orderId = $payload['order_id'] ?? null;
+        $transactionStatus = $payload['transaction_status'] ?? null;
+        if (!$orderId) return response()->json(['ok' => false], 400);
 
-    /**
-     * Display the specified resource.
-     */
-    public function show(trasaksi $trasaksi)
-    {
-        //
-    }
+        $order = Transaksi::where('midtrans_order_id', $orderId)->firstOrFail();
 
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(trasaksi $trasaksi)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, trasaksi $trasaksi)
-    {
-        //
-    }
+        $map = [
+            'settlement' => 'paid',
+            'capture' => 'paid',
+            'pending' => 'pending',
+            'expire' => 'expired',
+            'deny' => 'failed',
+            'cancel' => 'failed'
+        ];
+        if($map[$transactionStatus] === 'paid'){
+            $order->update(['status' => $map[$transactionStatus], 'paid_at' => now()->format('Y-m-d H:i:s')]);
+        } else {
+            $order->update(['status' => $map[$transactionStatus] ?? 'pending']);
+        }
 
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(trasaksi $trasaksi)
-    {
-        //
+
+        return response()->json(['ok' => true]);
     }
 }

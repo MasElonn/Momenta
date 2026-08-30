@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('midtrans_order_id')->unique();
             $table->string('snap_token')->nullable();
             $table->string('payment_type')->nullable();
-            $table->enum('status', ['unpaid','paid', 'expired'])->default('unpaid');
+            $table->enum('status', ['pending','paid', 'expired','failed'])->default('pending');
             $table->timestamp('paid_at')->nullable();
 
             $table->timestamps();
