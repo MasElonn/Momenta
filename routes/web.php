@@ -2,9 +2,14 @@
 
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\BookingController;
 
 Route::get('/', function () {
-    return view('home');
+    return view('LendingPage');
+});
+
+Route::get('/Login', function () {
+    return view('Login');
 });
 
 Route::get('/dashboard', function () {
