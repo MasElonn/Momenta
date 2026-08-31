@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('foto', function (Blueprint $table) {
             $table->id('foto_id');
-            $table->foreignId('acara_id')->references('acara_id')->on('acara')->onDelete('cascade');
+            $table->foreignId('acara_id')->constrained('acara','acara_id')->onDelete('cascade');
             $table->string('r2_bucket');
             $table->string('r2_key');
             $table->timestamps();

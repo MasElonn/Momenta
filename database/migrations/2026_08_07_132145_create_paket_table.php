@@ -13,10 +13,10 @@ return new class extends Migration
     {
         Schema::create('paket', function (Blueprint $table) {
             $table->id('paket_id');
-            $table->foreignId('fotografer_id')->references('user_id')->on('users');
+            $table->foreignId('fotografer_id')->constrained('users','user_id')->onDelete('cascade');
             $table->string('judul');
             $table->text('deskripsi');
-            $table->decimal('harga');
+            $table->decimal('harga',12,2);
 
             $table->timestamps();
         });
