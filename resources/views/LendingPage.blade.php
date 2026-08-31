@@ -273,7 +273,7 @@
     <div class="nav-links">
       <a href="#cara-kerja">Cara Kerja</a>
       <a href="#fitur">Fitur</a>
-      <a href="#harga">Harga</a>
+      <a href="#harga">Paket</a>
     </div>
     <div class="nav-cta">
       <a href="{{ url('/Login') }}" class="btn btn-ghost">Masuk</a>
@@ -391,7 +391,10 @@
         <h3>Paket Dasar</h3>
         <p class="plan-desc">Untuk acara kelas kecil</p>
         <div class="price">Rp 500rb<span>/sesi</span></div>
+<<<<<<< HEAD
         <p class="plan-edit-note mono">// edit isi paket di sini</p>
+=======
+>>>>>>> temp-branch
         <ul class="plan-list">
           <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>60 menit sesi foto</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>15 foto hasil edit</li>
@@ -406,7 +409,10 @@
         <h3>Paket Populer</h3>
         <p class="plan-desc">Untuk wisuda &amp; perpisahan</p>
         <div class="price">Rp 750rb<span>/sesi</span></div>
+<<<<<<< HEAD
         <p class="plan-edit-note mono">// edit isi paket di sini</p>
+=======
+>>>>>>> temp-branch
         <ul class="plan-list">
           <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>90 menit sesi foto</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>25 foto hasil edit</li>
@@ -420,7 +426,10 @@
         <h3>Paket Premium</h3>
         <p class="plan-desc">Untuk acara besar sekolah</p>
         <div class="price">Rp 1.2jt<span>/sesi</span></div>
+<<<<<<< HEAD
         <p class="plan-edit-note mono">// edit isi paket di sini</p>
+=======
+>>>>>>> temp-branch
         <ul class="plan-list">
           <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>3 jam sesi foto</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>60 foto hasil edit</li>
