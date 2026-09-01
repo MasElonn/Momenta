@@ -7,11 +7,12 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('home');
-})->name('home');
+    return view('LendingPage');
+});
 
-
-
+Route::get('/login', function () {
+    return view('auth.login');
+});
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', function () {
