@@ -104,6 +104,9 @@ class UserController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+        $user = auth()->user();
+
+        $user->delete();
+
     }
 }

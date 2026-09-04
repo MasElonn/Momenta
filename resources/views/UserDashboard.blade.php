@@ -12,6 +12,14 @@
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
 
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+          integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
+          crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+            integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
+            crossorigin=""></script>
+
+
 
 </head>
 <body>
@@ -22,9 +30,9 @@
 
         <div class=" flex flex-col items-center mb-10">
             <div class="uppercase w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-medium mb-3">
-                {{ substr($user->name ?? 'B', 0, 1) }}
+                {{ substr(Auth::user()->name, 0, 1) }}
             </div>
-            <h2 class="mt-1 text-xl font-bold ">{{ $user->name ?? 'Guest' }}</h2>
+            <h2 class="mt-1 text-xl font-bold ">{{ Auth::user()->name }}</h2>
             <span class="text-xs text-gray-500 uppercase font-semibold mt-0.5">{{ $user->role ?? 'customer' }}</span>
         </div>
 
@@ -296,9 +304,19 @@
                                         </div>
                                     </div>
 
-                                    {{--placeholder for maps--}}
-                                    <iframe class="rounded-xl w-full" height="400"  src="https://google.com" title="Example Page"></iframe>
 
+                                    <div id="map" class="map rounded-xl w-full h-75"></div>
+                                    <script>
+                                        var map = L.map('map').setView([51.505, -0.09], 13);
+
+                                        L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
+                                            attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors'
+                                        }).addTo(map);
+
+                                        L.marker([51.5, -0.09]).addTo(map)
+                                            .bindPopup('A pretty CSS popup.<br> Easily customizable.')
+                                            .openPopup();
+                                    </script>
 
                                 </div>
                             </div>

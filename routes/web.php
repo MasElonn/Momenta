@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
@@ -54,7 +55,7 @@ Route::get('/test-checkout', function () {
         'pakets' => \App\Models\Paket::all(),
     ]);
 });
-
+Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 Route::post('/checkout', [TransaksiController::class, 'midtransCheckout'])->name('checkout.midtrans');
 
 

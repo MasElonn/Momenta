@@ -18,6 +18,7 @@
     },
     "dependencies": {
         "@preline/remove-element": "^5.0.0",
+        "leaflet": "^1.9.4",
         "preline": "^4.2.0"
     }
 }
