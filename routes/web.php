@@ -3,6 +3,7 @@
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\FotoController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -28,7 +29,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
-
+Route::post('/upload', [FotoController::class, 'store'])->name('foto.upload');
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
@@ -42,7 +43,7 @@ Route::middleware('auth')->group(function () {
 
 
 
-Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
+
 
 
 

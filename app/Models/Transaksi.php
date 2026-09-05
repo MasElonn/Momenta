@@ -2,12 +2,15 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Attributes\Table;
+use Illuminate\Notifications\Notifiable;
 
 #[Table('transaksi')]
 class Transaksi extends Model
 {
+    use HasFactory, Notifiable;
 
     protected $primaryKey = 'trans_id';
 

@@ -8,15 +8,19 @@
         <div class="flex-auto w-full p-2">
             <h2 class="py-2 text-xl font-semibold">Bookings</h2>
 
-            <div class="w-full rounded-lg border border-gray-200 shadow-sm p-4">
+            @foreach(\App\Models\Transaksi::with('acara', 'paket')->where('customer_id', Auth::id())->get() as $transaksi)
+                @if($transaksi->acara)
+                    @php($acara = $transaksi->acara)
+
+                    <div class="w-full rounded-lg border border-gray-200 shadow-sm p-4">
                 <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
                     <div class="flex items-center gap-2">
                         <x-lucide-calendar-1 class="w-5 h-5" />
                         <span class="font-semibold">Booking</span>
                         <span class="text-gray-400 text-sm">ID Booking:</span>
-                        <span class="text-gray-500 text-sm">1234567</span>
+                        <span class="text-gray-500 text-sm">#{{ $acara->acara_id }}</span>
                     </div>
-                    <span class="text-gray-400 text-sm">31 Des 2024</span>
+                    <span class="text-gray-400 text-sm">{{ $acara->tanggal->translatedFormat('d M Y') }}</span>
                 </div>
 
                 <div class="flex items-start gap-4">
@@ -24,32 +28,32 @@
 
                     <div class="flex-1">
                         <div class="flex items-start justify-between">
-                            <h1 class="font-semibold text-lg">Fotoshoot Perpisahan SMP</h1>
+                            <h1 class="font-semibold text-lg">{{ $acara->judul }}</h1>
                             <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
-                                Upcoming
+                                {{ ucfirst($acara->status) }}
                             </span>
                         </div>
 
                         <div class="flex items-center gap-6 mt-2 text-sm text-gray-600">
                             <span class="flex items-center gap-1">
                                 <x-lucide-circle-dollar-sign class="w-4 h-4 rounded-full" />
-                                Harga: Rp 145000
+                                 Harga: Rp {{ number_format($transaksi->paket->harga ?? 0, 0, ',', '.') }}
                             </span>
 
                             <span class="flex items-center gap-1">
                                 <x-lucide-package-2 class="w-4 h-4 rounded-full" />
-                                Paket: Standard
+                                Paket: {{ $transaksi->paket->judul ?? '-' }}
                             </span>
                         </div>
 
                         <div class="flex justify-between mt-3">
                             <div class="flex gap-1">
                                 <x-lucide-user class="w-6 h-6 rounded-full" />
-                                <span class="text-sm text-gray-600">iwan - Fotografer</span>
+                                <span class="text-sm text-gray-600">{{ $transaksi->paket->fotografer->name ?? '-' }} - Fotografer</span>
                             </div>
 
                             <div class="flex gap-2">
-                                <button type="button" @click="section = 'booking', tab = 'booking'"
+                                <button type="button" @click="section = 'booking-{{$acara->acara_id}}', tab = 'booking'"
                                         class="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
                                     Manage
                                 </button>
@@ -64,6 +68,8 @@
                 </div>
             </div>
         </div>
+        @endif
+        @endforeach
 
         <div class="w-70 flex-auto p-2">
             <h2 class="py-2 text-xl font-semibold">Gallery</h2>

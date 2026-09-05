@@ -29,7 +29,18 @@
         <x-dashboard.gallery />
         <x-dashboard.account :user="$user ?? Auth::user()" />
         <x-dashboard.alert />
+
+
+        <form action="{{Route('foto.upload')}}" method="post" enctype="multipart/form-data">
+            @csrf
+
+            <input type="file" name="images[]" id="images" required multiple accept="'image/*">
+            <input hidden type="text" name="acara_id" value="1">
+
+            <button type="submit">upload</button>
+        </form>
     </main>
+
 </div>
 
 </body>
