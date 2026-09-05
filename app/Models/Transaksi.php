@@ -14,10 +14,11 @@ class Transaksi extends Model
     protected $fillable = [
         'customer_id',
         'paket_id',
-        'midtrans_order_id',
-        'snap_token',
-        'payment_type',
+        'bukti_bucket',
+        'bukti_key',
         'status',
+        'verified_at',
+        'rejected_reason',
         'paid_at',
     ];
     protected $casts = [

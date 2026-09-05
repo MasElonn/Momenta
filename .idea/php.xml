@@ -136,7 +136,6 @@
       <path value="$PROJECT_DIR$/vendor/mallardduck/blade-lucide-icons" />
       <path value="$PROJECT_DIR$/vendor/laravel/breeze" />
       <path value="$PROJECT_DIR$/vendor/_laravel_idea" />
-      <path value="$PROJECT_DIR$/vendor/midtrans/midtrans-php" />
       <path value="$PROJECT_DIR$/vendor/symfony/filesystem" />
       <path value="$PROJECT_DIR$/vendor/league/flysystem-aws-s3-v3" />
       <path value="$PROJECT_DIR$/vendor/mtdowling/jmespath.php" />

@@ -13,20 +13,18 @@ return new class extends Migration
     {
         Schema::create('transaksi', function (Blueprint $table) {
             $table->id('trans_id');
-            $table->foreignId('customer_id')->constrained('users','user_id')->onDelete('cascade');
-            $table->foreignId('paket_id')->constrained('paket','paket_id')->onDelete('cascade');
-            $table->string('midtrans_order_id')->unique();
-            $table->string('snap_token')->nullable();
-            $table->string('payment_type')->nullable();
-            $table->enum('status', ['pending','paid', 'expired','failed'])->default('pending');
+            $table->foreignId('customer_id')->constrained('users', 'user_id')->onDelete('cascade');
+            $table->foreignId('paket_id')->constrained('paket', 'paket_id')->onDelete('cascade');
+            $table->string('bukti_bucket')->nullable();
+            $table->string('bukti_key')->nullable();
+            $table->enum('status', ['unpaid', 'pending', 'paid', 'rejected', 'expired'])->default('unpaid');
+            $table->timestamp('verified_at')->nullable();
+            $table->string('rejection_reason')->nullable();
             $table->timestamp('paid_at')->nullable();
 
             $table->timestamps();
-
         });
     }
-
-
 
     /**
      * Reverse the migrations.

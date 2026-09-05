@@ -19,19 +19,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         $role = Auth::user()->role;
         if ($role == 'customer') {
-            return view('UserDashboard');
+            return view('CustomerDashboard');
         }
-        return view('ftUserDashboard');
+        return view('FotograferDashboard');
 
     })->name('UserDashboard');
 
-    //fotografer comming soon
-    /*Route::get('/dashboard', function () {
-        $user = Auth::user();
-        return view('UserDashboard', ['user' => $user]);
-    })->name('UserDashboard');*/
 
 });
+Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -44,19 +40,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/dashboard', [UserController::class, 'destroy'])->name('dashboard.destroy');
 });
 
-Route::get('/dash', function(){
-    return view ('UserDashboard',['user' => 'Budi','role' => 'customer']);
-});
 
 
-
-Route::get('/test-checkout', function () {
-    return view('checkout.midtrans_test', [
-        'pakets' => \App\Models\Paket::all(),
-    ]);
-});
 Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
-Route::post('/checkout', [TransaksiController::class, 'midtransCheckout'])->name('checkout.midtrans');
+
 
 
 require __DIR__.'/auth.php';

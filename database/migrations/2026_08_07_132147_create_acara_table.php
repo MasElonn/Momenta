@@ -17,6 +17,7 @@ return new class extends Migration
             $table->string('judul');
             $table->text('lokasi');
             $table->date('tanggal');
+            $table->time('jam');
             $table->enum('status', ['upcoming', 'ongoing','completed'])->default('upcoming');
             $table->timestamps();
         });
