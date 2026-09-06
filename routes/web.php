@@ -29,6 +29,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
+Route::get('/protected-action', function () {
+    return view('dashboard')->with('status', 'Password confirmed — sensitive action unlocked.');
+})->middleware(['auth', 'password.confirm'])->name('protected.action');
+
 Route::get('/dashboard', function(){
     return view ('UserDashboard', ['user' => 'Budi', 'role' => 'customer']);
 });

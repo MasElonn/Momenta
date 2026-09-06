@@ -1,63 +1,84 @@
-<x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+<x-auth-layout
+    :title="'Create account — Momenta'"
+    headline="Momenta Pilihan Terbaik untuk fotografer."
+    subheadline="Daftar Untuk masuk"
+>
+    <h1 class="mb-2 text-4xl font-bold text-[#1447E6]">Buat Akun</h1>
+    <p class="mb-8 text-sm text-gray-500">Tambahkan dengan detail untuk membuat akun baru</p>
+
+    <form method="POST" action="{{ route('register') }}" class="space-y-5" novalidate>
         @csrf
 
-        <!-- Name -->
-        <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
-        </div>
+        <x-auth-input
+            label="Nama Pengguna"
+            name="name"
+            placeholder="Nama"
+            required
+            autofocus
+            autocomplete="name"
+        />
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
+        <x-auth-input
+            label="Email address"
+            name="email"
+            type="email"
+            icon="mail"
+            placeholder="name@example.com"
+            required
+            autocomplete="username"
+        />
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+        <x-auth-input
+            label="Password"
+            name="password"
+            icon="lock"
+            toggle
+            placeholder="Password"
+            required
+            autocomplete="new-password"
+        />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+        <x-auth-input
+            label="Confirm Password"
+            name="password_confirmation"
+            icon="lock"
+            toggle
+            placeholder="Confirm password"
+            required
+            autocomplete="new-password"
+        />
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+        <label class="flex items-start gap-2 text-sm text-gray-600">
+            <input
+                type="checkbox"
+                required
+                class="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#1447E6] focus:ring-[#1447E6]"
+            >
+            I agree to Terms &amp; Conditions
+        </label>
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
-
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
-
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
-        </div>
-
-        <div class="mt-4 flex gap-2">
-            <div class="flex items-center">
-                <input type="radio" value="customer" name="role" class="shrink-0 size-4 bg-transparent border-line-3 rounded-full shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none" id="hs-checked-radio"checked>
-                <label for="hs-checked-radio" class="text-sm ms-3 text-muted-foreground-1">Customer</label>
-            </div>
-            <div class="flex items-center">
-                <input type="radio" value="fotografer" name="role" class="shrink-0 size-4 bg-transparent border-line-3 rounded-full shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none" id="hs-default-radio" >
-                <label for="hs-default-radio" class="text-sm ms-3 text-muted-foreground-1">Fotografer</label>
-            </div>
-        </div>
-
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-gray-100 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500 dark:focus:ring-offset-gray-800" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
-            </a>
-
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
-            </x-primary-button>
-        </div>
+        <x-auth-button>Create account</x-auth-button>
     </form>
-</x-guest-layout>
+
+    <div class="my-6 flex items-center gap-3 text-xs font-medium text-gray-400">
+        <div class="h-px flex-1 bg-gray-200"></div>
+        OR
+        <div class="h-px flex-1 bg-gray-200"></div>
+    </div>
+
+    <button
+        type="button"
+        class="flex h-12 w-full items-center justify-center gap-2 rounded-lg border border-gray-300 text-sm font-medium text-gray-700 transition hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-[#1447E6]/40"
+    >
+        <svg class="h-4 w-4" viewBox="0 0 20 20" fill="currentColor" aria-hidden="true">
+            <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.3" fill="none"/>
+            <path d="m6.5 6.5 7 7m0-7-7 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
+        </svg>
+        Sign in with Google
+    </button>
+
+    <p class="mt-6 text-center text-sm text-gray-500">
+        sudah punya akun?
+        <a href="{{ route('login') }}" class="font-semibold text-[#1447E6] hover:underline">Sign in</a>
+    </p>
+</x-auth-layout>

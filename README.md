@@ -56,3 +56,24 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+## 2. Routes (already wired in `routes/auth.php` + `routes/web.php`)
+
+| Method | URI                          | Name                   | Middleware               |
+|--------|------------------------------|------------------------|---------------------------|
+| GET    | `/register`                  | `register`              | `guest`                   |
+| POST   | `/register`                  | —                        | `guest`                   |
+| GET    | `/login`                     | `login`                 | `guest`                   |
+| POST   | `/login`                     | —                        | `guest`                   |
+| GET    | `/forgot-password`           | `password.request`      | `guest`                   |
+| POST   | `/forgot-password`           | `password.email`        | `guest`                   |
+| GET    | `/reset-password/{token}`    | `password.reset`        | `guest`                   |
+| POST   | `/reset-password`            | `password.store`        | `guest`                   |
+| GET    | `/verify-email`              | `verification.notice`   | `auth`                    |
+| GET    | `/verify-email/{id}/{hash}`  | `verification.verify`   | `auth`, `signed`, `throttle:6,1` |
+| POST   | `/email/verification-notification` | `verification.send` | `auth`, `throttle:6,1` |
+| GET    | `/confirm-password`          | `password.confirm`      | `auth`                    |
+| POST   | `/confirm-password`          | —                        | `auth`                    |
+| POST   | `/logout`                    | `logout`                 | `auth`                    |
+| GET    | `/dashboard`                 | `dashboard`              | `auth`, `verified`        |
+| GET    | `/protected-action`          | `protected.action`       | `auth`, `password.confirm`|
