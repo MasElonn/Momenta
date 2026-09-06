@@ -2,6 +2,7 @@
     :title="'Create account — Momenta'"
     headline="Momenta Pilihan Terbaik untuk fotografer."
     subheadline="Daftar Untuk masuk"
+        image="{{ asset('images/wisuda.webp') }}"
 >
     <h1 class="mb-2 text-4xl font-bold text-[#1447E6]">Buat Akun</h1>
     <p class="mb-8 text-sm text-gray-500">Tambahkan dengan detail untuk membuat akun baru</p>

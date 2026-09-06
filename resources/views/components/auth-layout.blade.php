@@ -12,7 +12,7 @@
     <title>{{ $title ?? 'Momenta' }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
-<body class="antialiased bg-[#1447E6]">
+<body class="antialiased">
     <div class="flex min-h-screen w-full flex-col md:flex-row">
 
         {{-- Left brand / image panel --}}
@@ -25,14 +25,16 @@
                 Momenta
             </a>
 
-            {{-- Diagonally clipped photo --}}
+            {{-- Simple diagonally-clipped photo, same angle as the reference. --}}
             <div class="absolute inset-0 z-0" style="clip-path: polygon(0 18%, 100% 0%, 100% 82%, 0% 100%);">
                 <img
-                    src="{{ $image ?? asset('images/auth-hero.jpg') }}"
+                    src="{{ $image ?? asset('images/wisuda.jpg') }}"
                     alt=""
                     class="h-full w-full object-cover"
+                    onerror="this.remove()"
                 >
-                <div class="absolute inset-0 bg-[#1447E6]/10"></div>
+                {{-- Soft gradient so the headline stays readable over any photo. --}}
+                <div class="absolute inset-0 bg-gradient-to-t from-[#1447E6] via-[#1447E6]/20 to-transparent"></div>
             </div>
 
             <div class="relative z-20 max-w-md text-white">
@@ -46,7 +48,7 @@
         </div>
 
         {{-- Right form panel --}}
-        <div class="flex w-full flex-1 items-center justify-center bg-[#FDFFFF] px-6 py-12 sm:px-10">
+        <div class="flex w-full flex-1 items-center justify-center bg-[#FDFFFF] px-6 py-6 sm:px-10">
             <div class="w-full max-w-md">
                 {{ $slot }}
             </div>
