@@ -37,7 +37,7 @@
             value="{{ old($name, $value) }}"
             placeholder="{{ $placeholder }}"
             {{ $attributes->merge([
-                'class' => 'h-12 w-full rounded-lg border text-sm text-gray-900 placeholder-gray-400 transition
+                'class' => 'h-10 w-full rounded-lg border text-sm text-gray-900 placeholder-gray-400 transition
                             focus:outline-none focus:ring-2 focus:ring-[#1447E6]/40 focus:border-[#1447E6]
                             ' . ($errors->has($name) ? 'border-red-400' : 'border-gray-300') . '
                             ' . ($icon ? 'pl-11' : 'pl-4') . '
