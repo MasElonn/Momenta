@@ -1,9 +1,10 @@
 <?php
 
+use App\Http\Controllers\FotoController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\FotoController;
+use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -20,9 +21,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
             return view('CustomerDashboard');
         }
         return view('FotograferDashboard');
+
     })->name('UserDashboard');
 
+
 });
+Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates'])->middleware(['auth', 'verified']);
+
 
 Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 Route::post('/upload', [FotoController::class, 'store'])->name('foto.upload');
@@ -32,14 +37,20 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
+    //Route::get('/dashboard', [UserController::class, 'edit'])->name('dashboard.edit');
     Route::patch('/dashboard/profile', [UserController::class, 'updateProfile'])->name('dashboard.updateProfile');
     Route::patch('/dashboard/password', [UserController::class, 'updatePassword'])->name('dashboard.updatePassword');
     Route::delete('/dashboard', [UserController::class, 'destroy'])->name('dashboard.destroy');
-
-    Route::get('/protected-action', function () {
-        return redirect()->route('UserDashboard')
-            ->with('status', 'Password confirmed — sensitive action unlocked.');
-    })->middleware('password.confirm')->name('protected.action');
 });
+
+
+
+Route::get('/booking', function () {
+    return view('booking');
+})->name('booking');
+
+Route::get('/pembayaran', function () {
+    return view('pembayaran');
+})->name('pembayaran');
 
 require __DIR__.'/auth.php';
