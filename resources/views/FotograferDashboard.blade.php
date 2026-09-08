@@ -24,11 +24,11 @@
     <x-dashboard.sidebar :user="$user ?? Auth::user()" />
     <h2>Fotografer</h2>
     <main class="static flex-1 p-4 justify-between">
-        <x-dashboard.overview :user="$user ?? Auth::user()" />
-        <x-dashboard.booking />
-        <x-dashboard.gallery />
-        <x-dashboard.account :user="$user ?? Auth::user()" />
-        <x-dashboard.alert />
+        <x-fotografer.overview :user="$user ?? Auth::user()" />
+        <x-fotografer.booking />
+        <x-fotografer.gallery />
+        <x-fotografer.account :user="$user ?? Auth::user()" />
+        <x-fotografer.alert />
     </main>
 </div>
 
