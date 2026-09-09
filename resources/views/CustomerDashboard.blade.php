@@ -7,6 +7,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Dashboard</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
@@ -17,6 +18,11 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
+
+    <script src="https://unpkg.com/dropzone@6/dist/dropzone-min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@6/dist/dropzone.css" type="text/css" />
+
+
 </head>
 <body>
 
@@ -31,14 +37,16 @@
         <x-dashboard.alert />
 
 
-        <form action="{{Route('foto.upload')}}" method="post" enctype="multipart/form-data">
+        <form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
             @csrf
+            <input type="number" name="acara_id" id="acara_id" value="1" hidden>
 
-            <input type="file" name="images[]" id="images" required multiple accept="'image/*">
-            <input hidden type="text" name="acara_id" value="1">
-
-            <button type="submit">upload</button>
         </form>
+
+        <script>
+
+
+        </script>
     </main>
 
 </div>

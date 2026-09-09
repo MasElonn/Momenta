@@ -171,11 +171,14 @@
                 </div>
 
                 <div class="flex flex-col mt-3 gap-2">
-                    <button type="button" class="text-center py-3 px-full items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden focus:bg-primary-focus disabled:opacity-50 disabled:pointer-events-none">
+                    <a href="{{ route('pembayaran', ['id' => $transaksi->trans_id]) }}" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                        Bayar Sekarang
+                    </a>
+                    <button type="button" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
                         Contact
                     </button>
                     <button @click="modalConfirm = true"
-                        type="button" class="text-red-400 text-center py-3 px-full border-red-400 items-center gap-x-2 text-sm font-medium rounded-lg border hover:border-red-600 hover:text-red-600 focus:outline-hidden focus:text-red-400 disabled:opacity-50 disabled:pointer-events-none">
+                        type="button" class="text-red-400 text-center py-3 px-4 border-red-400 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border hover:border-red-600 hover:text-red-600 focus:outline-hidden focus:text-red-400 disabled:opacity-50 disabled:pointer-events-none">
                         Cancel Booking
                     </button>
                 </div>

@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\acara;
+use App\Models\Acara;
 use Illuminate\Http\Request;
 
 class AcaraController extends Controller
@@ -34,7 +34,7 @@ class AcaraController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(acara $acara)
+    public function show(Acara $acara)
     {
         //
     }
@@ -42,7 +42,7 @@ class AcaraController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(acara $acara)
+    public function edit(Acara $acara)
     {
         //
     }
@@ -50,7 +50,7 @@ class AcaraController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, acara $acara)
+    public function update(Request $request, Acara $acara)
     {
         //
     }
@@ -58,7 +58,7 @@ class AcaraController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(acara $acara)
+    public function destroy(Acara $acara)
     {
         //
     }

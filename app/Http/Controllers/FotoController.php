@@ -3,11 +3,20 @@
 namespace App\Http\Controllers;
 
 use App\Models\Foto;
+
+use App\Services\UploadR2Service;
+use App\Services\ChunkUploadService;
+
 use Illuminate\Http\Request;
-use Storage;
+use Illuminate\Support\Str;
 
 class FotoController extends Controller
 {
+
+    public function __construct(
+        protected ChunkUploadService $chunkUpload,
+        protected UploadR2Service $r2
+    ) {}
     /**
      * Display a listing of the resource.
      */
@@ -27,32 +36,41 @@ class FotoController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+
+
     public function store(Request $request)
     {
         $request->validate([
             'acara_id' => 'required',
-            'images' => 'required|array',
-            'images.*' => 'image|mimes:jpg,jpeg,png,webp',
+            'file' => 'required|file',
+            'dzuuid'=> 'required|string',
+            'dzchunkindex' => 'required|integer',
+            'dztotalchunkcount' => 'required|integer',
         ]);
 
-        $dir = "foto";
-        $acara_id = $request->acara_id;
+        $chunkIndex  = (int) $request->input('dzchunkindex');
+        $totalChunks = (int) $request->input('dztotalchunkcount');
+        $ext    = $request->file('file')->getClientOriginalExtension();
+        $fileId      = $request->input('dzuuid');
+        $acaraId     = $request->input('acara_id');
 
-        foreach ($request->file('images') as $index => $image) {
-            $ext = $image->getClientOriginalExtension();
+        $this->chunkUpload->saveChunk($request->file('file'), $fileId, $chunkIndex);
 
-            $filename = $acara_id . '-' . time() . '-' . $index . '.' . $ext;
-
-            $path = $image->storeAs($dir, $filename, 'r2');
-            $file_url = Storage::disk('r2')->url($path);
-
-            Foto::create([
-                'acara_id' => $acara_id,
-                'r2_bucket' => $dir,
-                'r2_key'    => $file_url,
-            ]);
+        if (!$this->chunkUpload->isLastChunk($totalChunks, $chunkIndex)) {
+            return response()->json(['success' => 'chunk_uploaded']);
         }
+        $fileName = $acaraId .'-'. now()->toDateString() . '-' .Str::Random(5) . '.' . $ext;
 
+        $dir = 'foto';
+        $fileUrl = $this->chunkUpload->mergeAndUpload($fileId, $fileName, $totalChunks, $dir);
+
+        $foto = Foto::create([
+            'acara_id'  => $acaraId,
+            'r2_bucket' => $dir,
+            'r2_key'    => $fileUrl,
+        ]);
+
+        return response()->json(['status' => 'success', 'foto' => $foto]);
     }
 
     /**
@@ -60,7 +78,7 @@ class FotoController extends Controller
      */
     public function show(string $id)
     {
-
+        //
     }
 
     /**
