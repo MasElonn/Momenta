@@ -1,11 +1,11 @@
-<x-auth-layout
+     <x-auth-layout
     :title="'Sign in — Momenta'"
     headline="Setiap acara punya ceritanya sendiri."
     subheadline="Masuk untuk akses fitur-fitur kami."
     image="{{ asset('images/wisuda2.webp') }}"
 >
     <h1 class="mb-1 text-2xl font-bold text-[#1447E6]">Selamat Datang!!</h1>
-    <p class="mb-5 text-sm text-gray-500">tolong masukan data akun dengan benar account.</p>
+    <p class="mb-5 text-sm text-gray-500">tolong masukan data akun dengan benar!</p>
 
     <x-auth-status :status="session('status')" />
 

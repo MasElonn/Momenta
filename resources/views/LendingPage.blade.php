@@ -4,41 +4,35 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Momenta — Galeri &amp; Booking Fotografer Acara Sekolah</title>
+<link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="scroll-smooth bg-page font-sans text-ink antialiased">
-
-{{-- NAV --}}
-<nav class="sticky top-0 z-50 border-b border-line bg-page/85 backdrop-blur">
-    <div class="mx-auto flex max-w-[1180px] items-center justify-between px-8 py-[18px]">
-        <div class="flex items-center gap-2.5 font-display text-xl font-bold text-navy">
-            <span class="relative h-[30px] w-[30px] flex-shrink-0 rounded-lg bg-brand">
-                <span
-                    class="absolute left-1/2 top-1/2 h-3 w-3 -translate-x-1/2 -translate-y-[46%] bg-surface"
-                    style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"
-                ></span>
-            </span>
-            Momenta
+<header class="sticky top-0 z-50 border-b border-line bg-page/85 backdrop-blur">
+    <nav class="mx-auto flex w-full max-w-[1180px] flex-wrap items-center justify-between gap-4 px-8 py-[14px] sm:flex-nowrap">
+        <div>
+            <img src="{{ asset('images/Logo.svg') }}" alt="Logo" width="100">
         </div>
 
-        <div class="hidden gap-9 text-[14.5px] font-medium text-ink-soft md:flex">
-            <a href="#cara-kerja" class="hover:text-navy">Cara Kerja</a>
-            <a href="#fitur" class="hover:text-navy">Fitur</a>
-            <a href="#harga" class="hover:text-navy">Paket</a>
+        <div class="flex flex-row items-center gap-5">
+            <a class="text-sm font-medium text-brand focus:outline-hidden" href="/" aria-current="page">Halaman Utama</a>
+            <a class="text-sm text-ink-soft hover:text-navy focus:outline-hidden" href="/kerja">Cara Kerja</a>
+            <a class="text-sm text-ink-soft hover:text-navy focus:outline-hidden" href="/fitur">Fitur</a>
+            <a class="text-sm text-ink-soft hover:text-navy focus:outline-hidden" href="/paket">Paket</a>
         </div>
 
-        <div class="flex items-center gap-3.5">
-            <a href="{{ url('/login') }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">
-                Masuk
-            </a>
-            <a href="{{ url('/dash') }}" class="inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-[10px] bg-brand px-[22px] py-[11px] text-[14.5px] font-semibold text-surface shadow-[0_8px_20px_-8px_rgba(20,71,230,0.55)] transition hover:-translate-y-px hover:bg-brand-dark">
+        <div class="inline-flex flex-wrap gap-2">
+            <a href="/dashboard" class="inline-flex items-center gap-x-1 rounded-lg border border-line px-6 py-1.5 text-sm font-medium text-navy transition hover:border-brand hover:text-brand focus:outline-hidden disabled:pointer-events-none disabled:opacity-50">
                 Dashboard
             </a>
+            <a href="/login" class="inline-flex items-center gap-x-2 rounded-lg border border-brand bg-brand px-6 py-1.5 text-sm font-normal text-surface transition hover:bg-brand-dark focus:outline-hidden disabled:pointer-events-none disabled:opacity-50">
+                Sign Up
+            </a>
         </div>
-    </div>
-</nav>
+    </nav>
+</header>
 
 {{-- HERO --}}
 <header class="px-8 pb-[60px] pt-[88px]">
@@ -58,11 +52,11 @@
             </p>
 
             <div class="mt-8 flex flex-wrap gap-3.5">
-                <a href="{{ url('/dash') }}" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-brand px-[22px] py-[11px] text-[14.5px] font-semibold text-surface shadow-[0_8px_20px_-8px_rgba(20,71,230,0.55)] transition hover:-translate-y-px hover:bg-brand-dark">
+                <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-brand px-[22px] py-[11px] text-[14.5px] font-semibold text-surface shadow-[0_8px_20px_-8px_rgba(20,71,230,0.55)] transition hover:-translate-y-px hover:bg-brand-dark">
                     Buka Dashboard
                 </a>
-                <a href="#" class="inline-flex items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">
-                    Daftar Gratis
+                <a href="/login" class="inline-flex items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">
+                    Daftar Untuk Booking
                 </a>
             </div>
         </div>
@@ -114,7 +108,7 @@
                     <div class="text-[11.5px] text-brand-soft/80">Paket Dipilih</div>
                     <div class="mt-0.5 font-display text-xl font-bold text-surface">Rp 750.000</div>
                 </div>
-                <a href="{{ url('/dash') }}" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-brand px-4 py-2.5 text-[13px] font-semibold text-surface transition hover:bg-brand-dark">
+                <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-brand px-4 py-2.5 text-[13px] font-semibold text-surface transition hover:bg-brand-dark">
                     Lihat Detail
                 </a>
             </div>
@@ -192,7 +186,7 @@
     </div>
 </section>
 
-{{-- HARGA --}}
+{{-- Paket --}}
 <section id="harga" class="border-y border-line bg-surface px-8 py-20">
     <div class="mx-auto max-w-[1180px]">
         <div class="mx-auto mb-12 max-w-[600px] text-center">
@@ -225,7 +219,7 @@
                         Galeri online 30 hari
                     </li>
                 </ul>
-                <a href="#" class="inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">Pilih Paket</a>
+                <a href="/dashboard" class="inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">Pilih Paket</a>
             </div>
 
             {{-- Paket Populer (featured) --}}
@@ -278,7 +272,7 @@
                         Galeri online tanpa batas
                     </li>
                 </ul>
-                <a href="#" class="inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">Pilih Paket</a>
+                <a href="/dashboard" class="inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">Pilih Paket</a>
             </div>
         </div>
     </div>
@@ -293,7 +287,7 @@
         </div>
         <div class="flex gap-3.5">
             <a href="#" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-brand px-[22px] py-[11px] text-[14.5px] font-semibold text-surface transition hover:bg-brand-dark">Daftar Sekarang</a>
-            <a href="{{ url('/dash') }}" class="inline-flex items-center justify-center gap-2 rounded-[10px] border border-brand-soft/30 px-[22px] py-[11px] text-[14.5px] font-semibold text-surface transition hover:border-brand-soft">Buka Dashboard</a>
+            <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center gap-2 rounded-[10px] border border-brand-soft/30 px-[22px] py-[11px] text-[14.5px] font-semibold text-surface transition hover:border-brand-soft">Buka Dashboard</a>
         </div>
     </div>
 </section>
@@ -302,18 +296,20 @@
 <footer class="px-8 pb-8 pt-12">
     <div class="mx-auto flex max-w-[1180px] flex-wrap items-center justify-between gap-4">
         <div class="flex items-center gap-2.5 font-display text-base font-bold text-navy">
-            <span class="relative h-6 w-6 flex-shrink-0 rounded-lg bg-brand">
                 <span
                     class="absolute left-1/2 top-1/2 h-2.5 w-2.5 -translate-x-1/2 -translate-y-[46%] bg-surface"
                     style="clip-path: polygon(50% 0%, 0% 100%, 100% 100%);"
                 ></span>
             </span>
-            Momenta
+             <div>
+            <img src="{{ asset('images/Logo.svg') }}" alt="Logo" width="100">
+        </div>
         </div>
         <div class="flex gap-7 text-[13.5px] text-ink-soft">
-            <a href="#cara-kerja" class="hover:text-navy">Cara Kerja</a>
-            <a href="#fitur" class="hover:text-navy">Fitur</a>
-            <a href="#harga" class="hover:text-navy">Harga</a>
+            <a href="/page" class="hover:text-navy">Halaman Utama</a>
+            <a href="/kerja" class="hover:text-navy">Cara Kerja</a>
+            <a href="/fitur" class="hover:text-navy">Fitur</a>
+            <a href="/paket" class="hover:text-navy">Paket</a>
         </div>
         <div class="text-[13px] text-ink-soft">© 2026 Momenta.</div>
     </div>
