@@ -13,13 +13,14 @@ return new class extends Migration
     {
         Schema::create('acara', function (Blueprint $table) {
             $table->id('acara_id');
-            $table->foreignId('trans_id')->constrained('transaksi','trans_id')->onDelete('cascade');
+            $table->string('trans_id');
+            $table->foreign('trans_id')->references('trans_id')->on('transaksi')->onDelete('cascade');
             $table->string('judul');
             $table->text('lokasi');
             $table->date('tanggal');
             $table->text('deskripsi');
             $table->time('jam');
-            $table->enum('status', ['upcoming', 'ongoing','completed'])->default('upcoming');
+            $table->enum('status', ['upcoming', 'ongoing', 'completed'])->default('upcoming');
             $table->timestamps();
         });
     }

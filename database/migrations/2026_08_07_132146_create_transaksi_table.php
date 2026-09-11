@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('transaksi', function (Blueprint $table) {
-            $table->id('trans_id');
+            $table->string('trans_id')->primary();
             $table->foreignId('customer_id')->constrained('users', 'user_id')->onDelete('cascade');
             $table->foreignId('paket_id')->constrained('paket', 'paket_id')->onDelete('cascade');
             $table->string('bukti_bucket')->nullable();

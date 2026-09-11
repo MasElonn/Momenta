@@ -11,6 +11,7 @@ class Acara extends Model
 {
     use HasFactory;
 
+    protected $table = 'acara';
     protected $primaryKey = 'acara_id';
     protected $fillable = [
         'trans_id',
@@ -18,6 +19,8 @@ class Acara extends Model
         'lokasi',
         'tanggal',
         'status',
+        'jam',
+        'deskripsi',
     ];
 
     protected $casts = [

@@ -12,7 +12,10 @@ class Transaksi extends Model
 {
     use HasFactory, Notifiable;
 
+    protected $table = 'transaksi';
     protected $primaryKey = 'trans_id';
+    public $incrementing = false;
+    protected $keyType = 'string';
 
     protected $fillable = [
         'customer_id',
@@ -23,6 +26,7 @@ class Transaksi extends Model
         'verified_at',
         'rejected_reason',
         'paid_at',
+        'trans_id',
     ];
     protected $casts = [
         'paid_at' => 'datetime',

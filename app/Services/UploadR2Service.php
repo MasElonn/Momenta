@@ -1,16 +1,17 @@
 <?php
 namespace App\Services;
 
+use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\File;
 
 class UploadR2Service
 {
-    public function upload(string $filePath, string $dir, ?string $filename = null): string
+    public function upload(UploadedFile|File|string $file, string $dir, ?string $filename = null): string
     {
-        $filename = $filename ?? basename($filePath);
+        $filename = $filename ?? basename($file);
 
-        $path = Storage::disk('r2')->putFileAs($dir, new File($filePath), $filename);
+        $path = Storage::disk('r2')->putFileAs($dir, $file, $filename);
 
         return Storage::disk('r2')->url($path);
     }

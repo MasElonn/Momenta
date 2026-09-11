@@ -30,7 +30,7 @@ document.addEventListener("DOMContentLoaded", () => {
                     myDropzone.processQueue();
                 }
             });
-            this.on("queuecomplete", () => alert("All files uploaded successfully!"));
+            this.on("queuecomplete", () => {window.location.reload();});
             this.on("sending", (file, xhr, formData) => {
                 const acaraId = document.querySelector('input[name="acara_id"]')?.value;
                 if (acaraId) formData.append("acara_id", acaraId);

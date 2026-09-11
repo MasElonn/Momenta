@@ -34,7 +34,7 @@
         <x-dashboard.booking />
         <x-dashboard.gallery />
         <x-dashboard.account :user="$user ?? Auth::user()" />
-        <x-dashboard.alert />
+        <x-alert />
 
 
         <form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
@@ -43,10 +43,7 @@
 
         </form>
 
-        <script>
 
-
-        </script>
     </main>
 
 </div>
