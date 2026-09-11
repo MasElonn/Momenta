@@ -4,7 +4,6 @@ use App\Http\Controllers\FotoController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UploadController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
@@ -13,6 +12,9 @@ Route::get('/', function () {
     return view('LendingPage');
 });
 
+Route::get('/login', function () {
+    return view('auth.login');
+});
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', function () {
@@ -29,19 +31,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
 Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates'])->middleware(['auth', 'verified']);
 
 
-Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
-Route::post('/upload', [FotoController::class, 'store'])->name('foto.upload');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::post('/upload', [FotoController::class, 'store'])->name('foto.upload');
 
     //Route::get('/dashboard', [UserController::class, 'edit'])->name('dashboard.edit');
     Route::patch('/dashboard/profile', [UserController::class, 'updateProfile'])->name('dashboard.updateProfile');
     Route::patch('/dashboard/password', [UserController::class, 'updatePassword'])->name('dashboard.updatePassword');
     Route::delete('/dashboard', [UserController::class, 'destroy'])->name('dashboard.destroy');
 });
+
+
+
+
 
 
 
@@ -54,3 +59,6 @@ Route::get('/pembayaran', function () {
 })->name('pembayaran');
 
 require __DIR__.'/auth.php';
+
+
+

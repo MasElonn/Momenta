@@ -24,7 +24,7 @@
                 <x-lucide-calendar class="w-5 h-5" />
                 My Booking
             </button>
-        
+            
 
             <button @click="tab = 'gallery', section = ''"
                     :class="tab === 'gallery' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
@@ -40,6 +40,7 @@
                 <x-lucide-user class="w-5 h-5" />
                 My Account
             </button>
+            
         </div>
 
         <form action="{{ route('logout') }}" method="POST" class="w-full">
