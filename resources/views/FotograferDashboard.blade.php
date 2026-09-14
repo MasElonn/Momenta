@@ -21,14 +21,15 @@
 <body>
 
 <div class="w-screen h-screen flex" x-data="{tab: '{{ old('tab', request('tab', 'overview')) }}', section: ''}">
-    <x-dashboard.sidebar :user="$user ?? Auth::user()" />
-    <h2>Fotografer</h2>
+    <x-fotografer.sidebar :user="$user ?? Auth::user()" />
     <main class="static flex-1 p-4 justify-between">
         <x-fotografer.overview :user="$user ?? Auth::user()" />
         <x-fotografer.booking />
         <x-fotografer.gallery />
+        <x-fotografer.event />
+        <x-fotografer.transaksi />
         <x-fotografer.account :user="$user ?? Auth::user()" />
-        <x-fotografer.alert />
+        <x-.alert />
     </main>
 </div>
 

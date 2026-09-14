@@ -30,7 +30,21 @@
                     :class="tab === 'gallery' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
                     class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
                 <x-lucide-image class="w-5 h-5" />
-                My Gallery
+                Gallery / foto
+            </button>
+
+            <button @click="tab = 'event', section = ''"
+                    :class="tab === 'event' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
+                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
+                <x-lucide-image class="w-5 h-5" />
+                Event
+            </button>
+
+            <button @click="tab = 'Transaksi', section = ''"
+                    :class="tab === 'Transaksi' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
+                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
+                <x-lucide-image class="w-5 h-5" />
+                Transaksi
             </button>
             <br>
 
@@ -40,7 +54,6 @@
                 <x-lucide-user class="w-5 h-5" />
                 My Account
             </button>
-
         </div>
 
         <form action="{{ route('logout') }}" method="POST" class="w-full">
