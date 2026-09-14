@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\FotoController;
+use App\Http\Controllers\FotograferController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
@@ -9,7 +10,7 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('LendingPage');
+    return view('LandingPage');
 });
 
 Route::get('/login', function () {
@@ -24,13 +25,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         }
         return view('FotograferDashboard');
 
-    })->name('UserDashboard');
+    })->name('dashboard');
 
 
 });
-Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates'])->middleware(['auth', 'verified']);
-
-
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -42,21 +40,17 @@ Route::middleware('auth')->group(function () {
     Route::patch('/dashboard/profile', [UserController::class, 'updateProfile'])->name('dashboard.updateProfile');
     Route::patch('/dashboard/password', [UserController::class, 'updatePassword'])->name('dashboard.updatePassword');
     Route::delete('/dashboard', [UserController::class, 'destroy'])->name('dashboard.destroy');
+
+    Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
+
+    Route::get('/booking/{id}', [FotograferController::class, 'show'])->name('booking.show');
+
+    route::post('/booking/', [TransaksiController::class, 'create'])->name('booking.create');
+    route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
+    route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
 });
 
 
-
-
-
-
-
-Route::get('/booking', function () {
-    return view('booking');
-})->name('booking');
-
-Route::get('/pembayaran', function () {
-    return view('pembayaran');
-})->name('pembayaran');
 
 require __DIR__.'/auth.php';
 

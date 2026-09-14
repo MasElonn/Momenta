@@ -57,20 +57,21 @@ class FotoController extends Controller
         $this->chunkUpload->saveChunk($request->file('file'), $fileId, $chunkIndex);
 
         if (!$this->chunkUpload->isLastChunk($totalChunks, $chunkIndex)) {
-            return response()->json(['success' => 'chunk_uploaded']);
+            session()->flash('success', 'All files uploaded successfully!');
+
         }
         $fileName = $acaraId .'-'. now()->toDateString() . '-' .Str::Random(5) . '.' . $ext;
 
         $dir = 'foto';
         $fileUrl = $this->chunkUpload->mergeAndUpload($fileId, $fileName, $totalChunks, $dir);
 
-        $foto = Foto::create([
+       Foto::create([
             'acara_id'  => $acaraId,
             'r2_bucket' => $dir,
             'r2_key'    => $fileUrl,
         ]);
 
-        return response()->json(['status' => 'success', 'foto' => $foto]);
+        return response()->json(['success' => 'true']);
     }
 
     /**
