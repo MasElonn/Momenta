@@ -5,6 +5,7 @@ use App\Models\Acara;
 use App\Models\Transaksi;
 use App\Models\Paket;
 
+use App\Models\User;
 use App\Services\UploadR2Service;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
@@ -81,6 +82,18 @@ class TransaksiController extends Controller
         return redirect('pembayaran');
 
 
+    }
+    public function show(string $id)
+    {
+        $fotografer = User::where('role', 'fotografer')->where('user_id', $id)->firstOrFail();
+        $fid = $fotografer->user_id;
+        $fname = $fotografer->name;
+
+        $pakets = Paket::where('fotografer_id', $fid)->get();
+        return view('booking',
+            ['pakets' => $pakets,
+                'fname' => $fname,
+                'fid' => $fid,]);
     }
 
 }

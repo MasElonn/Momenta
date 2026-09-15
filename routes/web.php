@@ -29,6 +29,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 
 });
+Route::get('/finish', function () {
+    return view('Finish');
+});
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -43,7 +46,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
-    Route::get('/booking/{id}', [FotograferController::class, 'show'])->name('booking.show');
+    Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
 
     route::post('/booking/', [TransaksiController::class, 'create'])->name('booking.create');
     route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
