@@ -29,12 +29,9 @@ document.addEventListener('DOMContentLoaded', function () {
         revealEls.forEach(function (el) { el.classList.add('is-visible'); });
     }
 
-    // --- Highlight link navbar sesuai posisi scroll ---
-    // (Pakai posisi scroll langsung, bukan IntersectionObserver threshold,
-    // karena section yang tinggi bisa bikin threshold nggak pernah kepenuhan
-    // dan highlight "nyangkut" di section sebelumnya.)
+    // --- Highlight link navbar sesuai section yang lagi keliatan ---
     var navLinks = document.querySelectorAll('[data-nav-link]');
-    var sections = ['beranda', 'cara-kerja', 'fitur', 'harga']
+    var sections = ['cara-kerja', 'fitur', 'harga']
         .map(function (id) { return document.getElementById(id); })
         .filter(Boolean);
 
@@ -47,31 +44,13 @@ document.addEventListener('DOMContentLoaded', function () {
         });
     }
 
-    if (sections.length) {
-        var navbarOffset = 100; // tinggi navbar + sedikit buffer
-
-        var updateActiveSection = function () {
-            var scrollPos = window.scrollY + navbarOffset;
-            var current = sections[0];
-
-            sections.forEach(function (sec) {
-                if (sec.offsetTop <= scrollPos) current = sec;
+    if ('IntersectionObserver' in window && sections.length) {
+        var navObserver = new IntersectionObserver(function (entries) {
+            entries.forEach(function (entry) {
+                if (entry.isIntersecting) setActive(entry.target.id);
             });
+        }, { threshold: 0.4 });
 
-            setActive(current.id);
-        };
-
-        var ticking = false;
-        window.addEventListener('scroll', function () {
-            if (!ticking) {
-                window.requestAnimationFrame(function () {
-                    updateActiveSection();
-                    ticking = false;
-                });
-                ticking = true;
-            }
-        }, { passive: true });
-
-        updateActiveSection();
+        sections.forEach(function (sec) { navObserver.observe(sec); });
     }
 });

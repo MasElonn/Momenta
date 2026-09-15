@@ -1,3 +1,4 @@
+@import "./animation.css";
 @import "../../node_modules/preline/variants.css";
 @import "../../node_modules/preline/css/themes/theme.css";
 @import "tailwindcss";

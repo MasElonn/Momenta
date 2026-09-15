@@ -1,0 +1,124 @@
+/* ==========================================================================
+   Momenta — Animasi landing page
+   File ini isinya CSS biasa (bukan Tailwind), jadi dipisah dari app.css
+   supaya nggak ribet. Tinggal import di baris paling atas resources/css/app.css:
+
+   @import "./momenta-animations.css";
+
+   (taruh file ini di folder yang sama dengan app.css, misal resources/css/)
+   ========================================================================== */
+
+html {
+    scroll-padding-top: 84px; /* biar section nggak ketutup navbar sticky pas discroll */
+}
+
+@keyframes momenta-fade-up {
+    from { opacity: 0; transform: translateY(28px); }
+    to   { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes momenta-float {
+    0%, 100% { transform: translateY(0); }
+    50%      { transform: translateY(-8px); }
+}
+
+@keyframes momenta-pulse-dot {
+    0%, 100% { box-shadow: 0 0 0 0 rgba(20, 71, 230, 0.35); }
+    50%      { box-shadow: 0 0 0 6px rgba(20, 71, 230, 0); }
+}
+
+/* Elemen yang "reveal" saat masuk viewport (dikontrol oleh momenta-animations.js) */
+.reveal {
+    opacity: 0;
+    transform: translateY(28px);
+    transition: opacity .7s cubic-bezier(.22, .61, .36, 1), transform .7s cubic-bezier(.22, .61, .36, 1);
+    will-change: opacity, transform;
+}
+.reveal.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger otomatis untuk grid card supaya kelihatan bergantian, bukan bebarengan */
+.reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(24px);
+    transition: opacity .6s cubic-bezier(.22, .61, .36, 1), transform .6s cubic-bezier(.22, .61, .36, 1);
+}
+.reveal-stagger.is-visible > *:nth-child(1) { transition-delay: .05s; }
+.reveal-stagger.is-visible > *:nth-child(2) { transition-delay: .15s; }
+.reveal-stagger.is-visible > *:nth-child(3) { transition-delay: .25s; }
+.reveal-stagger.is-visible > *:nth-child(4) { transition-delay: .35s; }
+.reveal-stagger.is-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Hero masuk otomatis begitu halaman dimuat (tanpa nunggu scroll) */
+.hero-in {
+    animation: momenta-fade-up .8s cubic-bezier(.22, .61, .36, 1) both;
+}
+.hero-in.hero-in-delay-1 { animation-delay: .12s; }
+.hero-in.hero-in-delay-2 { animation-delay: .22s; }
+
+/* Kartu booking di hero melayang pelan */
+.float-card {
+    animation: momenta-float 5s ease-in-out infinite;
+}
+
+/* Badge status "Terjadwal" berdenyut halus */
+.pulse-badge {
+    animation: momenta-pulse-dot 2.2s ease-out infinite;
+}
+
+/* Card feature/paket sedikit terangkat & shadow lebih tebal saat hover */
+.lift-card {
+    transition: transform .25s ease, box-shadow .25s ease, border-color .25s ease;
+}
+.lift-card:hover {
+    transform: translateY(-6px);
+    box-shadow: 0 20px 40px -24px rgba(11, 42, 140, 0.35);
+}
+
+/* Kartu paket populer sudah punya scale bawaan (scale-[1.03]) dari Tailwind,
+   jadi hover-nya digabung supaya nggak "reset" ke ukuran normal */
+.lift-card-featured {
+    transition: transform .25s ease, box-shadow .25s ease;
+}
+.lift-card-featured:hover {
+    transform: translateY(-6px) scale(1.03);
+    box-shadow: 0 26px 50px -22px rgba(11, 42, 140, 0.55);
+}
+
+/* Underline animasi buat link navbar */
+.nav-link {
+    position: relative;
+}
+.nav-link::after {
+    content: "";
+    position: absolute;
+    left: 0;
+    bottom: -4px;
+    width: 0;
+    height: 2px;
+    background: currentColor;
+    transition: width .25s ease;
+}
+.nav-link:hover::after,
+.nav-link.is-active::after {
+    width: 100%;
+}
+
+/* Hormati preferensi user yang sensitif animasi */
+@media (prefers-reduced-motion: reduce) {
+    .reveal,
+    .reveal-stagger > *,
+    .hero-in,
+    .float-card,
+    .pulse-badge {
+        animation: none !important;
+        transition: none !important;
+        opacity: 1 !important;
+        transform: none !important;
+    }
+}
