@@ -1,4 +1,3 @@
-```php
 <x-auth-layout
     :title="'Sign in — Momenta'"
     headline="Setiap acara punya ceritanya sendiri."
