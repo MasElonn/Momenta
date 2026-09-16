@@ -79,7 +79,7 @@ class FotoController extends Controller
      */
     public function show(string $id)
     {
-        //
+        $fotoAcara = Foto::where('acara_id', $id);
     }
 
     /**
@@ -103,6 +103,6 @@ class FotoController extends Controller
      */
     public function destroy(string $id)
     {
-        //
+
     }
 }

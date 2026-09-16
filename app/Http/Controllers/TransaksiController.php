@@ -7,6 +7,7 @@ use App\Models\Paket;
 
 use App\Models\User;
 use App\Services\UploadR2Service;
+use Faker\Core\Number;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
@@ -20,7 +21,12 @@ class TransaksiController extends Controller
     {
     return view('pembayaran');
     }
+
     public function upload(Request $request){
+
+        $request->validate([
+           'bukti' => 'required|file|image|mimes:jpeg,png,jpg|max:3080',
+        ]);
 
         $file = $request->file('bukti');
         $filename = $file->getClientOriginalName();
@@ -36,8 +42,9 @@ class TransaksiController extends Controller
                 'bukti_key' => $upload,
                 'status' => 'paid'
             ]);
+            return redirect('/finish');
         }
-        return redirect()->back();
+        return redirect('/');
 
     }
 
@@ -78,6 +85,9 @@ class TransaksiController extends Controller
             'trans_id' => $trans_id,
             'total_harga'=> $total_harga,
             'status' => Transaksi::where('trans_id', $trans_id)->first()->status,
+            'paket' => Paket::where('paket_id', $paket_id)->first()->judul,
+            'date_time' => $request->tanggal . ', ' . $request->jam,
+            'lokasi' => $request->lokasi,
         ]);
         return redirect('pembayaran');
 
@@ -90,11 +100,12 @@ class TransaksiController extends Controller
         $fname = $fotografer->name;
 
         $pakets = Paket::where('fotografer_id', $fid)->get();
+
         return view('booking',
             ['pakets' => $pakets,
                 'fname' => $fname,
-                'fid' => $fid,]);
-                
+                'fid' => $fid,
+            ]);
     }
 
 }
