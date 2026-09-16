@@ -1,13 +1,15 @@
 <?php
 
 use App\Http\Controllers\FotoController;
-use App\Http\Controllers\FotograferController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
+
+
+
 
 Route::get('/', function () {
     return view('LandingPage');
@@ -52,7 +54,6 @@ Route::middleware('auth')->group(function () {
     route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
     route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
 });
-
 
 
 require __DIR__.'/auth.php';
