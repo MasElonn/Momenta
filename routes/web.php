@@ -1,7 +1,6 @@
 <?php
 
 use App\Http\Controllers\FotoController;
-use App\Http\Controllers\FotograferController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
