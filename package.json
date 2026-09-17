@@ -17,6 +17,7 @@
         "vite": "^8.0.0"
     },
     "dependencies": {
+        "@alpinejs/persist": "^3.17.3",
         "@preline/remove-element": "^5.0.0",
         "dropzone": "^6.2.0",
         "leaflet": "^1.9.4",

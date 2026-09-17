@@ -1,4 +1,4 @@
-@props(['user' => Auth::user()])
+@props(['user' => Auth::user(), 'transaksis'])
 
 <div x-show="tab === 'overview'">
     <h1 class="pt-5 text-4xl font-semibold">Hello, {{ $user->name ?? Auth::user()->name }}!</h1>
@@ -8,7 +8,7 @@
         <div class="flex-auto w-full p-2">
             <h2 class="py-2 text-xl font-semibold">Bookings</h2>
 
-            @foreach(\App\Models\Transaksi::with('acara', 'paket')->where('customer_id', Auth::id())->get() as $transaksi)
+            @foreach($transaksis as $transaksi)
                 @if($transaksi->acara)
                     @php($acara = $transaksi->acara)
 
@@ -69,6 +69,7 @@
                     </div> <!-- Closed card wrapper -->
                 @endif
             @endforeach
+            {{$transaksis->links('vendor.pagination.preline')}}
         </div> <!-- Closed left column (flex-auto w-full) outside foreach -->
 
         <div class="w-70 flex-auto p-2">

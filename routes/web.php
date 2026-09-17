@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
@@ -8,9 +9,6 @@ use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
-
-
-
 Route::get('/', function () {
     return view('LandingPage');
 });
@@ -18,19 +16,19 @@ Route::get('/', function () {
 Route::get('/login', function () {
     return view('auth.login');
 });
-Route::middleware(['auth', 'verified'])->group(function () {
 
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         $role = Auth::user()->role;
-        if ($role == 'customer') {
-            return view('CustomerDashboard');
+
+        if ($role === 'customer') {
+            return app(DashboardController::class)->index();
         }
+
         return view('FotograferDashboard');
-
     })->name('dashboard');
-
-
 });
+
 Route::get('/finish', function () {
     return view('Finish');
 });
@@ -41,7 +39,6 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/upload', [FotoController::class, 'store'])->name('foto.upload');
 
-    //Route::get('/dashboard', [UserController::class, 'edit'])->name('dashboard.edit');
     Route::patch('/dashboard/profile', [UserController::class, 'updateProfile'])->name('dashboard.updateProfile');
     Route::patch('/dashboard/password', [UserController::class, 'updatePassword'])->name('dashboard.updatePassword');
     Route::delete('/dashboard', [UserController::class, 'destroy'])->name('dashboard.destroy');
@@ -49,14 +46,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
     Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
-
-    route::post('/booking/', [TransaksiController::class, 'create'])->name('booking.create');
-    route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
-    route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
+    Route::post('/booking', [TransaksiController::class, 'create'])->name('booking.create');
+    Route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
+    Route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
 });
 
-
 require __DIR__.'/auth.php';
-
-
-

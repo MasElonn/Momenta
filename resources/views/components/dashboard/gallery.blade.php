@@ -6,12 +6,12 @@
         </div>
 
         <div class="space-y-4">
-            @foreach(\App\Models\Transaksi::with('acara', 'paket')->where('customer_id', Auth::id())->get() as $transaksi)
+            @foreach($transaksis as $transaksi)
                 @if($transaksi->acara)
                     @php($acara = $transaksi->acara)
 
                     <div @click="section = 'gallery'"
-                         class="w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer hover:border-gray-300 transition-colors">
+                         class="mb-4 w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer hover:border-gray-300 transition-colors">
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
                             <div class="flex items-center gap-2">
                                 <x-lucide-calendar-1 class="w-5 h-5" />
@@ -54,6 +54,7 @@
                 @endif
             @endforeach
         </div>
+        {{$transaksis->links('vendor.pagination.preline')}}
     </div> <!-- Closed list section -->
 
     <div x-show="section === 'gallery'">
