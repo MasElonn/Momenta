@@ -75,13 +75,13 @@
         <div class="w-70 flex-auto p-2">
             <h2 class="py-2 text-xl font-semibold">Gallery</h2>
             <div class="w-full h-40 rounded-lg">
-                <img class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
+                <img loading="lazy" class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
             </div>
             <div class="mt-2 shadow w-full h-40 rounded-lg">
-                <img class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
+                <img loading="lazy" class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
             </div>
             <div class="mt-2 shadow w-full h-40 rounded-lg">
-                <img class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
+                <img loading="lazy" class="rounded-lg" src="https://picsum.photos/210/160" alt="foto">
             </div>
         </div>
     </div>

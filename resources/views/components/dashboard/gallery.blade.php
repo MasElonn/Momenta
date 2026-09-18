@@ -1,4 +1,4 @@
-<div x-show="tab === 'gallery'" x-data="{ modalOpen: false, selectedImage: null }" class="space-y-6">
+<div x-show="tab === 'gallery'"  class="space-y-6">
     <div x-show="section !== 'gallery'">
         <div class="flex flex-col my-3 mb-4">
             <span class="text-2xl font-semibold">My Gallery</span>
@@ -83,107 +83,13 @@
             </button>
         </div>
 
-        <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-            <div class="break-inside-avoid relative group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300">
-                <img src="https://picsum.photos/400/600?random=1" alt="Session Photo" loading="lazy" class="w-full h-auto object-cover block">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-between">
-                    <div class="flex justify-end gap-2">
-                        <button class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-download class="w-4 h-4" />
-                        </button>
-                        <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-trash-2 class="w-4 h-4" />
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-end text-white">
-                        <button @click="modalOpen = true; selectedImage = 'https://picsum.photos/800/1200?random=1'"
-                                class="text-xs bg-white text-gray-800 font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors shadow">
-                            View
-                        </button>
-                    </div>
-                </div>
-            </div>
+        <div class="max-h-screen overflow-y-auto pr-2 ">
 
-            <div class="break-inside-avoid relative group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300">
-                <img src="https://picsum.photos/400/300?random=2" alt="Session Photo" loading="lazy" class="w-full h-auto object-cover block">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-between">
-                    <div class="flex justify-end gap-2">
-                        <button class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-download class="w-4 h-4" />
-                        </button>
-                        <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-trash-2 class="w-4 h-4" />
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-end text-white">
-                        <button @click="modalOpen = true; selectedImage = 'https://picsum.photos/1200/800?random=2'"
-                                class="text-xs bg-white text-gray-800 font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors shadow">
-                            View
-                        </button>
-                    </div>
-                </div>
-            </div>
+            <livewire:gallery-pinterest />
 
-            <div class="break-inside-avoid relative group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300">
-                <img src="https://picsum.photos/400/500?random=3" alt="Session Photo" loading="lazy" class="w-full h-auto object-cover block">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-between">
-                    <div class="flex justify-end gap-2">
-                        <button class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-download class="w-4 h-4" />
-                        </button>
-                        <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-trash-2 class="w-4 h-4" />
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-end text-white">
-                        <button @click="modalOpen = true; selectedImage = 'https://picsum.photos/800/1000?random=3'"
-                                class="text-xs bg-white text-gray-800 font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors shadow">
-                            View
-                        </button>
-                    </div>
-                </div>
-            </div>
-
-            <div class="break-inside-avoid relative group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300">
-                <img src="https://picsum.photos/400/700?random=4" alt="Session Photo" loading="lazy" class="w-full h-auto object-cover block">
-                <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-between">
-                    <div class="flex justify-end gap-2">
-                        <button class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-download class="w-4 h-4" />
-                        </button>
-                        <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-trash-2 class="w-4 h-4" />
-                        </button>
-                    </div>
-                    <div class="flex items-center justify-end text-white">
-                        <button @click="modalOpen = true; selectedImage = 'https://picsum.photos/800/1400?random=4'"
-                                class="text-xs bg-white text-gray-800 font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors shadow">
-                            View
-                        </button>
-                    </div>
-                </div>
-            </div>
         </div>
 
-        <div x-show="modalOpen"
-             x-transition:enter="transition ease-out duration-300"
-             x-transition:enter-start="opacity-0"
-             x-transition:enter-end="opacity-100"
-             x-transition:leave="transition ease-in duration-200"
-             x-transition:leave-start="opacity-100"
-             x-transition:leave-end="opacity-0"
-             @keydown.escape.window="modalOpen = false"
-             class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-             x-cloak>
-            <div @click.away="modalOpen = false" class="relative max-w-4xl max-h-[90vh] bg-white rounded-2xl overflow-hidden shadow-2xl flex flex-col">
-                <button @click="modalOpen = false" class="absolute top-4 right-4 z-10 p-2 bg-black/50 hover:bg-black/70 text-white rounded-full transition-colors">
-                    <x-lucide-x class="w-5 h-5" />
-                </button>
 
-                <div class="overflow-auto max-h-[85vh]">
-                    <img :src="selectedImage" alt="Expanded view" class="w-full h-auto object-contain">
-                </div>
-            </div>
-        </div>
     </div>
 </div>
+

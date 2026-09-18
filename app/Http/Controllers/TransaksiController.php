@@ -2,6 +2,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Acara;
+use App\Models\Foto;
 use App\Models\Transaksi;
 use App\Models\Paket;
 
@@ -106,6 +107,15 @@ class TransaksiController extends Controller
                 'fname' => $fname,
                 'fid' => $fid,
             ]);
+    }
+    public function destroy(string $id){
+        $acara_id = Acara::where('trans_id', $id)->first()->acara_id;
+
+        $acara = Acara::where('trans_id', $id)->firstOrFail();
+        $foto = Foto::where('acara_id', $acara_id)->firstOrFail();
+        $transaksi = Transaksi::where('trans_id', $id)->firstOrFail();
+
+        $transaksi->delete();
     }
 
 }

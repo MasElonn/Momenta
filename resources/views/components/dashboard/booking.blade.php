@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="flex items-start gap-4">
-                        <img class="rounded-lg w-25 h-25" src="https://picsum.photos/150/150" alt="gambar">
+                        <img class="rounded-lg w-25 h-25" loading="lazy" src="https://picsum.photos/150/150" alt="gambar">
 
                         <div class="flex-1">
                             <div class="flex items-start justify-between">
@@ -118,7 +118,7 @@
                                     </div>
                                 </div>
 
-                                <div id="map-{{$acara->acara_id}}" style="height: 400px" class="map rounded-xl w-full"></div>
+                                <div id="map-{{$acara->acara_id}}" style="height: 400px; z-index: 1" class="map rounded-xl w-full"></div>
                                 <script>
                                     document.addEventListener('DOMContentLoaded', () => {
                                         fetch('/get-coordinates', {

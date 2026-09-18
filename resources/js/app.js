@@ -1,11 +1,10 @@
 import 'preline';
 
-import Alpine from 'alpinejs'
-import persist from '@alpinejs/persist'
+import intersect from '@alpinejs/intersect'
 
-Alpine.plugin(persist)
-window.Alpine = Alpine
-Alpine.start()
+document.addEventListener('livewire:init', () => {
+    Alpine.plugin(intersect)
+})
 
 import HSRemoveElement from "@preline/remove-element/non-auto";
 HSRemoveElement.autoInit();

@@ -32,7 +32,7 @@
 
     <x-dashboard.sidebar :user="$user ?? Auth::user()" />
 
-    <main class="static flex-1 p-4 justify-between">
+    <main class="static flex-1 p-4 justify-between overflow-y-auto">
         <x-dashboard.overview :user="$user ?? Auth::user()" :transaksis="$transaksis"/>
         <x-dashboard.booking  :transaksis="$transaksis"/>
         <x-dashboard.gallery  :transaksis="$transaksis"/>
@@ -40,11 +40,13 @@
         <x-alert />
 
 
-        {{--<form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
+        <form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
             @csrf
             <input type="number" name="acara_id" id="acara_id" value="1" hidden>
 
-        </form>--}}
+        </form>
+
+
 
 
     </main>

@@ -23,9 +23,9 @@ class ChunkUploadService
 
     }
 
-    public function mergeAndUpload($fileId, $fileName, $totalChunks, $dir): string
+    public function merge(string $fileId, int $totalChunks): string
     {
-        $finalPath = storage_path('app/' . $fileId . '_' . $fileName);
+        $finalPath = storage_path('app/' . $fileId . '_merged');
         $file = fopen($finalPath, 'wb');
 
         for ($i = 0; $i < $totalChunks; $i++) {
@@ -35,10 +35,21 @@ class ChunkUploadService
                 stream_copy_to_stream($chunk, $file);
                 fclose($chunk);
                 @unlink($chunkPath);
+            } else {
+                fclose($file);
+                @unlink($finalPath);
+                throw new \RuntimeException("Missing chunk {$i} for file {$fileId}");
             }
         }
 
         fclose($file);
+
+        return $finalPath;
+    }
+
+    public function mergeAndUpload($fileId, $fileName, $totalChunks, $dir): string
+    {
+        $finalPath = $this->merge($fileId, $totalChunks);
 
         $fileUrl = $this->r2->upload($finalPath, $dir, $fileName);
 

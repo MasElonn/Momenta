@@ -10,6 +10,9 @@ use App\Services\ChunkUploadService;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
+use Intervention\Image\Laravel\Facades\Image;
+
+
 class FotoController extends Controller
 {
 
@@ -40,38 +43,60 @@ class FotoController extends Controller
 
     public function store(Request $request)
     {
+
+        set_time_limit(0);
         $request->validate([
             'acara_id' => 'required',
             'file' => 'required|file',
-            'dzuuid'=> 'required|string',
+            'dzuuid' => 'required|string',
             'dzchunkindex' => 'required|integer',
             'dztotalchunkcount' => 'required|integer',
         ]);
 
         $chunkIndex  = (int) $request->input('dzchunkindex');
         $totalChunks = (int) $request->input('dztotalchunkcount');
-        $ext    = $request->file('file')->getClientOriginalExtension();
+        $ext         = $request->file('file')->getClientOriginalExtension();
         $fileId      = $request->input('dzuuid');
         $acaraId     = $request->input('acara_id');
 
         $this->chunkUpload->saveChunk($request->file('file'), $fileId, $chunkIndex);
 
         if (!$this->chunkUpload->isLastChunk($totalChunks, $chunkIndex)) {
-            session()->flash('success', 'All files uploaded successfully!');
-
+            return response()->json(['success' => true]);
         }
-        $fileName = $acaraId .'-'. now()->toDateString() . '-' .Str::Random(5) . '.' . $ext;
 
-        $dir = 'foto';
-        $fileUrl = $this->chunkUpload->mergeAndUpload($fileId, $fileName, $totalChunks, $dir);
+        $fileName = $acaraId . '-' . now()->toDateString() . '-' . Str::random(5) . '.' . $ext;
+        $dir = 'foto/' . $acaraId;
 
-       Foto::create([
-            'acara_id'  => $acaraId,
-            'r2_bucket' => $dir,
-            'r2_key'    => $fileUrl,
+
+        $mergedPath = $this->chunkUpload->merge($fileId, $totalChunks);
+
+        $fileUrl = $this->r2->upload($mergedPath, $dir, $fileName);
+
+        $thumbUrl = null;
+
+            $thumbName = 'thumb-' . $fileName;
+            $thumbPath = storage_path('app/' . $fileId . '_thumb_' . $thumbName);
+
+        Image::decode($mergedPath)
+            ->scale(width: 400)
+            ->save($thumbPath);
+
+            $thumbUrl = $this->r2->upload($thumbPath, $dir . '/thumbnails', $thumbName);
+
+            @unlink($thumbPath);
+
+
+        @unlink($mergedPath);
+
+        Foto::create([
+            'acara_id'      => $acaraId,
+            'r2_dir'     => $dir,
+            'r2_url'        => $fileUrl,
+            'thumbnail_url' => $thumbUrl,
         ]);
 
-        return response()->json(['success' => 'true']);
+        return response()->json(['success' => true]);
     }
 
     /**
