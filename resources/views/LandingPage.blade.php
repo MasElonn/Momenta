@@ -298,11 +298,11 @@
         <div class="flex items-center gap-2.5 font-display text-base font-bold text-navy">
             <img src="{{ asset('images/Logo.svg') }}" alt="Logo" width="100">
         </div>
-        <div class="flex gap-7 text-[13.5px] text-ink-soft">
-            <a href="/page" class="hover:text-navy">Halaman Utama</a>
-            <a href="/kerja" class="hover:text-navy">Cara Kerja</a>
-            <a href="/fitur" class="hover:text-navy">Fitur</a>
-            <a href="/paket" class="hover:text-navy">Paket</a>
+        <div class="flex flex-row items-center gap-5">
+            <a class="nav-link text-sm font-medium text-brand focus:outline-hidden" href="#beranda" data-nav-link aria-current="page">Beranda</a>
+            <a class="nav-link text-sm text-ink-soft hover:text-navy focus:outline-hidden" href="#cara-kerja" data-nav-link>Cara Kerja</a>
+            <a class="nav-link text-sm text-ink-soft hover:text-navy focus:outline-hidden" href="#fitur" data-nav-link>Fitur</a>
+            <a class="nav-link text-sm text-ink-soft hover:text-navy focus:outline-hidden" href="#harga" data-nav-link>Paket</a>
         </div>
         <div class="text-[13px] text-ink-soft">© 2026 Momenta.</div>
     </div>

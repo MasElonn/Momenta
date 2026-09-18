@@ -1,12 +1,15 @@
+<?php
 use App\Models\Acara;
 use Illuminate\Http\Request;
 
-public function update(Request $request, $id)
+class BookingController extends Controller
 {
-    $request->validate([
-        'tanggal' => 'required|date',
-        'status' => 'required|in:upcoming,ongoing,completed',
-    ]);
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'tanggal' => 'required|date',
+            'status' => 'required|in:upcoming,ongoing,completed',
+        ]);
 
     $acara = Acara::findOrFail($id);
 
@@ -16,4 +19,5 @@ public function update(Request $request, $id)
     ]);
 
     return redirect()->back()->with('success', 'Booking berhasil diperbarui.');
+}
 }
