@@ -1,9 +1,11 @@
 import 'preline';
 
-import Alpine from 'alpinejs';
-window.Alpine = Alpine;
+import Alpine from 'alpinejs'
+import persist from '@alpinejs/persist'
 
-Alpine.start();
+Alpine.plugin(persist)
+window.Alpine = Alpine
+Alpine.start()
 
 import HSRemoveElement from "@preline/remove-element/non-auto";
 HSRemoveElement.autoInit();

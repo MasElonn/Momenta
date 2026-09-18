@@ -5,13 +5,13 @@
             <span class="text-gray-500">Manage All Your Sessions</span>
         </div>
 
-        @foreach(\App\Models\Transaksi::with('acara', 'paket')->where('customer_id', Auth::id())->get() as $transaksi)
+        @foreach($transaksis as $transaksi)
             @if($transaksi->acara)
                 @php($acara = $transaksi->acara)
 
                 <div @click="section = 'booking-{{$acara->acara_id}}'"
                      :class="section ? 'hidden': ''"
-                     class="w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer">
+                     class="mb-4 w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer">
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
                         <div class="flex items-center gap-2">
                             <x-lucide-calendar-1 class="w-5 h-5" />
@@ -53,9 +53,10 @@
                 </div>
             @endif
         @endforeach
+        {{$transaksis->links('vendor.pagination.preline')}}
     </div>
 
-    @foreach(\App\Models\Transaksi::with('acara', 'paket')->where('customer_id', Auth::id())->get() as $transaksi)
+    @foreach($transaksis as $transaksi)
         @if($transaksi->acara)
             @php($acara = $transaksi->acara)
 

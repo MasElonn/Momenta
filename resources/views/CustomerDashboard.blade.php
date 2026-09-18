@@ -26,22 +26,25 @@
 </head>
 <body>
 
-<div class="w-screen h-screen flex" x-data="{tab: '{{ old('tab', request('tab', 'overview')) }}', section: ''}">
+<div class="w-screen h-screen flex" x-data="{
+    tab: $persist('overview').as('dashboard_tab'),
+    section: $persist('').as('dashboard_section')}">
+
     <x-dashboard.sidebar :user="$user ?? Auth::user()" />
 
     <main class="static flex-1 p-4 justify-between">
-        <x-dashboard.overview :user="$user ?? Auth::user()" />
-        <x-dashboard.booking />
-        <x-dashboard.gallery />
+        <x-dashboard.overview :user="$user ?? Auth::user()" :transaksis="$transaksis"/>
+        <x-dashboard.booking  :transaksis="$transaksis"/>
+        <x-dashboard.gallery  :transaksis="$transaksis"/>
         <x-dashboard.account :user="$user ?? Auth::user()" />
         <x-alert />
 
 
-        <form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
+        {{--<form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
             @csrf
             <input type="number" name="acara_id" id="acara_id" value="1" hidden>
 
-        </form>
+        </form>--}}
 
 
     </main>

@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FotoController;
 use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GeocodingController;
@@ -14,12 +15,20 @@ Route::get('/', function () {
     return view('LandingPage');
 });
 
+<<<<<<< HEAD
 
 Route::middleware(['auth', 'verified'])->group(function () {
+=======
+Route::get('/login', function () {
+    return view('auth.login');
+});
+>>>>>>> a4241d224e0f69786a56b50e5972ea2d29bba5f5
 
+Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         $role = Auth::user()->role;
 
+<<<<<<< HEAD
         // Kalau user belum pernah pilih role, arahkan dulu ke halaman Pilih Role
         if (! $role) {
             return redirect()->route('role.select');
@@ -27,16 +36,24 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
         if ($role == 'customer') {
             return view('CustomerDashboard');
+=======
+        if ($role === 'customer') {
+            return app(DashboardController::class)->index();
+>>>>>>> a4241d224e0f69786a56b50e5972ea2d29bba5f5
         }
-        return view('FotograferDashboard');
 
+        return view('FotograferDashboard');
     })->name('dashboard');
+<<<<<<< HEAD
 
     // Halaman Pilih Role — cuma bisa diakses user yang sudah login
     Route::get('/pilih-role', [RoleController::class, 'show'])->name('role.select');
     Route::post('/pilih-role', [RoleController::class, 'store'])->name('role.store');
 
+=======
+>>>>>>> a4241d224e0f69786a56b50e5972ea2d29bba5f5
 });
+
 Route::get('/finish', function () {
     return view('Finish');
 });
@@ -47,13 +64,13 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/upload', [FotoController::class, 'store'])->name('foto.upload');
 
-    //Route::get('/dashboard', [UserController::class, 'edit'])->name('dashboard.edit');
     Route::patch('/dashboard/profile', [UserController::class, 'updateProfile'])->name('dashboard.updateProfile');
     Route::patch('/dashboard/password', [UserController::class, 'updatePassword'])->name('dashboard.updatePassword');
     Route::delete('/dashboard', [UserController::class, 'destroy'])->name('dashboard.destroy');
 
     Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
+<<<<<<< HEAD
     Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
 
     route::post('/booking/', [TransaksiController::class, 'create'])->name('booking.create');
@@ -64,3 +81,12 @@ Route::middleware('auth')->group(function () {
 
 
 require __DIR__.'/auth.php';
+=======
+    Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
+    Route::post('/booking', [TransaksiController::class, 'create'])->name('booking.create');
+    Route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
+    Route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
+});
+
+require __DIR__.'/auth.php';
+>>>>>>> a4241d224e0f69786a56b50e5972ea2d29bba5f5
