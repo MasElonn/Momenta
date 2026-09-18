@@ -49,14 +49,16 @@
             autocomplete="new-password"
         />
 
-        <label class="flex items-start gap-2 text-sm text-gray-600">
-            <input
-                type="checkbox"
-                required
-                class="mt-0.5 h-4 w-4 rounded border-gray-300 text-[#1447E6] focus:ring-[#1447E6]"
-            >
-            setuju
-        </label>
+               <div class="mt-4 flex gap-2">
+            <div class="flex items-center">
+                <input type="radio" value="customer" name="role" class="shrink-0 size-4 bg-transparent border-line-3 rounded-full shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none" id="hs-checked-radio"checked>
+                <label for="hs-checked-radio" class="text-sm ms-3 text-muted-foreground-1">Customer</label>
+            </div>
+            <div class="flex items-center">
+                <input type="radio" value="fotografer" name="role" class="shrink-0 size-4 bg-transparent border-line-3 rounded-full shadow-2xs text-primary focus:ring-0 focus:ring-offset-0 checked:bg-primary-checked checked:border-primary-checked disabled:opacity-50 disabled:pointer-events-none" id="hs-default-radio" >
+                <label for="hs-default-radio" class="text-sm ms-3 text-muted-foreground-1">Fotografer</label>
+            </div>
+        </div>
 
         <x-auth-button>Tambahkan Akun</x-auth-button>
     </form>

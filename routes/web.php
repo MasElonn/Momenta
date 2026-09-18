@@ -1,27 +1,30 @@
 <?php
 
 use App\Http\Controllers\FotoController;
+use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
-
-
-
 
 Route::get('/', function () {
     return view('LandingPage');
 });
 
-Route::get('/login', function () {
-    return view('auth.login');
-});
+
 Route::middleware(['auth', 'verified'])->group(function () {
 
     Route::get('/dashboard', function () {
         $role = Auth::user()->role;
+
+        // Kalau user belum pernah pilih role, arahkan dulu ke halaman Pilih Role
+        if (! $role) {
+            return redirect()->route('role.select');
+        }
+
         if ($role == 'customer') {
             return view('CustomerDashboard');
         }
@@ -29,6 +32,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
     })->name('dashboard');
 
+    // Halaman Pilih Role — cuma bisa diakses user yang sudah login
+    Route::get('/pilih-role', [RoleController::class, 'show'])->name('role.select');
+    Route::post('/pilih-role', [RoleController::class, 'store'])->name('role.store');
 
 });
 Route::get('/finish', function () {
@@ -48,7 +54,7 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
-    Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
+    Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
 
     route::post('/booking/', [TransaksiController::class, 'create'])->name('booking.create');
     route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
@@ -56,7 +62,5 @@ Route::middleware('auth')->group(function () {
 });
 
 
+
 require __DIR__.'/auth.php';
-
-
-
