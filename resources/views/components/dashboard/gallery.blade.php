@@ -1,4 +1,4 @@
-<div x-show="tab === 'gallery'"  class="space-y-6">
+<div x-data="{ section: '', acaraId: null }" x-show="tab === 'gallery'" class="space-y-6">
     <div x-show="section !== 'gallery'">
         <div class="flex flex-col my-3 mb-4">
             <span class="text-2xl font-semibold">My Gallery</span>
@@ -10,7 +10,7 @@
                 @if($transaksi->acara)
                     @php($acara = $transaksi->acara)
 
-                    <div @click="section = 'gallery'"
+                    <div @click="section = 'gallery'; acaraId = {{ $acara->acara_id }}"
                          class="mb-4 w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer hover:border-gray-300 transition-colors">
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
                             <div class="flex items-center gap-2">
@@ -50,12 +50,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- Closed card wrapper inside loop -->
+                    </div>
                 @endif
             @endforeach
         </div>
-        {{$transaksis->links('vendor.pagination.preline')}}
-    </div> <!-- Closed list section -->
+        {{ $transaksis->links('vendor.pagination.preline') }}
+    </div>
 
     <div x-show="section === 'gallery'">
         <div class="flex justify-between">
@@ -67,7 +67,7 @@
 
                 <div class="flex flex-col">
                     <span class="flex-row text-xl font-semibold">My Gallery</span>
-                    <span class="text-xs text-gray-400">ID Booking: 1234567</span>
+                    <span class="text-xs text-gray-400" x-text="'ID Booking: ' + acaraId"></span>
                 </div>
             </div>
             <div class="mr-5">
@@ -78,18 +78,14 @@
         </div>
 
         <div class="mt-2 mb-3 flex justify-end gap-4 mr-5">
-            <button type="button" class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden focus:bg-primary-focus disabled:opacity-50 disabled:pointer-events-none">
+            <a :href="acaraId ? `/acara/${acaraId}/download` : '#'"
+               class="py-2 px-2 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden focus:bg-primary-focus disabled:opacity-50 disabled:pointer-events-none">
                 Download All
-            </button>
+            </a>
         </div>
 
-        <div class="max-h-screen overflow-y-auto pr-2 ">
-
-            <livewire:gallery-pinterest />
-
+        <div class="max-h-screen overflow-y-auto pr-2">
+            <livewire:gallery-pinterest/>
         </div>
-
-
     </div>
 </div>
-

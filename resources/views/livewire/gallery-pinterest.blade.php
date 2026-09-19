@@ -6,9 +6,13 @@
                 <img src="{{$foto->thumbnail_url}}" alt="Session Photo" loading="lazy" class="w-full h-auto object-cover block">
                 <div class="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 p-4 flex flex-col justify-between">
                     <div class="flex justify-end gap-2">
-                        <button class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-download class="w-4 h-4" />
-                        </button>
+                        <form action="{{route('foto.download')}}" method="get">
+                            @csrf
+                            <input type="text" name="r2_url" value="{{$foto->r2_url}}" hidden="">
+                            <button type="submit" class="p-2 bg-white/80 hover:bg-white rounded-full text-gray-700 transition-colors shadow">
+                                <x-lucide-download class="w-4 h-4" />
+                            </button>
+                        </form>
                         <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
                             <x-lucide-trash-2 class="w-4 h-4" />
                         </button>
