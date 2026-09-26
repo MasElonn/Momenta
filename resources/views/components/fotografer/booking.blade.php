@@ -1,4 +1,4 @@
-<div x-show="tab === 'booking'" x-cloak>
+<div>
 
     <div class="my-4">
         <h1 class="text-2xl font-semibold">Daftar Booking</h1>

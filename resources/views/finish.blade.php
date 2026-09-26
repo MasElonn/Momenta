@@ -124,34 +124,38 @@
             <div class="fade-up-2 w-full border border-gray-200 rounded-xl p-5 text-left flex flex-col gap-3 mb-6">
                 <div class="flex justify-between items-center text-sm">
                     <span class="text-gray-500">Booking ID</span>
-                    <span class="font-semibold text-gray-800">#{{session('trans_id')}}</span>
+                    <span class="font-semibold text-gray-800">#{{ $trans_id ?? session('trans_id', '-') }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
                     <span class="text-gray-500">Package</span>
-                    <span class="font-semibold text-gray-800">{{ucfirst(session('paket'))}}</span>
+                    <span class="font-semibold text-gray-800">{{ ucfirst($paket ?? session('paket', '-')) }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
                     <span class="text-gray-500">Date & Time</span>
-                    <span class="font-semibold text-gray-800">{{session('date_time')}}</span>
+                    <span class="font-semibold text-gray-800">{{ $date_time ?? session('date_time', '-') }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
                     <span class="text-gray-500">Location</span>
-                    <span class="font-semibold text-gray-800">{{session('lokasi')}}</span>
+                    <span class="font-semibold text-gray-800">{{ $lokasi ?? session('lokasi', '-') }}</span>
                 </div>
                 <div class="border-t border-gray-200 pt-3 flex justify-between items-center">
                     <span class="font-semibold text-gray-800">Total Paid</span>
-                    <span class="font-bold text-lg text-blue-600">{{ Number::currency(session('total_harga'), in: 'IDR', locale: 'id') }}</span>
+                    <span class="font-bold text-lg text-blue-600">
+                        @php
+                            $paidAmount = $total_harga ?? session('total_harga', 0);
+                        @endphp
+                        {{ is_numeric($paidAmount) ? Number::currency($paidAmount, in: 'IDR', locale: 'id') : $paidAmount }}
+                    </span>
                 </div>
             </div>
 
             <p class="fade-up-3 text-xs text-gray-400 mb-6">{{__('Please Note that the Fotografer can change the Date if the schecdule is taken, if it taken Fotografer will notify you')}}</p>
 
             <div class="fade-up-4 flex gap-3">
-                <a onclick="{{{Session::forget(['trans_id','total_hara','status','paket','date_time','lokasi'])}}}"
-                    href="/" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">
+                <a href="/" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">
                     Back to Home
                 </a>
-                <a href="" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                <a href="{{ route('dashboard') }}" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 transition-colors">
                     View My Bookings
                 </a>
             </div>

@@ -1,4 +1,5 @@
-<div x-show="tab === 'gallery'" x-data="{ modalOpen: false, selectedImage: null }" class="space-y-6">
+
+<div x-data="{ modalOpen: false, selectedImage: null }" class="space-y-6">
     <div x-show="section !== 'gallery'">
         <div class="flex flex-col my-3 mb-4">
             <span class="text-2xl font-semibold">My Gallery</span>
@@ -6,12 +7,12 @@
         </div>
 
         <div class="space-y-4">
-            @foreach(\App\Models\Transaksi::with('acara', 'paket')->where('customer_id', Auth::id())->get() as $transaksi)
+            @foreach($transaksis as $transaksi)
                 @if($transaksi->acara)
                     @php($acara = $transaksi->acara)
 
-                    <div @click="section = 'gallery'"
-                         class="w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer hover:border-gray-300 transition-colors">
+                    <div @click="section = 'gallery'; acaraId = {{ $acara->acara_id }}"
+                         class="mb-4 w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer hover:border-gray-300 transition-colors">
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
                             <div class="flex items-center gap-2">
                                 <x-lucide-calendar-1 class="w-5 h-5" />
@@ -50,11 +51,12 @@
                                 </div>
                             </div>
                         </div>
-                    </div> <!-- Closed card wrapper inside loop -->
+                    </div>
                 @endif
             @endforeach
         </div>
-    </div> <!-- Closed list section -->
+        {{ $transaksis->links('vendor.pagination.preline') }}
+    </div>
 
     <div x-show="section === 'gallery'">
         <div class="flex justify-between">
@@ -81,6 +83,12 @@
                 Download All
             </button>
         </div>
+
+        <form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
+            @csrf
+            <input type="number" name="acara_id" id="acara_id" value="4" hidden>
+
+        </form>
 
         <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
             <div class="break-inside-avoid relative group rounded-2xl overflow-hidden bg-white border border-gray-200 shadow-sm hover:shadow-xl transition-all duration-300">

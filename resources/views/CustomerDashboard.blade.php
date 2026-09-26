@@ -40,11 +40,7 @@
         <x-alert />
 
 
-        <form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
-            @csrf
-            <input type="number" name="acara_id" id="acara_id" value="1" hidden>
 
-        </form>
 
 
 

@@ -15,19 +15,11 @@ Route::get('/', function () {
     return view('LandingPage');
 });
 
-
+Route::get('/acara/{acaraId}/download', [FotoController::class, 'downloadAll'])
+    ->name('foto.downloadAll');
+Route::get('download', [FotoController::class, 'downloadFoto']) -> name('foto.download');
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        $role = Auth::user()->role;
-
-        // Kalau user belum pernah pilih role, arahkan dulu ke halaman Pilih Role
-      
-        if ($role == 'customer') {
-            return app(DashboardController::class)->index();
-        }
-
-        return view('FotograferDashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Halaman Pilih Role — cuma bisa diakses user yang sudah login
     Route::get('/pilih-role', [RoleController::class, 'show'])->name('role.select');
@@ -35,9 +27,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
 
 });
 
-Route::get('/finish', function () {
-    return view('Finish');
-});
+
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -51,11 +41,13 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
-    Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+    Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
 
     route::post('/booking/', [TransaksiController::class, 'create'])->name('booking.create');
-    route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
+    route::get('/pembayaran/{id}', [TransaksiController::class, 'index'])->name('pembayaran');
     route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
+    Route::get('/finish/{id?}', [TransaksiController::class, 'finish'])->name('finish');
+    Route::delete('/cancel/{id}', [TransaksiController::class, 'destroy'])->name('cancel.booking');
 });
 
 

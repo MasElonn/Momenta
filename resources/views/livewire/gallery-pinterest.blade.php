@@ -26,13 +26,12 @@
                 </div>
             </div>
         @empty
-            <div class="text-center text-gray-500 py-8">
-                Belum ada data yang bisa ditampilkan.
+            <div class="col-span-full py-8 text-center text-gray-400">
+                Belum ada foto untuk acara ini.
             </div>
         @endforelse
     </div>
 
-    {{-- Loader is now a SIBLING of the columns div, not a descendant --}}
     @if ($fotos->hasMorePages())
         <div
             x-intersect="$wire.loadMore()"
@@ -40,7 +39,7 @@
         >
             <div class="w-6 h-6 border-2 border-t-blue-500 border-b-blue-500 rounded-full animate-spin"></div>
         </div>
-    @else
+    @elseif (! $fotos->isEmpty())
         <div class="text-center py-4 text-gray-400">
             Kamu sudah mencapai akhir data.
         </div>

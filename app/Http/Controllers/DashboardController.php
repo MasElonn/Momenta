@@ -13,12 +13,30 @@ class DashboardController extends Controller
      */
     public function index()
     {
-        $transaksis = Transaksi::with('acara', 'paket')
-            ->where('customer_id', Auth::id())
-            ->orderBy('created_at', 'asc') // or whatever column makes sense
-            ->paginate(3);
+        $user = Auth::user();
 
-        return view('CustomerDashboard')->with('transaksis', $transaksis);
+        if ($user->role === 'customer') {
+
+            $transaksis = Transaksi::with(['acara.foto', 'paket.fotografer'])
+                ->where('customer_id', $user->user_id)
+                ->orderBy('created_at', 'desc')
+                ->paginate(3);
+
+            return view('CustomerDashboard', compact('transaksis'));
+
+        } elseif ($user->role === 'fotografer') {
+
+            $transaksis = Transaksi::with(['acara.foto', 'paket.fotografer'])
+                ->whereHas('paket', function ($query) use ($user) {
+                    $query->where('fotografer_id', $user->user_id);
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(3);
+
+            return view('FotograferDashboard', compact('transaksis'));
+        }
+
+        abort(403);
     }
 
     /**

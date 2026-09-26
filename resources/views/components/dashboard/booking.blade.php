@@ -5,7 +5,7 @@
             <span class="text-gray-500">Manage All Your Sessions</span>
         </div>
 
-        @foreach($transaksis as $transaksi)
+        @forelse($transaksis as $transaksi)
             @if($transaksi->acara)
                 @php($acara = $transaksi->acara)
 
@@ -23,7 +23,7 @@
                     </div>
 
                     <div class="flex items-start gap-4">
-                        <img class="rounded-lg w-25 h-25" loading="lazy" src="https://picsum.photos/150/150" alt="gambar">
+                        <img class="rounded-lg w-25 h-25 object-cover" loading="lazy" src="{{ $acara->foto->first()?->thumbnail_url ?? 'https://placehold.co/100/2C5CF3/white?text='.ucfirst(substr($acara->judul,0,1)).'&font=poppins' }}" alt="gambar">
 
                         <div class="flex-1">
                             <div class="flex items-start justify-between">
@@ -52,7 +52,9 @@
                     </div>
                 </div>
             @endif
-        @endforeach
+        @empty
+            <div class="text-sm text-gray-400 py-4">Belum ada booking.</div>
+        @endforelse
         {{$transaksis->links('vendor.pagination.preline')}}
     </div>
 
@@ -173,9 +175,14 @@
                         </div>
 
                         <div class="flex flex-col mt-3 gap-2">
-                            <a href="{{ route('pembayaran', ['id' => $transaksi->trans_id]) }}" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors">
-                                Bayar Sekarang
-                            </a>
+                            @if($transaksi->status == 'paid')
+
+                            @else
+                                <a href="{{ route('pembayaran', ['id' => $transaksi->trans_id]) }}" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors">
+                                    Bayar Sekarang
+                                </a>
+                            @endif
+
                             <button type="button" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
                                 Contact
                             </button>
@@ -187,45 +194,45 @@
                     </div>
                 </div>
             </div>
+
+            <div x-show="modalConfirm"
+                 x-transition:enter="transition ease-out duration-300"
+                 x-transition:enter-start="opacity-0"
+                 x-transition:enter-end="opacity-100"
+                 x-transition:leave="transition ease-in duration-200"
+                 x-transition:leave-start="opacity-100"
+                 x-transition:leave-end="opacity-0"
+                 @keydown.escape.window="modalConfirm = false"
+                 class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
+                 x-cloak>
+                <div @click.away="modalConfirm = false" class="relative max-w-md w-full bg-white rounded-2xl overflow-hidden shadow-2xl p-6 flex flex-col">
+                    <button @click="modalConfirm = false" type="button" class="absolute top-4 right-4 z-10 p-2 text-gray-400 hover:text-gray-600 transition-colors">
+                        <x-lucide-x class="w-5 h-5" />
+                    </button>
+
+                    <div class="flex items-center gap-3 text-red-500 mb-3">
+                        <x-lucide-alert-triangle class="w-6 h-6 shrink-0" />
+                        <h3 class="text-lg font-bold text-gray-900">Cancel Booking</h3>
+                    </div>
+
+                    <p class="text-sm text-gray-600 mb-6">
+                        Are you sure you want to Cancel your Booking? All of your photo will be permanently removed. This action cannot be undone.
+                    </p>
+
+                    <form action="{{route('cancel.booking',['id' => $transaksi->trans_id])}}" method="POST" class="flex justify-end gap-3">
+                        @csrf
+                        @method('DELETE')
+                        <button type="button" @click="modalConfirm = false"
+                                class="py-2 px-4 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
+                            Cancel
+                        </button>
+                        <button type="submit"
+                                class="py-2 px-4 text-sm font-medium rounded-lg bg-red-600 text-white hover:bg-red-700 focus:outline-hidden">
+                            Confirm Cancel
+                        </button>
+                    </form>
+                </div>
+            </div>
         @endif
     @endforeach
-
-    <div x-show="modalConfirm"
-         x-transition:enter="transition ease-out duration-300"
-         x-transition:enter-start="opacity-0"
-         x-transition:enter-end="opacity-100"
-         x-transition:leave="transition ease-in duration-200"
-         x-transition:leave-start="opacity-100"
-         x-transition:leave-end="opacity-0"
-         @keydown.escape.window="modalConfirm = false"
-         class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 backdrop-blur-sm"
-         x-cloak>
-        <div @click.away="modalConfirm = false" class="relative max-w-md w-full bg-white rounded-2xl overflow-hidden shadow-2xl p-6 flex flex-col">
-            <button @click="modalConfirm = false" type="button" class="absolute top-4 right-4 z-10 p-2 text-gray-400 hover:text-gray-600 transition-colors">
-                <x-lucide-x class="w-5 h-5" />
-            </button>
-
-            <div class="flex items-center gap-3 text-red-500 mb-3">
-                <x-lucide-alert-triangle class="w-6 h-6 shrink-0" />
-                <h3 class="text-lg font-bold text-gray-900">Cancel Booking</h3>
-            </div>
-
-            <p class="text-sm text-gray-600 mb-6">
-                Are you sure you want to Cancel your Booking? All of your photo will be permanently removed. This action cannot be undone.
-            </p>
-
-            <form action="" method="POST" class="flex justify-end gap-3">
-                @csrf
-                @method('DELETE')
-                <button type="button" @click="modalConfirm = false"
-                        class="py-2 px-4 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
-                    Cancel
-                </button>
-                <button type="submit"
-                        class="py-2 px-4 text-sm font-medium rounded-lg bg-red-600 text-white hover:bg-red-700 focus:outline-hidden">
-                    Confirm Cancel
-                </button>
-            </form>
-        </div>
-    </div>
 </div>

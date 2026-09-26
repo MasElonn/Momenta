@@ -8,8 +8,8 @@ use App\Models\Paket;
 
 use App\Models\User;
 use App\Services\UploadR2Service;
-use Faker\Core\Number;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
 
 
@@ -18,9 +18,18 @@ class TransaksiController extends Controller
     public function __construct(
         protected UploadR2Service $r2
     ) {}
-    public function index()
+    public function index(string $id)
     {
-    return view('pembayaran');
+        $transaksi = Transaksi::with(['paket', 'acara'])->where('trans_id', $id)->firstOrFail();
+
+        return view('pembayaran', [
+            'trans_id'    => $transaksi->trans_id,
+            'total_harga' => $transaksi->paket?->harga ?? 0,
+            'status'      => $transaksi->status,
+            'paket'       => $transaksi->paket?->judul,
+            'date_time'   => $transaksi->acara ? ($transaksi->acara->tanggal ? $transaksi->acara->tanggal->format('Y-m-d') : '') . ', ' . $transaksi->acara->jam : null,
+            'lokasi'      => $transaksi->acara?->lokasi,
+        ]);
     }
 
     public function upload(Request $request){
@@ -41,12 +50,30 @@ class TransaksiController extends Controller
             $transaksi->update([
                 'bukti_bucket' => $dir,
                 'bukti_key' => $upload,
-                'status' => 'paid'
+                'status' => 'paid',
+                'paid_at' => now(),
             ]);
-            return redirect('/finish');
+            return redirect()->route('finish', ['id' => $transaksi->trans_id]);
         }
         return redirect('/');
 
+    }
+
+    public function finish(?string $id = null)
+    {
+        $transaksi = null;
+        if ($id) {
+            $transaksi = Transaksi::with(['paket', 'acara'])->where('trans_id', $id)->first();
+        }
+
+        return view('finish', [
+            'transaksi' => $transaksi,
+            'trans_id' => $transaksi?->trans_id ?? session('trans_id'),
+            'paket' => $transaksi?->paket?->judul ?? session('paket'),
+            'date_time' => $transaksi?->acara ? (($transaksi->acara->tanggal?->translatedFormat('d M Y') ?? $transaksi->acara->tanggal) . ', ' . $transaksi->acara->jam) : session('date_time'),
+            'lokasi' => $transaksi?->acara?->lokasi ?? session('lokasi'),
+            'total_harga' => $transaksi?->paket?->harga ?? session('total_harga', 0),
+        ]);
     }
 
     public function create(Request $request){
@@ -82,15 +109,7 @@ class TransaksiController extends Controller
             'deskripsi' => $request->deskripsi,
             'status' => 'upcoming',
         ]);
-        session()->put([
-            'trans_id' => $trans_id,
-            'total_harga'=> $total_harga,
-            'status' => Transaksi::where('trans_id', $trans_id)->first()->status,
-            'paket' => Paket::where('paket_id', $paket_id)->first()->judul,
-            'date_time' => $request->tanggal . ', ' . $request->jam,
-            'lokasi' => $request->lokasi,
-        ]);
-        return redirect('pembayaran');
+        return redirect()->route('pembayaran', ['id' => $trans_id]);
 
 
     }
@@ -112,10 +131,20 @@ class TransaksiController extends Controller
         $acara_id = Acara::where('trans_id', $id)->first()->acara_id;
 
         $acara = Acara::where('trans_id', $id)->firstOrFail();
-        $foto = Foto::where('acara_id', $acara_id)->firstOrFail();
+        $foto = Foto::where('acara_id', $acara_id)->get();
         $transaksi = Transaksi::where('trans_id', $id)->firstOrFail();
 
+        if($foto->isNotEmpty()){
+            if(Storage::disk('r2')->deleteDirectory('foto/' . $acara_id)){
+                $foto->each->delete();
+            }
+
+        }
+        $acara->delete();
         $transaksi->delete();
+
+
+        return redirect()->route('dashboard');
     }
 
 }

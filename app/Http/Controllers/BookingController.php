@@ -1,4 +1,6 @@
 <?php
+
+use App\Http\Controllers\Controller;
 use App\Models\Acara;
 use Illuminate\Http\Request;
 

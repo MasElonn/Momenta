@@ -6,10 +6,13 @@
     <title>Payment</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
+@php
+    $status = ucfirst($status ?? session('status', 'unpaid'));
+    $trans_id = $trans_id ?? session('trans_id', '');
+    $rawTotal = $total_harga ?? session('total_harga', 0);
+    $total_harga = is_numeric($rawTotal) ? \Illuminate\Support\Number::currency($rawTotal, in: 'IDR', locale: 'id') : $rawTotal;
+@endphp
 <body class="bg-white text-gray-900 font-sans">
-<h1 hidden>{{$status = ucfirst(session('status'))}}</h1>
-<h1 hidden>{{$trans_id = session('trans_id')}}</h1>
-<h1 hidden>{{$total_harga = Number::currency(session('total_harga'), in: 'IDR', locale: 'id')}}</h1>
     <x-navbar />
 
     <div class="p-6 max-w-6xl mx-auto">
@@ -97,7 +100,7 @@
             xhr.onload = () => {
                 this.uploading = false;
                 if (xhr.status >= 200 && xhr.status < 300) {
-                    window.location.href = xhr.responseURL || xhr.getResponseHeader('X-Redirect') || window.location.href;
+                    window.location.href = xhr.responseURL || xhr.getResponseHeader('X-Redirect') || '{{ route('finish', ['id' => $trans_id]) }}';
                 } else {
                     this.error = 'Upload failed, try again.';
                 }
@@ -188,6 +191,27 @@
                         <span class="text-gray-500">Booking ID</span>
                         <span class="font-semibold text-gray-800">#{{$trans_id}}</span>
                     </div>
+
+                    @if(!empty($paket))
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-500">Package</span>
+                        <span class="font-semibold text-gray-800">{{$paket}}</span>
+                    </div>
+                    @endif
+
+                    @if(!empty($date_time))
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-500">Schedule</span>
+                        <span class="font-semibold text-gray-800">{{$date_time}}</span>
+                    </div>
+                    @endif
+
+                    @if(!empty($lokasi))
+                    <div class="flex justify-between items-center text-sm">
+                        <span class="text-gray-500">Location</span>
+                        <span class="font-semibold text-gray-800 text-right">{{$lokasi}}</span>
+                    </div>
+                    @endif
 
                     <div class="flex justify-between items-center text-sm">
                         <span class="text-gray-500">Status</span>

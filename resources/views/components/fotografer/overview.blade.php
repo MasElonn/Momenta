@@ -1,10 +1,8 @@
-@props(['user' => Auth::user()])
+@props(['user' => Auth::user(), 'transaksis'])
 
-<div x-show="tab === 'overview'">
+<div>
     <h1 class="pt-5 text-4xl font-semibold">Hello, {{ $user->name ?? Auth::user()->name }}!</h1>
     <h2>Welcome back to your Momenta dashboard. Your next photo session is about to begin.</h2>
-
-    @props(['user' => Auth::user()])
 
     {{--STATISTIK DASHBOARD--}}
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mt-6 mb-6">
@@ -116,7 +114,4 @@
                      lokasi crud hasil transaksi
                 </div>
     </div>
-        </div>
-    </div>
-    
-    <div
+</div>

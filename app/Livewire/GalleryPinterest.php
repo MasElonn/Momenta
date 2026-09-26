@@ -12,13 +12,14 @@ class GalleryPinterest extends Component
 
     public $perPage = 5;
     public $seed;
+    public $acaraId;
 
-    public function mount()
+    public function mount($acaraId = null)
     {
-        // Reuse the same seed across refreshes; only generate a new one if none exists yet
-        $this->seed = session()->get('gallery_seed', function () {
+        $this->acaraId = $acaraId;
+        $this->seed = session()->get('gallery_seed_' . $this->acaraId, function () {
             $newSeed = mt_rand(1, 1000000);
-            session()->put('gallery_seed', $newSeed);
+            session()->put('gallery_seed_' . $this->acaraId, $newSeed);
             return $newSeed;
         });
     }
@@ -32,6 +33,7 @@ class GalleryPinterest extends Component
     {
         return view('livewire.gallery-pinterest', [
             'fotos' => Foto::query()
+                ->where('acara_id', $this->acaraId)
                 ->orderByRaw('RAND(?)', [$this->seed])
                 ->paginate($this->perPage),
         ]);
