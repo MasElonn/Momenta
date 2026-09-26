@@ -2,12 +2,10 @@
 
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\FotoController;
-use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\RoleController;
-use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
@@ -17,14 +15,14 @@ Route::get('/', function () {
 
 Route::get('/acara/{acaraId}/download', [FotoController::class, 'downloadAll'])
     ->name('foto.downloadAll');
-Route::get('download', [FotoController::class, 'downloadFoto']) -> name('foto.download');
+Route::get('download', [FotoController::class, 'downloadFoto'])->name('foto.download');
+
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // Halaman Pilih Role — cuma bisa diakses user yang sudah login
     Route::get('/pilih-role', [RoleController::class, 'show'])->name('role.select');
     Route::post('/pilih-role', [RoleController::class, 'store'])->name('role.store');
-
 });
 
 
@@ -35,18 +33,17 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::post('/upload', [FotoController::class, 'store'])->name('foto.upload');
 
-    Route::patch('/dashboard/profile', [UserController::class, 'updateProfile'])->name('dashboard.updateProfile');
-    Route::patch('/dashboard/password', [UserController::class, 'updatePassword'])->name('dashboard.updatePassword');
-    Route::delete('/dashboard', [UserController::class, 'destroy'])->name('dashboard.destroy');
+    Route::patch('/dashboard/profile', [ProfileController::class, 'updateProfile'])->name('dashboard.updateProfile');
+    Route::patch('/dashboard/password', [ProfileController::class, 'updatePassword'])->name('dashboard.updatePassword');
+    Route::delete('/dashboard', [ProfileController::class, 'destroy'])->name('dashboard.destroy');
 
     Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
     Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
-
-    route::post('/booking/', [TransaksiController::class, 'create'])->name('booking.create');
-    route::get('/pembayaran/{id}', [TransaksiController::class, 'index'])->name('pembayaran');
-    route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
-    Route::get('/finish/{id?}', [TransaksiController::class, 'finish'])->name('finish');
+    Route::post('/booking', [TransaksiController::class, 'create'])->name('booking.create');
+    Route::get('/pembayaran/{id}', [TransaksiController::class, 'index'])->name('pembayaran');
+    Route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
+    Route::get('/finish/{id}', [TransaksiController::class, 'finish'])->name('finish');
     Route::delete('/cancel/{id}', [TransaksiController::class, 'destroy'])->name('cancel.booking');
 });
 
