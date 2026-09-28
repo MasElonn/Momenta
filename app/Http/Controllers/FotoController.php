@@ -184,8 +184,17 @@ class FotoController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(string $id)
+    public function destroy(String $id)
     {
+        $fotoUrl = Foto::where('foto_id', $id)->firstOrFail()->r2_url;
+        $thumbUrl = Foto::where('foto_id', $id)->firstOrFail()->thumbnail_url;
 
+        $fotoPath = Str::after($fotoUrl, 'https://momenta.r2.rndlab.my.id/');
+        $thumbPath = Str::after($thumbUrl, 'https://momenta.r2.rndlab.my.id/');
+        Storage::disk('r2')->delete($fotoPath);
+        Storage::disk('r2')->delete($thumbPath);
+
+        Foto::where('foto_id', $id)->delete();
+        return back()->with('success', 'Foto telah dihapus');
     }
 }

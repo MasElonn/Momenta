@@ -13,9 +13,15 @@
                                 <x-lucide-download class="w-4 h-4" />
                             </button>
                         </form>
-                        <button class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
-                            <x-lucide-trash-2 class="w-4 h-4" />
-                        </button>
+
+                        <form action="{{ route('foto.delete', ['id' => $foto->foto_id]) }}" method="post">
+                            @csrf
+
+                            <button type="submit" class="p-2 bg-white/80 hover:bg-red-500 hover:text-white rounded-full text-gray-700 transition-colors shadow">
+                                <x-lucide-trash-2 class="w-4 h-4" />
+                            </button>
+                        </form>
+
                     </div>
                     <div class="flex items-center justify-end text-white">
                         <button @click="modalOpen = true; selectedImage = '{{$foto->r2_url}}'"
