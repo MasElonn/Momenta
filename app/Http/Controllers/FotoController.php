@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Acara;
 use App\Models\Foto;
 
 use App\Services\UploadR2Service;
@@ -62,16 +63,17 @@ class FotoController extends Controller
         $totalChunks = (int) $request->input('dztotalchunkcount');
         $ext         = $request->file('file')->getClientOriginalExtension();
         $fileId      = $request->input('dzuuid');
-        $acaraId     = $request->input('acara_id');
+        $transId     = $request->input('trans_id');
 
         $this->chunkUpload->saveChunk($request->file('file'), $fileId, $chunkIndex);
 
         if (!$this->chunkUpload->isLastChunk($totalChunks, $chunkIndex)) {
             return response()->json(['success' => true]);
         }
+        $acaraId = Acara::where('trans_id',$transId)->firstOrFail()->acara_id;
 
-        $fileName = $acaraId . '-' . now()->toDateString() . '-' . Str::random(5) . '.' . $ext;
-        $dir = 'foto/' . $acaraId;
+        $fileName = now()->toDateString() . '-' . Str::random(5) . '.' . $ext;
+        $dir = $transId . '/foto';
 
 
         $mergedPath = $this->chunkUpload->merge($fileId, $totalChunks);

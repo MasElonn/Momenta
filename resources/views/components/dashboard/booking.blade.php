@@ -17,7 +17,7 @@
                             <x-lucide-calendar-1 class="w-5 h-5" />
                             <span class="font-semibold">Booking</span>
                             <span class="text-gray-400 text-sm">ID Booking:</span>
-                            <span class="text-gray-500 text-sm">#{{ $acara->acara_id }}</span>
+                            <span class="text-gray-500 text-sm">#{{ $transaksi->trans_id }}</span>
                         </div>
                         <span class="text-gray-400 text-sm">{{ $acara->tanggal->translatedFormat('d M Y') }}</span>
                     </div>
@@ -72,7 +72,7 @@
 
                         <div class="flex flex-col">
                             <span class="flex-row text-xl font-semibold">Manage Booking</span>
-                            <span class="text-xs text-gray-400">ID Booking: #{{$acara->acara_id}}</span>
+                            <span class="text-xs text-gray-400">ID Booking: #{{$transaksi->trans_id}}</span>
                         </div>
                     </div>
                     <div class="mr-5">

@@ -40,10 +40,9 @@ class TransaksiController extends Controller
 
         $file = $request->file('bukti');
         $filename = $file->getClientOriginalName();
-        $dir = 'bukti';
-
-
         $transaksi = Transaksi::where('trans_id',$request->trans_id)->firstOrFail();
+        $dir = $transaksi->trans_id . '/bukti';
+
         $upload = $this->r2->upload($file, $dir, $filename);
 
         if($upload){

@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
             'harga' => 100000,
         ]);
         Transaksi::factory()->create([
-            'trans_id' => 'BOOK-1--2026091015',
+            'trans_id' => 'BK-1-1-l9iB9',
             'customer_id' => 1,
             'paket_id' => 1,
             'status' => 'paid',
@@ -51,7 +51,7 @@ class DatabaseSeeder extends Seeder
             'paid_at' => now(),
         ]);
         Acara::factory()->create([
-            'trans_id' => 'BOOK-1--2026091015',
+            'trans_id' => 'BK-1-1-l9iB9',
             'judul' => 'Acara 1',
             'lokasi' => 'SMK PGRI 3 Malang',
             'tanggal' => date('Y-m-d'),

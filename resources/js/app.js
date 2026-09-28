@@ -60,8 +60,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.reload();
             });
             this.on("sending", (file, xhr, formData) => {
-                const acaraId = document.querySelector('input[name="acara_id"]')?.value;
-                if (acaraId) formData.append("acara_id", acaraId);
+                const transId = document.querySelector('input[name="trans_id"]')?.value;
+                if (transId) formData.append("trans_id", transId);
             });
         }
     });
