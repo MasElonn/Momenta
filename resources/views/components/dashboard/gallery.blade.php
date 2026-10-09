@@ -10,6 +10,7 @@
                 @if($transaksi->acara)
                     @php
                         $acara = $transaksi->acara;
+
                     @endphp
 
                     <div @click="section = 'gallery-{{ $acara->acara_id }}'"

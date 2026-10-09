@@ -49,7 +49,7 @@ class TransaksiController extends Controller
             $transaksi->update([
                 'bukti_bucket' => $dir,
                 'bukti_key' => $upload,
-                'status' => 'paid',
+                'status' => 'pending',
                 'paid_at' => now(),
             ]);
             return redirect()->route('finish', ['id' => $transaksi->trans_id]);
@@ -146,4 +146,37 @@ class TransaksiController extends Controller
         return redirect()->route('dashboard');
     }
 
+    public function accept(string $id)
+    {
+        $transaksi = Transaksi::with('paket')->where('trans_id', $id)->firstOrFail();
+
+        if ($transaksi->status !== 'pending' || $transaksi->paket?->fotografer_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $transaksi->status = 'paid';
+        $transaksi->verified_at = now();
+        $transaksi->save();
+
+        return back()->with('success', 'Payment accepted');
+    }
+
+    public function reject(Request $request, string $id)
+    {
+        $request->validate([
+            'rejection_reason' => 'required|string',
+        ]);
+
+        $transaksi = Transaksi::with('paket')->where('trans_id', $id)->firstOrFail();
+
+        if ($transaksi->status !== 'pending' || $transaksi->paket?->fotografer_id !== auth()->id()) {
+            abort(403);
+        }
+
+        $transaksi->status = 'rejected';
+        $transaksi->rejection_reason = $request->rejection_reason;
+        $transaksi->save();
+
+        return back()->with('success', 'Payment rejected');
+    }
 }

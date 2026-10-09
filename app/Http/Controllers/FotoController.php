@@ -49,10 +49,10 @@ class FotoController extends Controller
 
     public function store(Request $request)
     {
-
+        //dd($request);
         set_time_limit(0);
         $request->validate([
-            'acara_id' => 'required',
+            'trans_id' => 'required',
             'file' => 'required|file',
             'dzuuid' => 'required|string',
             'dzchunkindex' => 'required|integer',
@@ -64,6 +64,7 @@ class FotoController extends Controller
         $ext         = $request->file('file')->getClientOriginalExtension();
         $fileId      = $request->input('dzuuid');
         $transId     = $request->input('trans_id');
+
 
         $this->chunkUpload->saveChunk($request->file('file'), $fileId, $chunkIndex);
 

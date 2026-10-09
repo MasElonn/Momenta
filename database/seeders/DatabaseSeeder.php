@@ -46,7 +46,7 @@ class DatabaseSeeder extends Seeder
             'trans_id' => 'BK-1-1-l9iB9',
             'customer_id' => 1,
             'paket_id' => 1,
-            'status' => 'paid',
+            'status' => 'unpaid',
             'verified_at' => now(),
             'paid_at' => now(),
         ]);

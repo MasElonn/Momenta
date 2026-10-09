@@ -13,10 +13,6 @@ Route::get('/', function () {
 });
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
-    // Halaman Pilih Role — cuma bisa diakses user yang sudah login
-    Route::get('/pilih-role', [RoleController::class, 'show'])->name('role.select');
-    Route::post('/pilih-role', [RoleController::class, 'store'])->name('role.store');
 });
 
 
@@ -39,6 +35,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
     Route::get('/finish/{id}', [TransaksiController::class, 'finish'])->name('finish');
     Route::delete('/cancel/{id}', [TransaksiController::class, 'destroy'])->name('cancel.booking');
+
+    Route::post('/transaksi/{id}/accept', [TransaksiController::class, 'accept'])->name('transaksi.accept');
+    Route::post('/transaksi/{id}/reject', [TransaksiController::class, 'reject'])->name('transaksi.reject');
 
     Route::get('/acara/{acaraId}/download', [FotoController::class, 'downloadAll'])
         ->name('foto.downloadAll');

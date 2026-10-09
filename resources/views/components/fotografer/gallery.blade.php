@@ -8,7 +8,10 @@
         <div class="space-y-4">
             @foreach($transaksis as $transaksi)
                 @if($transaksi->acara)
-                    @php($acara = $transaksi->acara)
+                    @php
+                    $trans_id = $transaksi->trans_id;
+                    $acara = $transaksi->acara;
+                    @endphp
 
                     <div @click="section = 'gallery'; transId = '{{ $transaksi->trans_id }}'"
                          class="mb-4 w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer hover:border-gray-300 transition-colors">
@@ -17,7 +20,7 @@
                                 <x-lucide-calendar-1 class="w-5 h-5" />
                                 <span class="font-semibold">Booking</span>
                                 <span class="text-gray-400 text-sm">ID Booking:</span>
-                                <span class="text-gray-500 text-sm">#{{ $acara->acara_id }}</span>
+                                <span class="text-gray-500 text-sm">#{{$transaksi->trans_id }}</span>
                             </div>
 
                             <span class="text-gray-400 text-sm">{{ $acara->tanggal->translatedFormat('d M Y') }}</span>
@@ -64,14 +67,14 @@
     <div x-show="section === 'gallery'">
         <div class="flex justify-between">
             <div class="flex items-center gap-2">
-                <div @click="section = ''; acaraId = null; transId = null"
+                <div @click="section = '';transId = null"
                      class="border border-gray-200 flex items-center justify-center shadow w-12 h-12 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
                     <x-lucide-arrow-left class="w-6 h-6" />
                 </div>
 
                 <div class="flex flex-col">
                     <span class="flex-row text-xl font-semibold">My Gallery</span>
-                    <span class="text-xs text-gray-400">ID Booking: <span x-text="acaraId"></span></span>
+                    <span class="text-xs text-gray-400">ID Booking: <span x-text="transId"></span></span>
                 </div>
             </div>
 
@@ -88,13 +91,14 @@
             </button>
         </div>
 
+
         <form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
             @csrf
             <input type="hidden" name="trans_id" id="trans_id" :value="transId">
         </form>
 
-        <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-4 space-y-4">
-
+        <div class="mt-6 max-h-screen overflow-y-auto pr-2 rounded-2xl">
+            <livewire:gallery-pinterest :acara-id="$acara->acara_id" :wire:key="'gallery-'.$acara->acara_id" />
         </div>
     </div>
 </div>

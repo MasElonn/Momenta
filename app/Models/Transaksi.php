@@ -24,7 +24,7 @@ class Transaksi extends Model
         'bukti_key',
         'status',
         'verified_at',
-        'rejected_reason',
+        'rejection_reason',
         'paid_at',
         'trans_id',
     ];
