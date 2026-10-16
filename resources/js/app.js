@@ -1,23 +1,11 @@
 import 'preline';
-<<<<<<< HEAD
 
 import './availability-check';
 import "./paket.js";
 import './paket-slider';
-import Alpine from 'alpinejs'
-import persist from '@alpinejs/persist'
-
-Alpine.plugin(persist)
-window.Alpine = Alpine
-Alpine.start()
-
-import HSRemoveElement from "@preline/remove-element/non-auto";
-HSRemoveElement.autoInit();
-=======
 import Alpine from 'alpinejs';
 import intersect from '@alpinejs/intersect';
 import persist from '@alpinejs/persist';
->>>>>>> 118048939cf4064c6420717245e23f2df2fbcc52
 
 import Dropzone from "dropzone";
 import "dropzone/dist/dropzone.css";
@@ -45,14 +33,6 @@ HSRemoveElement.autoInit();
 Dropzone.autoDiscover = false;
 
 document.addEventListener("DOMContentLoaded", () => {
-<<<<<<< HEAD
-    const dropzoneEl = document.querySelector('#my-dropzone');
-
-    if (!dropzoneEl) return;
-
-    const myDropzone = new Dropzone(dropzoneEl, {
-        url: dropzoneEl.action,
-=======
     const dropzoneEl = document.querySelector("#my-dropzone");
 
     // Guard: Only run if the element actually exists on the current page
@@ -68,7 +48,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const myDropzone = new Dropzone(dropzoneEl, {
         url: uploadUrl,
->>>>>>> 118048939cf4064c6420717245e23f2df2fbcc52
         paramName: 'file',
         chunking: true,
         forceChunking: true,
