@@ -10,6 +10,13 @@ use App\Http\Controllers\Auth\PasswordResetLinkController;
 use App\Http\Controllers\Auth\RegisteredUserController;
 use App\Http\Controllers\Auth\VerifyEmailController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\AcaraController;
+
+Route::patch('/fotografer/acara/{id}', [AcaraController::class, 'update'])
+    ->name('fotografer.acara.update');
+
+Route::delete('/fotografer/acara/{id}', [AcaraController::class, 'destroy'])
+    ->name('fotografer.acara.destroy');
 
 Route::middleware('guest')->group(function () {
     Route::get('register', [RegisteredUserController::class, 'create'])

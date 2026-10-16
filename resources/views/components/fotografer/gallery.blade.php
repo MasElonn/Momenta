@@ -2,7 +2,6 @@
     <div x-show="section !== 'gallery'">
         <div class="flex flex-col my-3 mb-4">
             <span class="text-2xl font-semibold">My Gallery</span>
-            <span class="text-gray-500">See All Your Completed Sessions</span>
         </div>
 
         <div class="space-y-4">
@@ -98,7 +97,10 @@
         </form>
 
         <div class="mt-6 max-h-screen overflow-y-auto pr-2 rounded-2xl">
-            <livewire:gallery-pinterest :acara-id="$acara->acara_id" :wire:key="'gallery-'.$acara->acara_id" />
+            <livewire:gallery-pinterest
+    :trans-id="$transaksi->trans_id"
+    :wire:key="'gallery-'.$transaksi->trans_id"
+/>
         </div>
     </div>
 </div>
