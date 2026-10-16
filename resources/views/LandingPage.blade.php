@@ -69,18 +69,6 @@
         {{-- Quiet stat row instead of a floating card or faked photo crops —
              grounded numbers, text only, no imagery to fight the headline. --}}
         <div class="hero-in hero-in-delay-2 mt-16 flex flex-wrap items-start gap-x-12 gap-y-6 border-t border-surface/15 pt-8">
-            <div>
-                <p class="font-display text-[26px] font-bold text-surface">500+</p>
-                <p class="mt-0.5 text-[12.5px] text-surface/60">sesi foto sekolah selesai</p>
-            </div>
-            <div>
-                <p class="font-display text-[26px] font-bold text-surface">120+</p>
-                <p class="mt-0.5 text-[12.5px] text-surface/60">fotografer terverifikasi</p>
-            </div>
-            <div>
-                <p class="font-display text-[26px] font-bold text-surface">98%</p>
-                <p class="mt-0.5 text-[12.5px] text-surface/60">galeri terkirim tepat waktu</p>
-            </div>
         </div>
     </div>
 </section>

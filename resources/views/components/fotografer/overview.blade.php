@@ -77,7 +77,7 @@
                     </p>
 
                     <h2 class="text-2xl font-bold text-gray-800">
-                        
+                        5
                     </h2>
 
                     <p class="text-xs text-gray-400">
