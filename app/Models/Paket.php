@@ -2,33 +2,94 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Casts\Attribute;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Attributes\Table;
-use Illuminate\Notifications\Notifiable;
 
-#[Table('paket')]
 class Paket extends Model
 {
-    use HasFactory, Notifiable;
+    use HasFactory;
+
+    /**
+     * The table associated with the model.
+     *
+     * @var string
+     */
+    protected $table = 'paket';
+
+    /**
+     * The primary key associated with the table.
+     *
+     * @var string
+     */
     protected $primaryKey = 'paket_id';
+
+    /**
+     * The attributes that are mass assignable.
+     *
+     * @var list<string>
+     */
     protected $fillable = [
         'fotografer_id',
         'judul',
         'deskripsi',
         'harga',
-    ];
-    protected $casts = [
-        'harga' => 'decimal:2',
+        'durasi',
+        'jumlah_foto',
+        'jumlah_fotografer',
+        'durasi_galeri',
+        'is_populer',
     ];
 
+    /**
+     * The attributes that should be cast.
+     *
+     * @return array<string, string>
+     */
+    protected function casts(): array
+    {
+        return [
+            'harga' => 'decimal:2',
+            'is_populer' => 'boolean',
+        ];
+    }
 
+    /**
+     * The fotografer (photographer) that owns this package.
+     */
     public function fotografer()
     {
         return $this->belongsTo(User::class, 'fotografer_id', 'user_id');
     }
-    public function transaksi()
+
+    /**
+     * Harga formatted into short Indonesian Rupiah notation.
+     *
+     * 500000    -> "Rp 500rb"
+     * 750000    -> "Rp 750rb"
+     * 1200000   -> "Rp 1,2jt"
+     * 2000000   -> "Rp 2jt"
+     */
+    protected function hargaFormatted(): Attribute
     {
-        return $this->hasMany(Transaksi::class, 'paket_id', 'paket_id');
+        return Attribute::make(
+            get: function () {
+                $value = (float) $this->harga;
+
+                if ($value >= 1_000_000) {
+                    $jt = $value / 1_000_000;
+                    $formatted = number_format($jt, 1, ',', '.');
+                    $formatted = rtrim(rtrim($formatted, '0'), ',');
+
+                    return 'Rp ' . $formatted . 'jt';
+                }
+
+                if ($value >= 1_000) {
+                    return 'Rp ' . round($value / 1000) . 'rb';
+                }
+
+                return 'Rp ' . number_format($value, 0, ',', '.');
+            }
+        );
     }
 }

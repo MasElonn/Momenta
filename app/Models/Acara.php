@@ -20,6 +20,7 @@ class Acara extends Model
         'tanggal',
         'status',
         'jam',
+        'jam_selesai',
         'deskripsi',
     ];
 

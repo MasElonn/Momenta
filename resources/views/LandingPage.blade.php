@@ -35,245 +35,262 @@
 </header>
 
 {{-- HERO --}}
-<header id="beranda" class="px-8 pb-[60px] pt-[88px]">
-    <div class="mx-auto grid max-w-[1180px] grid-cols-1 items-center gap-14 md:grid-cols-[1.05fr_0.95fr]">
-        <div>
-            <div class="hero-in mb-5 inline-flex items-center gap-2 rounded-full bg-accent-soft px-3 py-1.5 text-[12.5px] font-semibold tracking-wide text-accent before:h-1.5 before:w-1.5 before:rounded-full before:bg-accent">
-                Untuk acara sekolah
-            </div>
+<section id="beranda" class="relative overflow-hidden bg-navy">
+    <div class="absolute inset-0">
+        <img src="{{ asset('images/bg1.jpg') }}" alt="" class="h-full w-full object-cover opacity-60">
+        <div class="absolute inset-0 bg-gradient-to-br from-navy/80 via-navy/60 to-brand-dark/70"></div>
+        <div class="absolute inset-0 bg-gradient-to-t from-navy via-navy/30 to-transparent"></div>
+    </div>
 
-            <h1 class="hero-in hero-in-delay-1 font-display text-[34px] font-bold leading-[1.12] tracking-tight text-navy md:text-[46px]">
-                Atur fotografer,<br>simpan hasilnya,<br>
-                <span class="text-brand">bagikan ke orang tua.</span>
-            </h1>
-
-            <p class="hero-in hero-in-delay-1 mt-5 max-w-[480px] text-[16.5px] leading-relaxed text-ink-soft">
-                Panitia tinggal pilih tanggal dan paket, fotografer datang sesuai jadwal, lalu hasil fotonya langsung muncul di galeri. Nggak perlu lagi kirim-kirim file lewat WhatsApp.
-            </p>
-
-            <div class="hero-in hero-in-delay-2 mt-8 flex flex-wrap gap-3.5">
-                <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-brand px-[22px] py-[11px] text-[14.5px] font-semibold text-surface shadow-[0_8px_20px_-8px_rgba(20,71,230,0.55)] transition hover:-translate-y-px hover:bg-brand-dark">
-                    Buka Dashboard
-                </a>
-                <a href="/login" class="inline-flex items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">
-                    Daftar Untuk Booking
-                </a>
-            </div>
+    <div class="relative mx-auto max-w-[1180px] px-8 pb-24 pt-40 md:pt-48">
+        <div class="hero-in inline-flex items-center gap-2 rounded-full border border-surface/25 bg-surface/10 px-3 py-1.5 text-[12.5px] font-medium text-surface backdrop-blur-sm">
+            <span class="h-1.5 w-1.5 rounded-full bg-brand-soft"></span>
+            Untuk acara sekolah
         </div>
 
-        {{-- Signature: booking ticket card --}}
-        <div class="hero-in hero-in-delay-2 float-card overflow-hidden rounded-2xl border border-line bg-surface shadow-[0_30px_60px_-30px_rgba(11,42,140,0.3)]">
-            <div class="flex items-start justify-between px-6 pb-5 pt-[22px]">
-                <div class="text-xs text-ink-soft">
-                    Booking ID
-                    <b class="mt-0.5 block font-mono text-[13.5px] text-navy">#MMT-2026-9042</b>
-                </div>
-                <span class="pulse-badge rounded-full bg-accent-soft px-2.5 py-1.5 text-[11.5px] font-semibold text-accent">Terjadwal</span>
+        <h1 class="hero-in hero-in-delay-1 mt-6 max-w-[620px] font-display text-[36px] font-bold leading-[1.12] tracking-tight text-surface md:text-[52px]">
+            Atur fotografer, simpan hasilnya,
+            <span class="text-brand-soft">bagikan ke orang tua.</span>
+        </h1>
+
+        <p class="hero-in hero-in-delay-1 mt-5 max-w-[480px] text-[16.5px] leading-relaxed text-surface/75">
+            Panitia tinggal pilih tanggal dan paket, fotografer datang sesuai jadwal, lalu hasil fotonya langsung muncul di galeri. Nggak perlu lagi kirim-kirim file lewat WhatsApp.
+        </p>
+
+        <div class="hero-in hero-in-delay-2 mt-8 flex flex-wrap gap-3.5">
+            <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-brand px-[22px] py-[11px] text-[14.5px] font-semibold text-surface shadow-[0_8px_20px_-8px_rgba(20,71,230,0.55)] transition hover:-translate-y-px hover:bg-brand-dark">
+                Buka Dashboard
+            </a>
+            <a href="/login" class="inline-flex items-center justify-center gap-2 rounded-[10px] border border-surface/30 px-[22px] py-[11px] text-[14.5px] font-semibold text-surface transition hover:border-surface hover:bg-surface/10">
+                Daftar Untuk Booking
+            </a>
+        </div>
+
+        {{-- Quiet stat row instead of a floating card or faked photo crops —
+             grounded numbers, text only, no imagery to fight the headline. --}}
+        <div class="hero-in hero-in-delay-2 mt-16 flex flex-wrap items-start gap-x-12 gap-y-6 border-t border-surface/15 pt-8">
+            <div>
+                <p class="font-display text-[26px] font-bold text-surface">500+</p>
+                <p class="mt-0.5 text-[12.5px] text-surface/60">sesi foto sekolah selesai</p>
             </div>
-
-            <div class="px-6 pb-[22px]">
-                <div class="flex items-start gap-3 py-3">
-                    <div class="flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-[9px] bg-brand-soft">
-                        <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
-                    </div>
-                    <div>
-                        <div class="text-[11.5px] uppercase tracking-wide text-ink-soft">Tanggal Sesi</div>
-                        <div class="mt-0.5 text-[14.5px] font-semibold text-navy">Kamis, 12 Nov 2026</div>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-3 border-t border-dashed border-line py-3">
-                    <div class="flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-[9px] bg-brand-soft">
-                        <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
-                    </div>
-                    <div>
-                        <div class="text-[11.5px] uppercase tracking-wide text-ink-soft">Lokasi</div>
-                        <div class="mt-0.5 text-[14.5px] font-semibold text-navy">Aula Sekolah, Gerbang Utama</div>
-                    </div>
-                </div>
-
-                <div class="flex items-start gap-3 border-t border-dashed border-line py-3">
-                    <div class="flex h-[34px] w-[34px] flex-shrink-0 items-center justify-center rounded-[9px] bg-brand-soft">
-                        <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 4-6 8-6s8 2 8 6"/></svg>
-                    </div>
-                    <div>
-                        <div class="text-[11.5px] uppercase tracking-wide text-ink-soft">Fotografer</div>
-                        <div class="mt-0.5 text-[14.5px] font-semibold text-navy">Muhammad Atif</div>
-                    </div>
-                </div>
+            <div>
+                <p class="font-display text-[26px] font-bold text-surface">120+</p>
+                <p class="mt-0.5 text-[12.5px] text-surface/60">fotografer terverifikasi</p>
             </div>
-
-            <div class="flex items-center justify-between bg-navy px-6 py-5">
-                <div>
-                    <div class="text-[11.5px] text-brand-soft/80">Paket Dipilih</div>
-                    <div class="mt-0.5 font-display text-xl font-bold text-surface">Rp 750.000</div>
-                </div>
-                <a href="{{ url('/dashboard') }}" class="inline-flex items-center justify-center gap-2 rounded-[10px] bg-brand px-4 py-2.5 text-[13px] font-semibold text-surface transition hover:bg-brand-dark">
-                    Lihat Detail
-                </a>
+            <div>
+                <p class="font-display text-[26px] font-bold text-surface">98%</p>
+                <p class="mt-0.5 text-[12.5px] text-surface/60">galeri terkirim tepat waktu</p>
             </div>
         </div>
     </div>
-</header>
+</section>
 
 {{-- CARA KERJA --}}
-<section id="cara-kerja" class="px-8 py-20">
+<section id="cara-kerja" class="px-8 py-28">
     <div class="mx-auto max-w-[1180px]">
-        <div class="reveal mx-auto mb-12 max-w-[600px] text-center">
-            <div class="mb-3 text-[12.5px] font-semibold uppercase tracking-wider text-brand">Cara Kerja</div>
-            <h2 class="font-display text-[32px] font-bold tracking-tight text-navy">Dari booking sampai galeri</h2>
-            <p class="mt-3.5 text-[15.5px] leading-relaxed text-ink-soft">Prosesnya sama untuk acara apa pun, dari rapat kelas sampai wisuda.</p>
-        </div>
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-[0.75fr_1.25fr] md:gap-16">
+            <div class="reveal md:sticky md:top-28 md:self-start">
+                <p class="mb-2 text-sm font-medium italic text-brand">Cara kerja</p>
+                <h2 class="font-display text-[30px] font-bold tracking-tight text-navy md:text-[36px]">Dari booking sampai galeri</h2>
+                <p class="mt-4 max-w-xs text-[14.5px] leading-relaxed text-ink-soft">Prosesnya sama untuk acara apa pun, dari rapat kelas sampai wisuda.</p>
+            </div>
 
-        <div class="reveal-stagger grid grid-cols-1 gap-6 md:grid-cols-3">
-            <div class="lift-card rounded-2xl border border-line bg-surface p-7">
-                <div class="mb-[18px] flex h-9 w-9 items-center justify-center rounded-[10px] bg-brand-soft font-mono text-[13px] font-semibold text-brand">01</div>
-                <h3 class="mb-2 text-[17px] font-semibold text-navy">Pilih paket &amp; jadwal</h3>
-                <p class="text-[14.5px] leading-relaxed text-ink-soft">Tentukan tanggal, lokasi, dan paket yang paling pas buat acaramu.</p>
-            </div>
-            <div class="lift-card rounded-2xl border border-line bg-surface p-7">
-                <div class="mb-[18px] flex h-9 w-9 items-center justify-center rounded-[10px] bg-brand-soft font-mono text-[13px] font-semibold text-brand">02</div>
-                <h3 class="mb-2 text-[17px] font-semibold text-navy">Fotografer datang</h3>
-                <p class="text-[14.5px] leading-relaxed text-ink-soft">Datang tepat waktu, motret sepanjang acara berlangsung.</p>
-            </div>
-            <div class="lift-card rounded-2xl border border-line bg-surface p-7">
-                <div class="mb-[18px] flex h-9 w-9 items-center justify-center rounded-[10px] bg-brand-soft font-mono text-[13px] font-semibold text-brand">03</div>
-                <h3 class="mb-2 text-[17px] font-semibold text-navy">Galeri siap dibagikan</h3>
-                <p class="text-[14.5px] leading-relaxed text-ink-soft">Foto yang sudah diedit masuk ke galeri, tinggal bagikan link-nya ke siswa dan orang tua.</p>
+            <div class="reveal-stagger relative max-w-xl">
+                <div class="absolute bottom-2 left-[15px] top-2 w-px bg-line"></div>
+
+                <div class="lift-card relative flex gap-6 pb-14">
+                    <div class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line bg-page font-mono text-[11px] text-ink-soft">01</div>
+                    <div class="pt-1">
+                        <h3 class="mb-2 text-[17px] font-semibold text-navy">Pilih paket &amp; jadwal</h3>
+                        <p class="max-w-md text-[14.5px] leading-relaxed text-ink-soft">Tentukan tanggal, lokasi, dan paket yang paling pas buat acaramu.</p>
+                    </div>
+                </div>
+
+                <div class="lift-card relative flex gap-6 pb-14">
+                    <div class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line bg-page font-mono text-[11px] text-ink-soft">02</div>
+                    <div class="pt-1">
+                        <h3 class="mb-2 text-[17px] font-semibold text-navy">Fotografer datang</h3>
+                        <p class="max-w-md text-[14.5px] leading-relaxed text-ink-soft">Datang tepat waktu, motret sepanjang acara berlangsung.</p>
+                    </div>
+                </div>
+
+                <div class="lift-card relative flex gap-6">
+                    <div class="relative z-10 flex h-8 w-8 shrink-0 items-center justify-center rounded-full border border-line bg-page font-mono text-[11px] text-ink-soft">03</div>
+                    <div class="pt-1">
+                        <h3 class="mb-2 text-[17px] font-semibold text-navy">Galeri siap dibagikan</h3>
+                        <p class="max-w-md text-[14.5px] leading-relaxed text-ink-soft">Foto yang sudah diedit masuk ke galeri, tinggal bagikan link-nya ke siswa dan orang tua.</p>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
 </section>
 
 {{-- FITUR --}}
-<section id="fitur" class="px-8 py-20">
+<section id="fitur" class="bg-page px-8 py-28">
     <div class="mx-auto max-w-[1180px]">
-        <div class="reveal mx-auto mb-12 max-w-[600px] text-center">
-            <div class="mb-3 text-[12.5px] font-semibold uppercase tracking-wider text-brand">Fitur</div>
-            <h2 class="font-display text-[32px] font-bold tracking-tight text-navy">Yang bisa panitia lakukan di sini</h2>
-        </div>
+        <div class="grid grid-cols-1 gap-10 md:grid-cols-[0.75fr_1.25fr] md:gap-16">
+            <div class="reveal md:sticky md:top-28 md:self-start">
+                <p class="mb-2 text-sm font-medium italic text-brand">Fitur</p>
+                <h2 class="font-display text-[30px] font-bold tracking-tight text-navy md:text-[36px]">Yang bisa panitia lakukan di sini</h2>
+            </div>
 
-        <div class="reveal-stagger grid grid-cols-2 gap-5 md:grid-cols-4">
-            <div class="lift-card rounded-[14px] border border-line bg-surface p-[22px]">
-                <div class="mb-3.5 flex h-[34px] w-[34px] items-center justify-center rounded-[9px] bg-brand-soft">
-                    <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+            <div class="reveal-stagger max-w-xl divide-y divide-line border-t border-line">
+                <div class="lift-card flex items-start gap-5 py-7">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-soft">
+                        <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><path d="M16 2v4M8 2v4M3 10h18"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="mb-1 text-[15px] font-semibold text-navy">Jadwal Sesi</h4>
+                        <p class="max-w-sm text-[14px] leading-relaxed text-ink-soft">Atur tanggal dan lokasi sesi foto tanpa bentrok.</p>
+                    </div>
                 </div>
-                <h4 class="mb-1.5 text-[14.5px] font-semibold text-navy">Jadwal Sesi</h4>
-                <p class="text-[13px] leading-relaxed text-ink-soft">Atur tanggal dan lokasi sesi foto tanpa bentrok.</p>
-            </div>
-            <div class="lift-card rounded-[14px] border border-line bg-surface p-[22px]">
-                <div class="mb-3.5 flex h-[34px] w-[34px] items-center justify-center rounded-[9px] bg-brand-soft">
-                    <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+
+                <div class="lift-card flex items-start gap-5 py-7">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-soft">
+                        <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="mb-1 text-[15px] font-semibold text-navy">Galeri Online</h4>
+                        <p class="max-w-sm text-[14px] leading-relaxed text-ink-soft">Hasil foto tersusun rapi per acara dan siap diunduh, tinggal bagikan satu link.</p>
+                    </div>
                 </div>
-                <h4 class="mb-1.5 text-[14.5px] font-semibold text-navy">Galeri Online</h4>
-                <p class="text-[13px] leading-relaxed text-ink-soft">Hasil foto tersusun rapi per acara dan siap diunduh.</p>
-            </div>
-            <div class="lift-card rounded-[14px] border border-line bg-surface p-[22px]">
-                <div class="mb-3.5 flex h-[34px] w-[34px] items-center justify-center rounded-[9px] bg-brand-soft">
-                    <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+
+                <div class="lift-card flex items-start gap-5 py-7">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-soft">
+                        <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11Z"/><circle cx="12" cy="10" r="2.5"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="mb-1 text-[15px] font-semibold text-navy">Fotografer Terverifikasi</h4>
+                        <p class="max-w-sm text-[14px] leading-relaxed text-ink-soft">Pilih berdasarkan lokasi dan pengalaman acara sekolah.</p>
+                    </div>
                 </div>
-                <h4 class="mb-1.5 text-[14.5px] font-semibold text-navy">Fotografer Terverifikasi</h4>
-                <p class="text-[13px] leading-relaxed text-ink-soft">Pilih fotografer berdasarkan lokasi dan pengalaman acara sekolah.</p>
-            </div>
-            <div class="lift-card rounded-[14px] border border-line bg-surface p-[22px]">
-                <div class="mb-3.5 flex h-[34px] w-[34px] items-center justify-center rounded-[9px] bg-brand-soft">
-                    <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
+
+                <div class="lift-card flex items-start gap-5 py-7">
+                    <div class="flex h-9 w-9 shrink-0 items-center justify-center rounded-lg bg-brand-soft">
+                        <svg class="h-4 w-4 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
+                    </div>
+                    <div>
+                        <h4 class="mb-1 text-[15px] font-semibold text-navy">Status Booking</h4>
+                        <p class="max-w-sm text-[14px] leading-relaxed text-ink-soft">Lihat progres booking, dari diajukan sampai selesai.</p>
+                    </div>
                 </div>
-                <h4 class="mb-1.5 text-[14.5px] font-semibold text-navy">Status Booking</h4>
-                <p class="text-[13px] leading-relaxed text-ink-soft">Lihat progres booking, dari diajukan sampai selesai.</p>
             </div>
         </div>
     </div>
 </section>
 
-{{-- Paket --}}
-<section id="harga" class="border-y border-line bg-surface px-8 py-20">
+{{-- PAKET --}}
+<section id="harga" class="border-y border-line bg-surface px-8 py-28">
     <div class="mx-auto max-w-[1180px]">
-        <div class="reveal mx-auto mb-12 max-w-[600px] text-center">
-            <div class="mb-3 text-[12.5px] font-semibold uppercase tracking-wider text-brand">Harga</div>
-            <h2 class="font-display text-[32px] font-bold tracking-tight text-navy">Paket yang bisa disesuaikan</h2>
-            <p class="mt-3.5 text-[15.5px] leading-relaxed text-ink-soft">Contoh paket di bawah masih bisa kamu ubah nama, isi, dan harganya sesuai kebutuhan.</p>
+        <div class="reveal mb-14 max-w-xl">
+            <p class="mb-2 text-sm font-medium italic text-brand">Harga</p>
+            <h2 class="font-display text-[30px] font-bold tracking-tight text-navy md:text-[36px]">Paket yang bisa disesuaikan</h2>
         </div>
 
-        <div class="reveal-stagger grid grid-cols-1 items-stretch gap-6 md:grid-cols-3">
-            {{-- Paket Dasar --}}
-            <div class="lift-card flex flex-col rounded-2xl border border-line bg-page p-8">
-                <h3 class="mb-1.5 text-lg font-semibold">Paket Dasar</h3>
-                <p class="mb-[22px] text-[13.5px] text-ink-soft">Untuk acara kelas kecil</p>
-                <div class="font-display text-[34px] font-bold text-navy">Rp 500rb<span class="text-sm font-medium text-ink-soft">/sesi</span></div>
-                <ul class="my-[26px] flex-grow list-none">
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-ink-soft">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        60 menit sesi foto
-                    </li>
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-ink-soft">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        15 foto hasil edit
-                    </li>
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-ink-soft">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        1 fotografer
-                    </li>
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-ink-soft">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        Galeri online 30 hari
-                    </li>
-                </ul>
-                <a href="/dashboard" class="inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">Pilih Paket</a>
+        <div class="relative" x-data="paketSlider" x-init="init()">
+            <div
+                class="pointer-events-none absolute inset-y-0 left-0 z-10 w-14 bg-gradient-to-r from-surface to-transparent transition-opacity duration-300 sm:w-20"
+                :class="canScrollLeft ? 'opacity-100' : 'opacity-0'"
+            ></div>
+            <div
+                class="pointer-events-none absolute inset-y-0 right-0 z-10 w-14 bg-gradient-to-l from-surface to-transparent transition-opacity duration-300 sm:w-20"
+                :class="canScrollRight ? 'opacity-100' : 'opacity-0'"
+            ></div>
+
+            <button
+                type="button"
+                @click="prev()"
+                aria-label="Paket sebelumnya"
+                class="slider-arrow absolute left-0 top-1/2 z-20 hidden h-11 w-11 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-page text-navy shadow-lg transition hover:-translate-y-1/2 hover:border-brand hover:bg-brand hover:text-surface md:flex"
+            >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg>
+            </button>
+
+            <div
+                x-ref="slider"
+                @scroll="updateEdges()"
+                @pointerdown="startDrag($event)"
+                @pointermove="duringDrag($event)"
+                @pointerup="endDrag()"
+                @pointercancel="endDrag()"
+                @pointerleave="pointerLeave()"
+                @mouseenter="pauseAutoSlide()"
+                @mouseleave="resumeAutoSlide()"
+                class="package-slider reveal-stagger flex snap-x snap-mandatory items-stretch gap-8 overflow-x-auto px-1 pb-4 pt-5 cursor-grab select-none active:cursor-grabbing [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
+            >
+                @forelse ($pakets as $paket)
+                    <div class="package-card {{ $paket->is_populer
+                            ? 'lift-card-featured relative flex w-[300px] shrink-0 snap-center flex-col rounded-2xl border border-navy bg-navy p-8 text-surface shadow-[0_30px_60px_-25px_rgba(11,42,140,0.45)] sm:w-[320px]'
+                            : 'lift-card relative flex w-[300px] shrink-0 snap-center flex-col rounded-2xl border border-line bg-page p-8 sm:w-[320px]' }}">
+
+                        @if ($paket->is_populer)
+                            <div class="absolute -top-[13px] left-7 rounded-full bg-brand px-3 py-1.5 text-[11.5px] font-semibold text-surface">Paling Populer</div>
+                        @endif
+
+                        <span class="mb-4 font-mono text-[11px] {{ $paket->is_populer ? 'text-brand-soft/70' : 'text-ink-soft' }}">Paket {{ sprintf('%02d', $loop->iteration) }}</span>
+
+                        <h3 class="mb-1.5 text-lg font-semibold {{ $paket->is_populer ? '' : 'text-navy' }}">{{ $paket->judul }}</h3>
+                        <p class="mb-[22px] text-[13.5px] {{ $paket->is_populer ? 'text-brand-soft/70' : 'text-ink-soft' }}">{{ $paket->deskripsi }}</p>
+                        <div class="font-display text-[34px] font-bold {{ $paket->is_populer ? 'text-surface' : 'text-navy' }}">
+                            {{ $paket->harga_formatted }}<span class="text-sm font-medium {{ $paket->is_populer ? 'text-brand-soft/70' : 'text-ink-soft' }}">/sesi</span>
+                        </div>
+
+                        <ul class="my-[26px] flex-grow list-none">
+                            <li class="flex items-start gap-2.5 py-2 text-sm {{ $paket->is_populer ? 'text-brand-soft/90' : 'text-ink-soft' }}">
+                                <svg class="mt-0.5 h-4 w-4 flex-shrink-0 {{ $paket->is_populer ? 'stroke-brand-soft' : 'stroke-brand' }}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
+                                {{ $paket->durasi }} sesi foto
+                            </li>
+                            <li class="flex items-start gap-2.5 py-2 text-sm {{ $paket->is_populer ? 'text-brand-soft/90' : 'text-ink-soft' }}">
+                                <svg class="mt-0.5 h-4 w-4 flex-shrink-0 {{ $paket->is_populer ? 'stroke-brand-soft' : 'stroke-brand' }}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
+                                {{ $paket->jumlah_foto }}
+                            </li>
+                            <li class="flex items-start gap-2.5 py-2 text-sm {{ $paket->is_populer ? 'text-brand-soft/90' : 'text-ink-soft' }}">
+                                <svg class="mt-0.5 h-4 w-4 flex-shrink-0 {{ $paket->is_populer ? 'stroke-brand-soft' : 'stroke-brand' }}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
+                                {{ $paket->jumlah_fotografer }}
+                            </li>
+                            <li class="flex items-start gap-2.5 py-2 text-sm {{ $paket->is_populer ? 'text-brand-soft/90' : 'text-ink-soft' }}">
+                                <svg class="mt-0.5 h-4 w-4 flex-shrink-0 {{ $paket->is_populer ? 'stroke-brand-soft' : 'stroke-brand' }}" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
+                                {{ $paket->durasi_galeri }}
+                            </li>
+                        </ul>
+
+                        <a href="{{ route('booking.show', ['id' => $paket->fotografer_id, 'paket' => $paket->paket_id]) }}"
+                           class="{{ $paket->is_populer
+                                ? 'inline-flex w-full items-center justify-center gap-2 rounded-[10px] bg-brand px-[22px] py-[11px] text-[14.5px] font-semibold text-surface transition hover:bg-brand-dark'
+                                : 'inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand' }}">
+                            Pilih Paket
+                        </a>
+                    </div>
+                @empty
+                    <div class="w-full rounded-2xl border border-dashed border-line bg-page p-12 text-center text-sm text-ink-soft">
+                        Belum ada paket yang tersedia saat ini.
+                    </div>
+                @endforelse
             </div>
 
-            {{-- Paket Populer (featured) --}}
-            <div class="lift-card-featured relative flex scale-[1.03] flex-col rounded-2xl border border-navy bg-navy p-8 text-surface shadow-[0_30px_60px_-25px_rgba(11,42,140,0.45)]">
-                <div class="absolute -top-[13px] left-7 rounded-full bg-brand px-3 py-1.5 text-[11.5px] font-semibold text-surface">Paling Populer</div>
-                <h3 class="mb-1.5 text-lg font-semibold">Paket Populer</h3>
-                <p class="mb-[22px] text-[13.5px] text-brand-soft/70">Untuk wisuda &amp; perpisahan</p>
-                <div class="font-display text-[34px] font-bold text-surface">Rp 750rb<span class="text-sm font-medium text-brand-soft/70">/sesi</span></div>
-                <ul class="my-[26px] flex-grow list-none">
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-brand-soft/90">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand-soft" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        90 menit sesi foto
-                    </li>
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-brand-soft/90">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand-soft" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        25 foto hasil edit
-                    </li>
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-brand-soft/90">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand-soft" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        1 fotografer + asisten
-                    </li>
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-brand-soft/90">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand-soft" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        Galeri online 90 hari
-                    </li>
-                </ul>
-                <a href="#" class="inline-flex w-full items-center justify-center gap-2 rounded-[10px] bg-brand px-[22px] py-[11px] text-[14.5px] font-semibold text-surface transition hover:bg-brand-dark">Pilih Paket</a>
-            </div>
+            <button
+                type="button"
+                @click="next()"
+                aria-label="Paket berikutnya"
+                class="slider-arrow absolute right-0 top-1/2 z-20 hidden h-11 w-11 translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-full border border-line bg-page text-navy shadow-lg transition hover:-translate-y-1/2 hover:border-brand hover:bg-brand hover:text-surface md:flex"
+            >
+                <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg>
+            </button>
 
-            {{-- Paket Premium --}}
-            <div class="lift-card flex flex-col rounded-2xl border border-line bg-page p-8">
-                <h3 class="mb-1.5 text-lg font-semibold">Paket Premium</h3>
-                <p class="mb-[22px] text-[13.5px] text-ink-soft">Untuk acara besar sekolah</p>
-                <div class="font-display text-[34px] font-bold text-navy">Rp 1.2jt<span class="text-sm font-medium text-ink-soft">/sesi</span></div>
-                <ul class="my-[26px] flex-grow list-none">
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-ink-soft">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        3 jam sesi foto
-                    </li>
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-ink-soft">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        60 foto hasil edit
-                    </li>
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-ink-soft">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        2 fotografer
-                    </li>
-                    <li class="flex items-start gap-2.5 py-2 text-sm text-ink-soft">
-                        <svg class="mt-0.5 h-4 w-4 flex-shrink-0 stroke-brand" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                        Galeri online tanpa batas
-                    </li>
-                </ul>
-                <a href="/dashboard" class="inline-flex w-full items-center justify-center gap-2 rounded-[10px] border border-line px-[22px] py-[11px] text-[14.5px] font-semibold text-navy transition hover:border-brand hover:text-brand">Pilih Paket</a>
-            </div>
+            @if ($pakets->count() > 1)
+                <div class="mt-5 flex items-center justify-center gap-2">
+                    @foreach ($pakets as $paket)
+                        <button
+                            type="button"
+                            @click="scrollToIndex({{ $loop->index }})"
+                            aria-label="Ke paket {{ $loop->iteration }}"
+                            class="h-1.5 rounded-full transition-all duration-300"
+                            :class="current === {{ $loop->index }} ? 'w-6 bg-brand' : 'w-1.5 bg-line'"
+                        ></button>
+                    @endforeach
+                </div>
+            @endif
         </div>
     </div>
 </section>

@@ -1,5 +1,8 @@
 import 'preline';
 
+import './availability-check';
+import "./paket.js";
+import './paket-slider';
 import Alpine from 'alpinejs'
 import persist from '@alpinejs/persist'
 
@@ -16,8 +19,12 @@ import "dropzone/dist/dropzone.css";
 Dropzone.autoDiscover = false;
 
 document.addEventListener("DOMContentLoaded", () => {
-    const myDropzone = new Dropzone("#my-dropzone", {
-        url: document.querySelector('#my-dropzone').action,
+    const dropzoneEl = document.querySelector('#my-dropzone');
+
+    if (!dropzoneEl) return;
+
+    const myDropzone = new Dropzone(dropzoneEl, {
+        url: dropzoneEl.action,
         paramName: 'file',
         chunking: true,
         forceChunking: true,

@@ -6,13 +6,20 @@ use App\Http\Controllers\BookingController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\RoleController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PaketController;
+use App\Http\Controllers\AvailabilityController;
+use App\Http\Controllers\PaketBrowseController;
+use App\Models\Paket;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    return view('LandingPage');
+    // Pricing packages are pulled from the database, not hardcoded — see
+    // resources/views/LandingPage.blade.php.
+    $pakets = Paket::latest()->get();
+
+    return view('LandingPage', compact('pakets'));
 });
 
 
@@ -20,19 +27,22 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', function () {
         $role = Auth::user()->role;
 
-        // Kalau user belum pernah pilih role, arahkan dulu ke halaman Pilih Role
-      
         if ($role == 'customer') {
             return app(DashboardController::class)->index();
         }
 
         return view('FotograferDashboard');
     })->name('dashboard');
+});
 
-    // Halaman Pilih Role — cuma bisa diakses user yang sudah login
-    Route::get('/pilih-role', [RoleController::class, 'show'])->name('role.select');
-    Route::post('/pilih-role', [RoleController::class, 'store'])->name('role.store');
-
+// "My Packages" CRUD — only accessible to authenticated users with the
+// fotografer role. Uses the same 'paket' table/model as the public
+// pricing section, scoped to Auth::id() so a photographer only ever
+// sees and manages their own packages.
+Route::middleware(['auth', 'verified', \App\Http\Middleware\EnsureIsFotografer::class])->group(function () {
+    Route::resource('dashboard/paket', PaketController::class)
+        ->only(['create', 'store', 'edit', 'update', 'destroy'])
+        ->names('paket');
 });
 
 Route::get('/finish', function () {
@@ -51,11 +61,21 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
-    Route::get('/booking/{id}', [BookingController::class, 'show'])->name('booking.show');
+    // {id} here is the fotografer's user_id — TransaksiController::show()
+    // looks up that fotografer and lists their packages. Was previously
+    // pointed at BookingController::show(), which doesn't exist (that
+    // controller only has update()); this was silently breaking every
+    // "Pilih Paket" / "Pilih Fotografer" button in the app.
+    Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
 
     route::post('/booking/', [TransaksiController::class, 'create'])->name('booking.create');
     route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
     route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
+
+    Route::get('/cek-ketersediaan', [AvailabilityController::class, 'index'])->name('availability.index');
+    Route::post('/cek-ketersediaan', [AvailabilityController::class, 'check'])->name('availability.check');
+
+    Route::get('/paket', [PaketBrowseController::class, 'index'])->name('packages.index');
 });
 
 

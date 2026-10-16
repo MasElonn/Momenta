@@ -2,76 +2,108 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\paket;
+use App\Models\Paket;
+use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\View\View;
 
 class PaketController extends Controller
 {
     /**
-     * Display a listing of the resource.
+     * Show the form for creating a new package.
      */
-    public function index()
+    public function create(): View
     {
-        //
+        return view('dashboard.paket.create');
     }
 
     /**
-     * Show the form for creating a new resource.
+     * Store a newly created package, owned by the authenticated photographer.
      */
-    public function create()
+    public function store(Request $request): RedirectResponse
     {
-        return view('paket.create');
+        $data = $this->validated($request);
+        $data['fotografer_id'] = Auth::id();
+        $data['is_populer'] = $request->boolean('is_populer');
+
+        Paket::create($data);
+
+        return redirect()
+            ->route('dashboard', ['tab' => 'paket'])
+            ->with('success', 'Paket berhasil dibuat.');
     }
 
     /**
-     * Store a newly created resource in storage.
+     * Show the form for editing a package.
+     *
+     * Route-model-bound via {paket} => paket_id. Ownership is checked before
+     * the form is shown so a photographer can never open another
+     * photographer's edit page.
      */
-    public function store(Request $request)
+    public function edit(Paket $paket): View
     {
-        //
+        $this->authorizeOwner($paket);
+
+        return view('dashboard.paket.edit', compact('paket'));
     }
 
     /**
-     * Display the specified resource.
+     * Update an existing package. Ownership is checked before saving.
      */
-    public function show(paket $paket)
+    public function update(Request $request, Paket $paket): RedirectResponse
     {
-        $paket = paket;;FindOrFail($paket);
-        return view('paket.show', compact('paket'));
+        $this->authorizeOwner($paket);
+
+        $data = $this->validated($request);
+        $data['is_populer'] = $request->boolean('is_populer');
+
+        $paket->update($data);
+
+        return redirect()
+            ->route('dashboard', ['tab' => 'paket'])
+            ->with('success', 'Paket berhasil diperbarui.');
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Delete a package. Ownership is checked before deleting.
      */
-    public function edit(paket $paket)
+    public function destroy(Paket $paket): RedirectResponse
     {
-        $paket = paket::findOrFail($paket);
-        return view('paket.edit', compact('paket'));
-    }
+        $this->authorizeOwner($paket);
 
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, paket $paket)
-    {
-        $request->validate([
-            'nama_paket' => 'required|string|max:255',
-            'deskripsi' => 'required|string',
-            'harga' => 'required|numeric',
-        ]);
-
-        $paket ;;FindOrFail($paket);
-        $paket->update($request->all());
-        return redirect()->route('paket.index')->with('success', 'Paket  berhasil diperbarui.');
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(paket $paket)
-    {
-        $paket = paket::findOrFail($paket);
         $paket->delete();
-        return redirect()->route('paket.index')->with('success', 'Paket  berhasil dihapus.');
+
+        return redirect()
+            ->route('dashboard', ['tab' => 'paket'])
+            ->with('success', 'Paket berhasil dihapus.');
+    }
+
+    /**
+     * Shared validation rules for store() and update().
+     */
+    private function validated(Request $request): array
+    {
+        return $request->validate([
+            'judul' => ['required', 'string', 'max:255'],
+            'deskripsi' => ['required', 'string', 'max:1000'],
+            'harga' => ['required', 'numeric', 'min:0'],
+            'durasi' => ['required', 'string', 'max:100'],
+            'jumlah_foto' => ['required', 'string', 'max:100'],
+            'jumlah_fotografer' => ['required', 'string', 'max:100'],
+            'durasi_galeri' => ['required', 'string', 'max:100'],
+        ]);
+    }
+
+    /**
+     * Abort with 403 unless the current user owns this package.
+     */
+    private function authorizeOwner(Paket $paket): void
+    {
+        abort_if(
+            $paket->fotografer_id !== Auth::id(),
+            403,
+            'Anda tidak memiliki akses ke paket ini.'
+        );
     }
 }

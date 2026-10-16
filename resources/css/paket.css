@@ -1,0 +1,32 @@
+.package-slider {
+    cursor: grab;
+    scroll-behavior: smooth;
+    scrollbar-width: none;
+    scroll-snap-type: x proximity;
+}
+
+.package-slider::-webkit-scrollbar {
+    display: none;
+}
+
+.package-slider.is-dragging {
+    cursor: grabbing;
+    scroll-behavior: auto;
+    scroll-snap-type: none;
+}
+
+.package-card {
+    scroll-snap-align: center;
+    transition:
+        transform 0.4s ease,
+        box-shadow 0.4s ease,
+        opacity 0.4s ease;
+}
+
+.package-card:hover {
+    transform: translateY(-10px) scale(1.015);
+}
+
+.package-card:active {
+    transform: scale(0.98);
+}
