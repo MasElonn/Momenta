@@ -187,21 +187,36 @@
                 <h3 class="text-lg font-bold text-gray-900">Delete Account</h3>
             </div>
 
-            <p class="text-sm text-gray-600 mb-6">
+            <p class="text-sm text-gray-600 mb-4">
                 Are you sure you want to delete your account? All of your resources and data will be permanently removed. This action cannot be undone.
             </p>
 
-            <form action="{{ route('dashboard.destroy') }}" method="POST" class="flex justify-end gap-3">
+            <form method="post" action="{{ route('profile.destroy') }}">
                 @csrf
-                @method('DELETE')
-                <button type="button" @click="modalConfirm = false"
-                        class="py-2 px-4 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
-                    Cancel
-                </button>
-                <button type="submit"
-                        class="py-2 px-4 text-sm font-medium rounded-lg bg-red-600 text-white hover:bg-red-700 focus:outline-hidden">
-                    Confirm Delete
-                </button>
+                @method('delete')
+
+                    <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+
+                    <input class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-hidden focus:border-primary"
+                        id="password"
+                        name="password"
+                        type="password"
+
+                        placeholder="{{ __('Password') }}"
+                    />
+
+                    <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+
+                <div class="mt-6 flex justify-end">
+                    <button class="py-1 px-6 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-layer-line text-muted-foreground-1 hover:border-primary-hover hover:text-primary-hover focus:outline-hidden focus:border-primary-focus focus:text-primary-focus  disabled:opacity-50 disabled:pointer-events-none"
+                        x-on:click="$dispatch('close')">
+                        {{ __('Cancel') }}
+                    </button>
+
+                    <x-danger-button class="ms-3">
+                        {{ __('Delete Account') }}
+                    </x-danger-button>
+                </div>
             </form>
         </div>
     </div>

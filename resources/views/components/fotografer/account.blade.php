@@ -1,6 +1,6 @@
 @props(['user' => Auth::user()])
 
-<div x-show="tab === 'account'" x-data="{ editMode: false, modalConfirm: false }">
+<div x-data="{ editMode: false, modalConfirm: false }">
     <div class="flex flex-col my-3 mb-4">
         <span class="text-2xl font-semibold">My Account</span>
         <span class="text-gray-500">Manage Your Profile and Account Settings</span>

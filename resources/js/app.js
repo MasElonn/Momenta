@@ -1,4 +1,5 @@
 import 'preline';
+<<<<<<< HEAD
 
 import './availability-check';
 import "./paket.js";
@@ -12,19 +13,62 @@ Alpine.start()
 
 import HSRemoveElement from "@preline/remove-element/non-auto";
 HSRemoveElement.autoInit();
+=======
+import Alpine from 'alpinejs';
+import intersect from '@alpinejs/intersect';
+import persist from '@alpinejs/persist';
+>>>>>>> 118048939cf4064c6420717245e23f2df2fbcc52
 
 import Dropzone from "dropzone";
 import "dropzone/dist/dropzone.css";
 
+Alpine.plugin(intersect);
+Alpine.plugin(persist);
+
+window.Alpine = Alpine;
+
+document.addEventListener('livewire:init', () => {
+    Alpine.plugin(intersect);
+    Alpine.plugin(persist);
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    if (!window.Alpine.started) {
+        Alpine.start();
+    }
+});
+
+import HSRemoveElement from "@preline/remove-element/non-auto";
+HSRemoveElement.autoInit();
+
+
 Dropzone.autoDiscover = false;
 
 document.addEventListener("DOMContentLoaded", () => {
+<<<<<<< HEAD
     const dropzoneEl = document.querySelector('#my-dropzone');
 
     if (!dropzoneEl) return;
 
     const myDropzone = new Dropzone(dropzoneEl, {
         url: dropzoneEl.action,
+=======
+    const dropzoneEl = document.querySelector("#my-dropzone");
+
+    // Guard: Only run if the element actually exists on the current page
+    if (!dropzoneEl) return;
+
+    // Grab action from the form element or its data-action attribute
+    const uploadUrl = dropzoneEl.action || dropzoneEl.getAttribute("data-action") || dropzoneEl.closest("form")?.action;
+
+    if (!uploadUrl) {
+        console.error("Dropzone target URL is missing. Ensure the element is a <form> with an action attribute or has data-action.");
+        return;
+    }
+
+    const myDropzone = new Dropzone(dropzoneEl, {
+        url: uploadUrl,
+>>>>>>> 118048939cf4064c6420717245e23f2df2fbcc52
         paramName: 'file',
         chunking: true,
         forceChunking: true,
@@ -41,8 +85,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 window.location.reload();
             });
             this.on("sending", (file, xhr, formData) => {
-                const acaraId = document.querySelector('input[name="acara_id"]')?.value;
-                if (acaraId) formData.append("acara_id", acaraId);
+                const transId = document.querySelector('input[name="trans_id"]')?.value;
+                if (transId) formData.append("trans_id", transId);
             });
         }
     });

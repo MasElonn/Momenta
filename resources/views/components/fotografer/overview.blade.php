@@ -1,10 +1,8 @@
-@props(['user' => Auth::user()])
+@props(['user' => Auth::user(), 'transaksis'])
 
-<div x-show="tab === 'overview'">
+<div>
     <h1 class="pt-5 text-4xl font-semibold">Hello, {{ $user->name ?? Auth::user()->name }}!</h1>
     <h2>Welcome back to your Momenta dashboard. Your next photo session is about to begin.</h2>
-
-    @props(['user' => Auth::user()])
 
     {{--STATISTIK DASHBOARD--}}
     <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-4 mt-6 mb-6">
@@ -13,7 +11,8 @@
         <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
             <div class="flex items-center gap-4">
 
-                <div class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-xl">
+                <div button @click="tab = 'paket', section = ''"
+                class="w-12 h-12 rounded-xl bg-blue-50 flex items-center justify-center text-xl">
                     <x-lucide-package-2 class="w-6 h-6 text-blue-600" />
                 </div>
 
@@ -39,7 +38,7 @@
         <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
             <div class="flex items-center gap-4">
 
-                <div @click="tab = 'event', section = ''"
+                <div @click="tab = 'transaksi', section = ''"
                 class="w-12 h-12 rounded-xl bg-green-50 flex items-center justify-center text-xl">
                     <x-lucide-circle-dollar-sign class="w-6 h-6 text-green-600" />
                 </div>
@@ -66,17 +65,19 @@
         <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
             <div class="flex items-center gap-4">
 
-                <div class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center text-xl">
+                <div @click="tab = 'booking', section = ''"
+                class="w-12 h-12 rounded-xl bg-orange-50 flex items-center justify-center text-xl">
                     <x-lucide-calendar-1 class="w-6 h-6 text-orange-600" />
+                    
                 </div>
 
                 <div>
                     <p class="text-sm text-gray-500">
-                        Upcoming Session
+                        Booking Session
                     </p>
 
                     <h2 class="text-2xl font-bold text-gray-800">
-                        3
+                        
                     </h2>
 
                     <p class="text-xs text-gray-400">
@@ -92,7 +93,8 @@
         <div class="bg-white rounded-xl p-5 shadow-sm border border-gray-100">
             <div class="flex items-center gap-4">
 
-                <div class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-xl">
+                <div @click="tab = 'gallery', section = ''" 
+                    class="w-12 h-12 rounded-xl bg-purple-50 flex items-center justify-center text-xl">
                     <x-lucide-image class="w-6 h-6 text-purple-600" />
                 </div>
 
@@ -116,7 +118,4 @@
                      lokasi crud hasil transaksi
                 </div>
     </div>
-        </div>
-    </div>
-    
-    <div
+</div>

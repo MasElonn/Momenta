@@ -1,3 +1,6 @@
-<div x-show="tab === 'event'" class="space-y-4">
-    <h2 class="text-lg font-semibold text-gray-800">Upcoming Session</h2>
+<div>
+    <h2 class="text-xl font-semibold">Jadwal Booking</h2>
+    <p class="mt-2 text-gray-500">
+        Kelola jadwal dan acara booking fotografer di sini.
+    </p>
 </div>

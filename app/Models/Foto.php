@@ -15,6 +15,9 @@ class Foto extends Model
         'acara_id',
         'r2_bucket',
         'r2_key',
+        'r2_dir',
+        'r2_url',
+        'thumbnail_url',
     ];
 
     public function acara()

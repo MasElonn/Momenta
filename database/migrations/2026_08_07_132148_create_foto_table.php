@@ -14,8 +14,9 @@ return new class extends Migration
         Schema::create('foto', function (Blueprint $table) {
             $table->id('foto_id');
             $table->foreignId('acara_id')->constrained('acara','acara_id')->onDelete('cascade');
-            $table->string('r2_bucket');
-            $table->string('r2_key');
+            $table->string('r2_dir');
+            $table->string('r2_url');
+            $table->string('thumbnail_url')->nullable();
             $table->timestamps();
         });
     }

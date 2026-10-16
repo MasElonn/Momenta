@@ -11,6 +11,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <title>Dashboard</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     {{-- Vite --}}
     @vite('resources/css/app.css')
@@ -35,110 +36,44 @@
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin="">
     </script>
+    <script src="https://unpkg.com/dropzone@6/dist/dropzone-min.js"></script>
+    <link rel="stylesheet" href="https://unpkg.com/dropzone@6/dist/dropzone.css" type="text/css" />
 
 </head>
 
 <body>
 
-<div
-    class="w-screen h-screen flex"
-    x-data="{
-        tab: '{{ old('tab', request('tab', 'overview')) }}',
-        section: ''
-    }"
->
+<div class="w-screen h-screen flex" x-data="{
+    tab: $persist('overview').as('dashboard_tab'),
+    section: $persist('').as('dashboard_section')}">
 
     {{-- SIDEBAR --}}
     <x-fotografer.sidebar :user="$user ?? Auth::user()" />
 
-
     {{-- MAIN CONTENT --}}
-    <main class="static flex-1 p-4">
-
-        {{-- ========================= --}}
-        {{-- OVERVIEW --}}
-        {{-- ========================= --}}
-        <div
-            x-show="tab === 'overview'"
-            x-cloak
-        >
-            <x-fotografer.overview
-                :user="$user ?? Auth::user()"
-            />
+    <main class="static flex-1 p-4 justify-between overflow-y-auto">
+        <div x-show="tab === 'overview'" x-cloak>
+            <x-fotografer.overview :user="$user ?? Auth::user()"  :transaksis="$transaksis"/>
         </div>
-
-
-        {{-- ========================= --}}
-        {{-- BOOKING --}}
-        {{-- ========================= --}}
-        <div
-            x-show="tab === 'booking'"
-            x-cloak
-        >
-            <x-fotografer.booking />
+        <div x-show="tab === 'paket'" x-cloak>
+            <x-fotografer.paket  :transaksis="$transaksis"/>
         </div>
-
-
-        {{-- ========================= --}}
-        {{-- GALLERY --}}
-        {{-- ========================= --}}
-        <div
-            x-show="tab === 'gallery'"
-            x-cloak
-        >
-            <x-fotografer.gallery />
+        <div x-show="tab === 'booking'" x-cloak>
+            <x-fotografer.booking  :transaksis="$transaksis"/>
         </div>
-
-
-        {{-- ========================= --}}
-        {{-- EVENT --}}
-        {{-- ========================= --}}
-        <div
-            x-show="tab === 'event'"
-            x-cloak
-        >
-            <x-fotografer.event />
+        <div x-show="tab === 'gallery'" x-cloak>
+            <x-fotografer.gallery  :transaksis="$transaksis"/>
         </div>
-
-
-        {{-- ========================= --}}
-        {{-- TRANSAKSI --}}
-        {{-- ========================= --}}
-        <div
-            x-show="tab === 'transaksi'"
-            x-cloak
-        >
-            <x-fotografer.transaksi />
+        <div x-show="tab === 'event'" x-cloak>
+            <x-fotografer.event  :transaksis="$transaksis"/>
         </div>
-    
-
-
-
-        {{-- ========================= --}}
-        {{-- MY ACCOUNT --}}
-        {{-- ========================= --}}
-        <div
-            x-show="tab === 'account'"
-            x-cloak
-        >
-            <x-fotografer.account
-                :user="$user ?? Auth::user()"
-            />
+        <div x-show="tab === 'transaksi'" x-cloak>
+            <x-fotografer.transaksi  :transaksis="$transaksis"/>
         </div>
-
-                {{-- ========================= --}}
-        {{-- PAKET --}}
-        {{-- ========================= --}}
-        <div
-            x-show="tab === 'paket'"
-            x-cloak
-        >
-            <x-fotografer.paket />
+        <div x-show="tab === 'account'" x-cloak>
+            <x-fotografer.account :user="$user ?? Auth::user()"  :transaksis="$transaksis"/>
         </div>
-
-        {{-- ALERT --}}
         <x-alert />
-
     </main>
 
 </div>

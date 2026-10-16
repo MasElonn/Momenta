@@ -10,14 +10,33 @@ class AcaraController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'tanggal' => 'required|date',
+            'jam' => 'nullable|date_format:H:i',
+            'lokasi' => 'nullable|string|max:255',
+            'status' => 'required|in:upcoming,ongoing,completed',
+        ]);
+
+        $acara = Acara::where('acara_id', $id)
+            ->whereHas('transaksi.paket', function ($query) {
+                $query->where('fotografer_id', auth()->id());
+            })
+            ->firstOrFail();
+
+        $acara->update([
+            'tanggal' => $request->tanggal,
+            'jam' => $request->jam,
+            'lokasi' => $request->lokasi,
+            'status' => $request->status,
+        ]);
+
+        return back()->with('success', 'Jadwal berhasil diperbarui.');
+
     }
 
-    /**
-     * Show the form for creating a new resource.
-     */
+
     public function create()
     {
         //
@@ -50,16 +69,18 @@ class AcaraController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Acara $acara)
-    {
-        //
-    }
 
-    /**
-     * Remove the specified resource from storage.
-     */
     public function destroy(Acara $acara)
     {
-        //
+        $acara = Acara::where('acara_id', $id)
+            ->whereHas('transaksi.paket', function ($query) {
+                $query->where('fotografer_id', auth()->id());
+            })
+            ->firstOrFail();
+
+        $acara->delete();
+
+        return back()->with('success', 'Jadwal berhasil dihapus.');
     }
-}
+    }
+

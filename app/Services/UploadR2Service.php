@@ -15,4 +15,8 @@ class UploadR2Service
 
         return Storage::disk('r2')->url($path);
     }
+    public function path(string $dir, string $filename): string
+    {
+        return $dir . '/' . $filename;
+    }
 }
