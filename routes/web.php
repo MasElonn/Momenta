@@ -5,7 +5,6 @@ use App\Http\Controllers\FotoController;
 use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\UserController;
 use App\Http\Controllers\PaketController;
 use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\PaketBrowseController;
@@ -21,15 +20,7 @@ Route::get('/', function () {
     return view('LandingPage', compact('pakets'));
 });
 Route::middleware(['auth', 'verified'])->group(function () {
-    Route::get('/dashboard', function () {
-        $role = Auth::user()->role;
-
-        if ($role == 'customer') {
-            return app(DashboardController::class)->index();
-        }
-
-        return view('FotograferDashboard');
-    })->name('dashboard');
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 });
 
 // "My Packages" CRUD — only accessible to authenticated users with the
@@ -56,20 +47,30 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
-    // {id} here is the fotografer's user_id — TransaksiController::show()
-    // looks up that fotografer and lists their packages. Was previously
-    // pointed at BookingController::show(), which doesn't exist (that
-    // controller only has update()); this was silently breaking every
-    // "Pilih Paket" / "Pilih Fotografer" button in the app.
     Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
+    Route::post('/booking', [TransaksiController::class, 'create'])->name('booking.create');
+    Route::get('/pembayaran/{id}', [TransaksiController::class, 'index'])->name('pembayaran');
+    Route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
+    Route::get('/finish/{id}', [TransaksiController::class, 'finish'])->name('finish');
+    Route::delete('/cancel/{id}', [TransaksiController::class, 'destroy'])->name('cancel.booking');
 
-    route::post('/booking/', [TransaksiController::class, 'create'])->name('booking.create');
-    route::get('/pembayaran', [TransaksiController::class, 'index'])->name('pembayaran');
-    route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
+    Route::post('/transaksi/{id}/accept', [TransaksiController::class, 'accept'])->name('transaksi.accept');
+    Route::post('/transaksi/{id}/reject', [TransaksiController::class, 'reject'])->name('transaksi.reject');
 
+    Route::get('/acara/{acaraId}/download', [FotoController::class, 'downloadAll'])
+        ->name('foto.downloadAll');
+
+    Route::get('/download', [FotoController::class, 'downloadFoto'])->name('foto.download');
+    Route::post('/delete/{id}', [FotoController::class, 'destroy'])->name('foto.delete');
+
+    // Fitur Cek Ketersediaan Jadwal Fotografer.
+    // GET shows the form + empty results shell; POST is called via fetch()
+    // from resources/js/availability-check.js and returns JSON, so the page
+    // never does a full reload when checking a date/time.
     Route::get('/cek-ketersediaan', [AvailabilityController::class, 'index'])->name('availability.index');
     Route::post('/cek-ketersediaan', [AvailabilityController::class, 'check'])->name('availability.check');
 
+    // "Daftar Paket" — every package from every fotografer, for customers.
     Route::get('/paket', [PaketBrowseController::class, 'index'])->name('packages.index');
 });
 

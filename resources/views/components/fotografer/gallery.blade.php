@@ -97,9 +97,12 @@
         </form>
 
         <div class="mt-6 max-h-screen overflow-y-auto pr-2 rounded-2xl">
-            <livewire:gallery-pinterest
-    :trans-id="$transaksi->trans_id"
-    :wire:key="'gallery-'.$transaksi->trans_id"
+@isset($transaksi)
+    <livewire:gallery-pinterest
+        :trans-id="$transaksi->trans_id"
+        :wire:key="'gallery-'.$transaksi->trans_id"
+    />
+@endisset
 />
         </div>
     </div>
