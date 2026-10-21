@@ -98,7 +98,7 @@
     </div>
 
     @foreach ($transaksis as $transaksi)
-        <div x-show="section === 'transaksi' && selected === '{{ $transaksi->trans_id }}'" x-cloak>
+        <div x-show="selected === '{{ $transaksi->trans_id }}'" x-cloak>
             <div class="flex items-center">
                 <div @click="section = '', selected = null"
                      class="border border-gray-200 flex items-center justify-center shadow w-12 h-12 rounded-full cursor-pointer">

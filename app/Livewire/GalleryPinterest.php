@@ -1,51 +1,160 @@
-<?php
+<div
+    x-data="{
+        section: '',
+        transId: null,
+        modalOpen: false,
+        selectedImage: null
+    }"
+    x-show="tab === 'gallery'"
+    x-cloak
+    class="space-y-6"
+>
+    {{-- Daftar Booking --}}
+    <div x-show="section !== 'gallery'">
+        <div class="flex flex-col my-3 mb-4">
+            <span class="text-2xl font-semibold">My Gallery</span>
+        </div>
 
-namespace App\Livewire;
+        <div class="space-y-4">
+            @foreach ($transaksis as $transaksi)
+                @if ($transaksi->acara)
+                    @php
+                        $acara = $transaksi->acara;
+                    @endphp
 
-use App\Models\Acara;
-use App\Models\Foto;
-use Livewire\Component;
-use Livewire\WithPagination;
+                    <div
+                        @click="section = 'gallery'; transId = '{{ $transaksi->trans_id }}'"
+                        class="mb-4 w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer hover:border-gray-300 transition-colors"
+                    >
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
+                            <div class="flex items-center gap-2">
+                                <x-lucide-calendar-1 class="w-5 h-5" />
+                                <span class="font-semibold">Booking</span>
+                                <span class="text-gray-400 text-sm">ID Booking:</span>
+                                <span class="text-gray-500 text-sm">
+                                    #{{ $transaksi->trans_id }}
+                                </span>
+                            </div>
 
-class GalleryPinterest extends Component
-{
-    use WithPagination;
+                            <span class="text-gray-400 text-sm">
+                                {{ $acara->tanggal->translatedFormat('d M Y') }}
+                            </span>
+                        </div>
 
-    public $perPage = 5;
-    public $seed;
-    public $acaraId;
-    public $transId;
+                        <div class="flex items-start gap-4">
+                            <img
+                                class="rounded-lg w-25 h-25 object-cover"
+                                src="https://picsum.photos/150/150"
+                                alt="Gambar acara"
+                            >
 
-    public function mount($acaraId = null, $transId = null)
-    {
-        $this->acaraId = $acaraId;
-        $this->transId = $transId;
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between">
+                                    <h1 class="font-semibold text-lg">
+                                        {{ $acara->judul }}
+                                    </h1>
 
-        if ($this->transId) {
-            $this->acaraId = Acara::where('trans_id', $this->transId)
-                ->value('acara_id');
-        }
+                                    <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+                                        {{ ucfirst($acara->status) }}
+                                    </span>
+                                </div>
 
-        $this->seed = session()->get('gallery_seed_' . $this->acaraId);
+                                <div class="flex items-center gap-6 mt-2 text-sm text-gray-600">
+                                    <span class="flex items-center gap-1">
+                                        <x-lucide-circle-dollar-sign class="w-4 h-4" />
+                                        Harga: Rp
+                                        {{ number_format($transaksi->paket->harga ?? 0, 0, ',', '.') }}
+                                    </span>
 
-        if (!$this->seed) {
-            $this->seed = mt_rand(1, 1000000);
-            session()->put('gallery_seed_' . $this->acaraId, $this->seed);
-        }
-    }
+                                    <span class="flex items-center gap-1">
+                                        <x-lucide-package-2 class="w-4 h-4" />
+                                        Paket: {{ $transaksi->paket->judul ?? '-' }}
+                                    </span>
+                                </div>
 
-    public function loadMore()
-    {
-        $this->perPage += 4;
-    }
+                                <div class="flex items-center gap-2 mt-3">
+                                    <x-lucide-user class="w-5 h-5" />
+                                    <span class="text-sm text-gray-600">
+                                        {{ $transaksi->paket->fotografer->name ?? '-' }} - Fotografer
+                                    </span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endforeach
+        </div>
 
-    public function render()
-    {
-        return view('livewire.gallery-pinterest', [
-            'fotos' => Foto::query()
-                ->where('acara_id', $this->acaraId)
-                ->orderByRaw('RAND(?)', [$this->seed])
-                ->paginate($this->perPage),
-        ]);
-    }
-}
+        {{ $transaksis->links('vendor.pagination.preline') }}
+    </div>
+
+    {{-- Detail Gallery --}}
+    <div x-show="section === 'gallery'" x-cloak>
+        <div class="flex justify-between">
+            <div class="flex items-center gap-2">
+                <button
+                    type="button"
+                    @click="section = ''; transId = null"
+                    class="border border-gray-200 flex items-center justify-center shadow w-12 h-12 rounded-full hover:bg-gray-50 transition-colors"
+                >
+                    <x-lucide-arrow-left class="w-6 h-6" />
+                </button>
+
+                <div class="flex flex-col">
+                    <span class="text-xl font-semibold">My Gallery</span>
+                    <span class="text-xs text-gray-400">
+                        ID Booking: <span x-text="transId"></span>
+                    </span>
+                </div>
+            </div>
+
+            <div class="mr-5">
+                <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+                    Gallery
+                </span>
+            </div>
+        </div>
+
+        <div class="mt-2 mb-3 flex justify-end gap-4 mr-5">
+            <button
+                type="button"
+                class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover"
+            >
+                Download All
+            </button>
+        </div>
+
+        {{-- Form Upload Foto --}}
+        <form
+            action="{{ route('foto.upload') }}"
+            method="POST"
+            class="dropzone"
+            id="my-dropzone"
+        >
+            @csrf
+            <input
+                type="hidden"
+                name="trans_id"
+                id="trans_id"
+                :value="transId"
+            >
+        </form>
+
+        {{-- Foto berdasarkan acara yang dipilih --}}
+        <div class="mt-6 max-h-screen overflow-y-auto pr-2 rounded-2xl">
+            @foreach ($transaksis as $transaksi)
+                @if ($transaksi->acara)
+                    <div
+                        x-show="transId === '{{ $transaksi->trans_id }}'"
+                        x-cloak
+                    >
+                        <livewire:gallery-pinterest
+                            :trans-id="$transaksi->trans_id"
+                            :key="'gallery-'.$transaksi->trans_id"
+                        />
+                    </div>
+                @endif
+            @endforeach
+        </div>
+    </div>
+</div>
