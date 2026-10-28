@@ -4,11 +4,51 @@ import './availability-check';
 import "./paket.js";
 import './paket-slider';
 import Alpine from 'alpinejs';
+import 'sweetalert2/dist/sweetalert2.min.css';
 import intersect from '@alpinejs/intersect';
+import Swal from 'sweetalert2';
 import persist from '@alpinejs/persist';
-
 import Dropzone from "dropzone";
 import "dropzone/dist/dropzone.css";
+
+window.Swal = Swal;
+const swalWithButtons = Swal.mixin({
+    customClass: {
+        confirmButton:
+            'rounded-lg bg-[#1447E6] px-4 py-2 text-white mx-1',
+        cancelButton:
+            'rounded-lg bg-gray-500 px-4 py-2 text-white mx-1'
+    },
+    buttonsStyling: false
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+    const logoutForm = document.getElementById('logout-form');
+
+    if (!logoutForm) return;
+
+    const logoutButton = document.getElementById('logout-button');
+
+    if (!logoutButton) return;
+
+    logoutButton.addEventListener('click', async function () {
+        const result = await swalWithButtons.fire({
+            title: 'Yakin ingin keluar?',
+            text: 'Login kembali untuk akses dashboard!.',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonText: 'Ya, keluar',
+            cancelButtonText: 'Tidak, batal',
+            reverseButtons: true,
+            focusCancel: true
+        });
+
+        if (result.isConfirmed) {
+            logoutForm.submit();
+        }
+    });
+});
+
 
 Alpine.plugin(intersect);
 Alpine.plugin(persist);

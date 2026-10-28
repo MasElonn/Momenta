@@ -39,6 +39,7 @@ class Paket extends Model
         'jumlah_fotografer',
         'durasi_galeri',
         'is_populer',
+        'tersedia',
     ];
 
     /**
@@ -51,6 +52,7 @@ class Paket extends Model
         return [
             'harga' => 'decimal:2',
             'is_populer' => 'boolean',
+            'tersedia' => 'boolean',
         ];
     }
 
@@ -73,23 +75,29 @@ class Paket extends Model
     protected function hargaFormatted(): Attribute
     {
         return Attribute::make(
-            get: function () {
-                $value = (float) $this->harga;
-
-                if ($value >= 1_000_000) {
-                    $jt = $value / 1_000_000;
-                    $formatted = number_format($jt, 1, ',', '.');
-                    $formatted = rtrim(rtrim($formatted, '0'), ',');
-
-                    return 'Rp ' . $formatted . 'jt';
-                }
-
-                if ($value >= 1_000) {
-                    return 'Rp ' . round($value / 1000) . 'rb';
-                }
-
-                return 'Rp ' . number_format($value, 0, ',', '.');
-            }
+            get: fn () => self::formatHargaShort((float) $this->harga)
         );
+    }
+
+    /**
+     * Reusable short-Rupiah formatter — used by the hargaFormatted accessor
+     * above, and also directly for aggregate values (e.g. an average price
+     * across several packages) that don't belong to a single model instance.
+     */
+    public static function formatHargaShort(float $value): string
+    {
+        if ($value >= 1_000_000) {
+            $jt = $value / 1_000_000;
+            $formatted = number_format($jt, 1, ',', '.');
+            $formatted = rtrim(rtrim($formatted, '0'), ',');
+
+            return 'Rp ' . $formatted . 'jt';
+        }
+
+        if ($value >= 1_000) {
+            return 'Rp ' . round($value / 1000) . 'rb';
+        }
+
+        return 'Rp ' . number_format($value, 0, ',', '.');
     }
 }

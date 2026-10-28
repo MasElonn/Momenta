@@ -4,6 +4,10 @@
         <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
                 <h1 class="font-display text-[26px] font-bold tracking-tight text-navy sm:text-[30px]">Daftar Paket</h1>
+                <p class="mt-2 text-[14.5px] leading-relaxed text-ink-soft">
+                    Semua paket dari fotografer kami. Belum tahu fotografer mana yang kosong?
+                    <a href="{{ route('availability.index') }}" class="font-medium text-brand underline-offset-2 hover:underline">Cek ketersediaan dulu</a>.
+                </p>
             </div>
         </div>
 
@@ -18,7 +22,9 @@
                     <div class="flex flex-col rounded-2xl border border-line bg-surface p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-lg">
                         <div class="mb-3 flex items-start justify-between gap-3">
                             <h3 class="text-[17px] font-semibold text-navy">{{ $paket->judul }}</h3>
-                            @if ($paket->is_populer)
+                            @if (! $paket->tersedia)
+                                <span class="shrink-0 rounded-full bg-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700">Tidak tersedia</span>
+                            @elseif ($paket->is_populer)
                                 <span class="shrink-0 rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-semibold text-brand">Populer</span>
                             @endif
                         </div>
@@ -53,10 +59,16 @@
                             {{ $paket->fotografer->name ?? '-' }}
                         </p>
 
-                        <a href="{{ route('booking.show', ['id' => $paket->fotografer_id, 'paket' => $paket->paket_id]) }}"
-                           class="mt-auto inline-flex items-center justify-center rounded-[10px] bg-brand px-4 py-2.5 text-sm font-semibold text-surface transition hover:bg-brand-dark">
-                            Pilih Paket
-                        </a>
+                        @if ($paket->tersedia)
+                            <a href="{{ route('booking.show', ['id' => $paket->fotografer_id, 'paket' => $paket->paket_id]) }}"
+                               class="mt-auto inline-flex items-center justify-center rounded-[10px] bg-brand px-4 py-2.5 text-sm font-semibold text-surface transition hover:bg-brand-dark">
+                                Pilih Paket
+                            </a>
+                        @else
+                            <span class="mt-auto inline-flex cursor-not-allowed items-center justify-center rounded-[10px] bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-500" aria-disabled="true">
+                                Tidak tersedia
+                            </span>
+                        @endif
                     </div>
                 @endforeach
             </div>

@@ -23,6 +23,7 @@
         "dropzone": "^6.2.0",
         "leaflet": "^1.9.4",
         "lodash": "^4.18.1",
-        "preline": "^4.2.0"
+        "preline": "^4.2.0",
+        "sweetalert2": "^11.26.25"
     }
 }

@@ -19,6 +19,11 @@ document.addEventListener('alpine:init', () => {
         current: 0,
         count: 0,
         autoplayTimer: null,
+        autoplay: false, // off: content that moves by itself is distracting and hard to read
+
+        prefersReducedMotion() {
+            return window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+        },
 
         init() {
             this.count = this.$refs.slider.children.length;
@@ -43,7 +48,10 @@ document.addEventListener('alpine:init', () => {
             const el = this.$refs.slider;
             const card = el.children[i];
             if (!card) return;
-            el.scrollTo({ left: card.offsetLeft - el.offsetLeft, behavior: 'smooth' });
+            el.scrollTo({
+                left: card.offsetLeft - el.offsetLeft,
+                behavior: this.prefersReducedMotion() ? 'auto' : 'smooth',
+            });
         },
 
         prev() {
@@ -56,7 +64,7 @@ document.addEventListener('alpine:init', () => {
 
         startAutoplay() {
             clearInterval(this.autoplayTimer);
-            if (this.count <= 1) return;
+            if (!this.autoplay || this.count <= 1) return;
             this.autoplayTimer = setInterval(() => {
                 if (this.current >= this.count - 1) {
                     this.scrollToIndex(0);
@@ -75,6 +83,8 @@ document.addEventListener('alpine:init', () => {
         },
 
         startDrag(e) {
+            if (e.pointerType !== 'mouse') return;
+
             this.isDown = true;
             this.hasDragged = false;
             this.startX = e.pageX;
@@ -134,10 +144,16 @@ document.addEventListener('alpine:init', () => {
         glide() {
             const el = this.$refs.slider;
             const decay = 0.94;
+            const settle = () => {
+                // hasDragged also switches scroll-snap off in the template
+                // while dragging; clearing it lets the row snap to a card.
+                this.hasDragged = false;
+                this.updateEdges();
+                this.resumeAutoSlide();
+            };
             const step = () => {
                 if (Math.abs(this.velocity) < 0.02) {
-                    this.updateEdges();
-                    this.resumeAutoSlide();
+                    settle();
                     return;
                 }
                 el.scrollLeft -= this.velocity * 16;
@@ -145,6 +161,10 @@ document.addEventListener('alpine:init', () => {
                 this.updateEdges();
                 this.raf = requestAnimationFrame(step);
             };
+            if (this.prefersReducedMotion()) {
+                settle();
+                return;
+            }
             this.raf = requestAnimationFrame(step);
         },
     }));

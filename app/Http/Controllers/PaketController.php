@@ -26,6 +26,7 @@ class PaketController extends Controller
         $data = $this->validated($request);
         $data['fotografer_id'] = Auth::id();
         $data['is_populer'] = $request->boolean('is_populer');
+        $data['tersedia'] = $request->boolean('tersedia');
 
         Paket::create($data);
 
@@ -57,6 +58,7 @@ class PaketController extends Controller
 
         $data = $this->validated($request);
         $data['is_populer'] = $request->boolean('is_populer');
+        $data['tersedia'] = $request->boolean('tersedia');
 
         $paket->update($data);
 

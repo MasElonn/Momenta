@@ -20,7 +20,7 @@ class AvailabilityController extends Controller
      */
     public function index(): View
     {
-        return view('availability.index');
+        return view('cek-ketersediaan');
     }
 
     /**

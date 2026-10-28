@@ -19,6 +19,7 @@
             jumlah_fotografer: @js(old('jumlah_fotografer', '1 fotografer')),
             durasi_galeri: @js(old('durasi_galeri', 'Galeri online 90 hari')),
             is_populer: @js((bool) old('is_populer', false)),
+            tersedia: @js((bool) old('tersedia', true)),
         })"
         class="mx-auto max-w-5xl px-4 py-10"
     >
@@ -59,6 +60,10 @@
                         <div class="absolute -top-[13px] left-6 rounded-full bg-brand px-3 py-1.5 text-[11px] font-semibold text-surface">Paling Populer</div>
                     </template>
 
+                    <template x-if="!tersedia">
+                        <span class="mb-3 inline-block w-fit rounded-md bg-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700">Tidak tersedia</span>
+                    </template>
+
                     <h3 class="mb-1 text-lg font-semibold" :class="is_populer ? '' : 'text-navy'" x-text="judul || 'Judul Paket'"></h3>
                     <p class="mb-5 text-[13px]" :class="is_populer ? 'text-brand-soft/70' : 'text-ink-soft'" x-text="deskripsi || 'Deskripsi paket akan tampil di sini'"></p>
 
@@ -86,9 +91,8 @@
                     </ul>
 
                     <div class="w-full rounded-[10px] py-2.5 text-center text-sm font-semibold"
-                         :class="is_populer ? 'bg-brand text-surface' : 'border border-line text-navy'">
-                        Pilih Paket
-                    </div>
+                         :class="!tersedia ? 'bg-slate-200 text-slate-500' : (is_populer ? 'bg-brand text-surface' : 'border border-line text-navy')"
+                         x-text="tersedia ? 'Pilih Paket' : 'Tidak tersedia'"></div>
                 </div>
 
                 <p class="mt-3 text-xs text-ink-soft">Ini simulasi tampilan — otomatis update sambil kamu ngisi form.</p>

@@ -115,7 +115,7 @@
     </div>
 
     {{-- Section: Visibilitas --}}
-    <div>
+    <div class="space-y-3">
         <label class="flex cursor-pointer items-center justify-between rounded-xl border border-line bg-page px-5 py-4">
             <span class="flex items-center gap-2.5">
                 <svg class="h-4 w-4 text-brand" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 6.9-6.3-3.8-6.3 3.8 1.7-6.9L2 9.2l7.1-.6L12 2z"/></svg>
@@ -130,6 +130,27 @@
                 <input type="checkbox" name="is_populer" value="1" x-model="is_populer" class="peer sr-only">
                 <span class="inline-block h-4.5 w-4.5 transform rounded-full bg-surface shadow transition-transform"
                       :class="is_populer ? 'translate-x-6' : 'translate-x-1'"></span>
+            </span>
+        </label>
+
+        {{-- Ketersediaan paket: Ada / Tidak ada.
+             Input hidden bernilai 0 dikirim kalau saklar mati (checkbox yang tidak dicentang
+             tidak dikirim browser sama sekali). Kalau saklar nyala, nilai 1 menimpanya. --}}
+        <label class="flex cursor-pointer items-center justify-between rounded-xl border border-line bg-page px-5 py-4">
+            <span>
+                <span class="block text-sm font-medium text-ink">Ketersediaan paket</span>
+                <span class="block text-xs text-ink-soft">
+                    Status sekarang: <strong x-text="tersedia ? 'Ada' : 'Tidak ada'"></strong>.
+                    Kalau "Tidak ada", paket tetap tampil tetapi tidak bisa dipesan.
+                </span>
+            </span>
+
+            <span class="relative inline-flex h-6 w-11 shrink-0 items-center rounded-full transition-colors"
+                  :class="tersedia ? 'bg-brand' : 'bg-line'">
+                <input type="hidden" name="tersedia" value="0">
+                <input type="checkbox" name="tersedia" value="1" x-model="tersedia" class="peer sr-only">
+                <span class="inline-block h-4.5 w-4.5 transform rounded-full bg-surface shadow transition-transform"
+                      :class="tersedia ? 'translate-x-6' : 'translate-x-1'"></span>
             </span>
         </label>
     </div>

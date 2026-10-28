@@ -1,68 +1,141 @@
 @props(['user' => Auth::user()])
 
-<aside class="sticky overflow-y-auto top-0 shadow-xl w-64 h-screen border-r border-gray-200 flex flex-col items-center py-10 px-4">
-    <div class="flex flex-col items-center mb-10">
-        <div class="uppercase w-16 h-16 rounded-full bg-primary text-white flex items-center justify-center text-2xl font-medium mb-3">
+<aside class="sticky top-0 flex h-screen w-64 flex-col items-center overflow-y-auto border-r border-gray-200 px-4 py-10 shadow-xl">
+
+    {{-- PROFILE --}}
+    <div class="mb-10 flex flex-col items-center">
+        <div class="mb-3 flex h-16 w-16 items-center justify-center rounded-full bg-primary text-2xl font-medium uppercase text-white">
             {{ substr($user->name ?? Auth::user()->name, 0, 1) }}
         </div>
-        <h2 class="mt-1 text-xl font-bold">{{ $user->name ?? Auth::user()->name }}</h2>
-        <span class="text-xs text-gray-500 uppercase font-semibold mt-0.5">{{ $user->role ?? 'customer' }}</span>
+
+        <h2 class="mt-1 text-xl font-bold">
+            {{ $user->name ?? Auth::user()->name }}
+        </h2>
+
+        <span class="mt-0.5 text-xs font-semibold uppercase text-gray-500">
+            {{ $user->role ?? 'customer' }}
+        </span>
     </div>
 
-    <nav class="w-full flex flex-col justify-between h-full">
+    {{-- NAVIGATION --}}
+    <nav class="flex h-full w-full flex-col justify-between">
+
         <div class="space-y-3">
-            <button @click="tab = 'overview'"
-                    :class="tab === 'overview' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
-                <x-lucide-layout-grid class="w-5 h-5" />
+
+            {{-- OVERVIEW --}}
+            <button
+                type="button"
+                @click="tab = 'overview'"
+                :class="tab === 'overview'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30'"
+                class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium"
+            >
+                <x-lucide-layout-grid class="h-5 w-5" />
                 Overview
             </button>
 
-            <button @click="tab = 'paket', section = ''"
-                    :class="tab === 'paket' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
-                <x-lucide-image class="w-5 h-5" />
-                package
+            {{-- PACKAGE --}}
+            <button
+                type="button"
+                @click="tab = 'paket'; section = ''"
+                :class="tab === 'paket'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30'"
+                class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium"
+            >
+                <x-lucide-package class="h-5 w-5" />
+                Package
             </button>
 
-            <button @click="tab = 'booking', section = ''"
-                    :class="tab === 'booking' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
-                <x-lucide-calendar class="w-5 h-5" />
-                My  booking
+            {{-- BOOKING --}}
+            <button
+                type="button"
+                @click="tab = 'booking'; section = ''"
+                :class="tab === 'booking'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30'"
+                class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium"
+            >
+                <x-lucide-calendar class="h-5 w-5" />
+                My Booking
             </button>
 
-
-            <button @click="tab = 'gallery', section = ''"
-                    :class="tab === 'gallery' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
-                <x-lucide-image class="w-5 h-5" />
-                Gallery / foto
+            {{-- GALLERY --}}
+            <button
+                type="button"
+                @click="tab = 'gallery'; section = ''"
+                :class="tab === 'gallery'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30'"
+                class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium"
+            >
+                <x-lucide-image class="h-5 w-5" />
+                Gallery / Foto
             </button>
 
-            <button @click="tab = 'transaksi', section = ''"
-                    :class="tab === 'transaksi' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
-                <x-lucide-image class="w-5 h-5" />
+            {{-- TRANSAKSI --}}
+            <button
+                type="button"
+                @click="tab = 'transaksi'; section = ''"
+                :class="tab === 'transaksi'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30'"
+                class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium"
+            >
+                <x-lucide-wallet class="h-5 w-5" />
                 Transaksi
             </button>
-            <br>
 
-
-            <button @click="tab = 'account'"
-                    :class="tab === 'account' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30 dark:focus:bg-primary-500/30'"
-                    class="w-full flex items-center gap-3 px-4 py-3 text-sm font-medium rounded-lg">
-                <x-lucide-user class="w-5 h-5" />
+            {{-- ACCOUNT --}}
+            <button
+                type="button"
+                @click="tab = 'account'"
+                :class="tab === 'account'
+                    ? 'bg-primary text-primary-foreground'
+                    : 'bg-primary-100 text-primary-800 hover:bg-primary-200 dark:bg-primary-500/20 dark:text-primary-400 dark:hover:bg-primary-500/30'"
+                class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium"
+            >
+                <x-lucide-user class="h-5 w-5" />
                 My Account
             </button>
+
         </div>
 
-        <form action="{{ route('logout') }}" method="POST" class="w-full">
+        {{-- LOGOUT --}}
+        <form
+            id="logout-form"
+            action="{{ route('logout') }}"
+            method="POST"
+            class="mt-8 w-full"
+        >
             @csrf
-            <button type="submit" class="flex w-full py-3 px-4 items-center gap-x-2 text-sm font-medium rounded-lg border border-red-500 text-red-500 hover:border-red-400 hover:text-red-400 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
-                <x-lucide-log-out class="w-5 h-5" />
+
+            <button
+                type="button"
+                @click="
+                    Swal.fire({
+                        title: 'Yakin ingin logout?',
+                        text: 'Kamu perlu login kembali untuk mengakses akunmu.',
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonText: 'Ya, logout',
+                        cancelButtonText: 'Batal',
+                        confirmButtonColor: '#1447E6',
+                        cancelButtonColor: '#6B7280',
+                        reverseButtons: true
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            $el.closest('form').submit();
+                        }
+                    })
+                "
+                class="flex w-full items-center gap-2 rounded-lg border border-red-500 px-4 py-3 text-sm font-medium text-red-500 transition hover:border-red-400 hover:text-red-400 focus:outline-hidden"
+            >
+                <x-lucide-log-out class="h-5 w-5" />
                 Logout
             </button>
         </form>
+
     </nav>
 </aside>
