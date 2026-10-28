@@ -1,4 +1,3 @@
-
 <div x-show="tab === 'booking'" x-cloak class="space-y-6">
 
     @php
@@ -19,6 +18,9 @@
             <h2 class="text-2xl font-bold tracking-tight text-gray-900">
                 Upcoming Sessions
             </h2>
+            <p class="mt-1 text-sm text-gray-500">
+                Kelola jadwal booking dan informasi acara customer.
+            </p>
         </div>
 
         <div class="inline-flex w-fit items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm">
@@ -30,8 +32,9 @@
         </div>
     </div>
 
-    {{-- Daftar Sesi --}} 
+    {{-- Daftar Booking --}}
     @forelse ($upcomingSessions as $session)
+
         <div class="overflow-hidden rounded-2xl border border-gray-200 bg-white shadow-sm transition hover:border-blue-200 hover:shadow-md">
 
             <div class="flex flex-col gap-5 p-5 sm:flex-row sm:items-start">
@@ -44,13 +47,14 @@
                         <p class="text-2xl font-bold text-blue-700">
                             {{ $session->tanggal?->format('d') ?? '--' }}
                         </p>
+
                         <p class="text-sm font-medium text-blue-600">
                             {{ $session->tanggal?->translatedFormat('M Y') ?? '-' }}
                         </p>
                     </div>
                 </div>
 
-                {{-- Informasi --}}
+                {{-- Informasi Booking --}}
                 <div class="min-w-0 flex-1 space-y-3">
 
                     <div class="flex flex-wrap items-start justify-between gap-3">
@@ -78,6 +82,7 @@
                         </span>
                     </div>
 
+                    {{-- Detail Customer --}}
                     <div class="grid grid-cols-1 gap-3 text-sm text-gray-600 sm:grid-cols-2">
 
                         <div class="flex items-center gap-2">
@@ -110,100 +115,191 @@
 
                     </div>
 
+                    {{-- Deskripsi --}}
                     @if ($session->deskripsi)
                         <p class="border-t border-gray-100 pt-3 text-sm leading-relaxed text-gray-500">
                             {{ $session->deskripsi }}
                         </p>
-                        <div class="mt-4 flex justify-end border-t border-gray-100 pt-4">
-                            <button
-                                type="button"
-                                onclick="document.getElementById('edit-acara-{{ $session->acara_id }}').classList.remove('hidden')"
-                                class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
-                            >
-                                Edit Jadwal
-                            </button>
-                            
-                        </div>
                     @endif
+
+                    {{-- Tombol Edit --}}
+                    <div class="mt-4 flex justify-end border-t border-gray-100 pt-4">
+                        <button
+                            type="button"
+                            onclick="document.getElementById('edit-acara-{{ $session->acara_id }}').classList.remove('hidden'); document.getElementById('edit-acara-{{ $session->acara_id }}').classList.add('flex')"
+                            class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                        >
+                            Edit Jadwal
+                        </button>
+                    </div>
+
                 </div>
             </div>
-            
-<div id="edit-acara-{{ $session->acara_id }}"
-     class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4">
+        </div>
 
-    <div class="w-full max-w-md rounded-xl bg-white p-6">
-        <h3 class="mb-4 text-lg font-semibold text-gray-900">
-            Edit Jadwal Sesi
-        </h3>
+        {{-- Modal Edit Jadwal --}}
+        <div
+            id="edit-acara-{{ $session->acara_id }}"
+            class="hidden fixed inset-0 z-50 items-center justify-center overflow-y-auto bg-black/40 p-4"
+        >
+            <div class="my-auto w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
 
-        <form action="{{ route('fotografer.acara.update', $session->acara_id) }}"
-              method="POST"
-              class="space-y-4">
+                <div class="mb-5 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-xl font-semibold text-gray-900">
+                            Edit Jadwal Sesi
+                        </h3>
 
-            @csrf
-            @method('PATCH')
+                        <p class="mt-1 text-sm text-gray-500">
+                            Booking #{{ $session->trans_id }}
+                        </p>
+                    </div>
 
-            <div>
-                <label class="mb-1 block text-sm text-gray-600">Tanggal</label>
-                <input type="date" name="tanggal"
-                       value="{{ $session->tanggal?->format('Y-m-d') }}"
-                       required
-                       class="w-full rounded-lg border border-gray-300 px-3 py-2">
+                    <button
+                        type="button"
+                        onclick="document.getElementById('edit-acara-{{ $session->acara_id }}').classList.add('hidden'); document.getElementById('edit-acara-{{ $session->acara_id }}').classList.remove('flex')"
+                        class="flex h-9 w-9 items-center justify-center rounded-lg text-gray-500 hover:bg-gray-100"
+                    >
+                        <x-lucide-x class="h-5 w-5" />
+                    </button>
+                </div>
+
+                <form
+                    action="{{ route('fotografer.acara.update', $session->acara_id) }}"
+                    method="POST"
+                    class="space-y-4"
+                >
+                    @csrf
+                    @method('PATCH')
+
+                    {{-- Tanggal --}}
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">
+                            Tanggal Acara
+                        </label>
+
+                        <input
+                            type="date"
+                            name="tanggal"
+                            value="{{ $session->tanggal?->format('Y-m-d') }}"
+                            required
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        >
+                    </div>
+
+                    {{-- Jam --}}
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">
+                            Jam Acara
+                        </label>
+
+                        <input
+                            type="time"
+                            name="jam"
+                            value="{{ $session->jam ? substr($session->jam, 0, 5) : '' }}"
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        >
+                    </div>
+
+                    {{-- Lokasi --}}
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">
+                            Lokasi
+                        </label>
+
+                        <input
+                            type="text"
+                            name="lokasi"
+                            value="{{ $session->lokasi }}"
+                            placeholder="Masukkan lokasi acara"
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        >
+                    </div>
+
+                    {{-- Status --}}
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">
+                            Status Acara
+                        </label>
+
+                        <select
+                            name="status"
+                            required
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        >
+                            <option value="upcoming" @selected($session->status === 'upcoming')>
+                                Upcoming
+                            </option>
+
+                            <option value="ongoing" @selected($session->status === 'ongoing')>
+                                Ongoing
+                            </option>
+
+                            <option value="completed" @selected($session->status === 'completed')>
+                                Completed
+                            </option>
+                        </select>
+                    </div>
+
+                    {{-- Deskripsi --}}
+                    <div>
+                        <label class="mb-1 block text-sm font-medium text-gray-700">
+                            Deskripsi
+                        </label>
+
+                        <textarea
+                            name="deskripsi"
+                            rows="3"
+                            placeholder="Tambahkan keterangan acara jika diperlukan"
+                            class="w-full rounded-lg border border-gray-300 px-3 py-2.5 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
+                        >{{ $session->deskripsi }}</textarea>
+                    </div>
+
+                    {{-- Tombol Aksi --}}
+                    <div class="flex flex-col-reverse gap-2 border-t border-gray-100 pt-4 sm:flex-row sm:justify-between">
+
+                        <button
+                            type="button"
+                            onclick="document.getElementById('edit-acara-{{ $session->acara_id }}').classList.add('hidden'); document.getElementById('edit-acara-{{ $session->acara_id }}').classList.remove('flex')"
+                            class="rounded-lg border border-gray-300 px-4 py-2.5 text-sm font-medium text-gray-700 hover:bg-gray-50"
+                        >
+                            Batal
+                        </button>
+
+                        <button
+                            type="submit"
+                            class="rounded-lg bg-blue-600 px-5 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
+                        >
+                            Simpan Perubahan
+                        </button>
+
+                    </div>
+                </form>
+
+                {{-- Hapus Jadwal --}}
+                <form
+                    action="{{ route('fotografer.acara.destroy', $session->acara_id) }}"
+                    method="POST"
+                    class="mt-3 border-t border-gray-100 pt-4"
+                    onsubmit="return confirm('Yakin ingin menghapus jadwal ini?')"
+                >
+                    @csrf
+                    @method('DELETE')
+
+                    <button
+                        type="submit"
+                        class="text-sm font-medium text-red-600 hover:text-red-700"
+                    >
+                        Hapus Jadwal
+                    </button>
+                </form>
+
             </div>
-
-            <div>
-                <label class="mb-1 block text-sm text-gray-600">Jam</label>
-                <input type="time" name="jam"
-                       value="{{ $session->jam ? substr($session->jam, 0, 5) : '' }}"
-                       class="w-full rounded-lg border border-gray-300 px-3 py-2">
-            </div>
-
-            <div>
-                <label class="mb-1 block text-sm text-gray-600">Lokasi</label>
-                <input type="text" name="lokasi"
-                       value="{{ $session->lokasi }}"
-                       class="w-full rounded-lg border border-gray-300 px-3 py-2">
-            </div>
-
-            <div>
-                <label class="mb-1 block text-sm text-gray-600">Status</label>
-                <select name="status" required
-                        class="w-full rounded-lg border border-gray-300 px-3 py-2">
-                    <option value="upcoming" @selected($session->status === 'upcoming')>Upcoming</option>
-                    <option value="ongoing" @selected($session->status === 'ongoing')>Ongoing</option>
-                    <option value="completed" @selected($session->status === 'completed')>Completed</option>
-                </select>
-            </div>
-
-            <div class="flex justify-end gap-2">
-                <button type="button"
-                        onclick="document.getElementById('edit-acara-{{ $session->acara_id }}').classList.add('hidden')"
-                        class="rounded-lg border px-4 py-2 text-sm">
-                    Batal
-                </button>
-
-                <button type="submit"
-                        class="rounded-lg bg-blue-600 px-4 py-2 text-sm text-white hover:bg-blue-700">
-                    Simpan
-                </button>
-            </div>
-        </form>
-
-        <form action="{{ route('fotografer.acara.destroy', $session->acara_id) }}"
-              method="POST" class="mt-3"
-              onsubmit="return confirm('Yakin ingin menghapus jadwal ini?')">
-            @csrf
-            @method('DELETE')
-
-            <button type="submit"
-                    class="text-sm text-red-600 hover:text-red-700">
-                Hapus Jadwal
-            </button>
-        </form>
-    </div>
-</div>
+        </div>
 
     @empty
+
+        {{-- Jika Belum Ada Booking --}}
         <div class="rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-14 text-center">
             <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
                 <x-lucide-calendar-days class="h-7 w-7 text-blue-600" />
@@ -217,6 +313,7 @@
                 Booking dari customer akan muncul di sini setelah terhubung dengan paket fotografer kamu.
             </p>
         </div>
+
     @endforelse
 
 </div>
