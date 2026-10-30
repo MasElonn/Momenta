@@ -56,6 +56,9 @@ return [
             'endpoint' => env('CLOUDFLARE_R2_ENDPOINT'),
             'use_path_style_endpoint' => env('CLOUDFLARE_R2_USE_PATH_STYLE_ENDPOINT', true),
             'throw' => true,
+            'http' => [
+            'verify' => false, 
+            ],
         ],
 
         's3' => [

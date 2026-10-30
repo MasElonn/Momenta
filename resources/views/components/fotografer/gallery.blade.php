@@ -14,9 +14,6 @@
             <h1 class="text-2xl font-semibold text-gray-900">
                 Gallery
             </h1>
-            <p class="mt-1 text-sm text-gray-500">
-                Kelola foto dari acara yang sudah kamu tangani.
-            </p>
         </div>
     </div>
 
