@@ -1,3 +1,4 @@
+
 <div x-show="tab === 'booking'" x-cloak class="space-y-6">
 
     @php
@@ -122,27 +123,20 @@
                         </p>
                     @endif
 
-                    {{-- Tombol Edit --}}
                     <div class="mt-4 flex justify-end border-t border-gray-100 pt-4">
                         <button
                             type="button"
-                            onclick="document.getElementById('edit-acara-{{ $session->acara_id }}').classList.remove('hidden'); document.getElementById('edit-acara-{{ $session->acara_id }}').classList.add('flex')"
+                            onclick="const m = document.getElementById('edit-acara-{{ $session->acara_id }}'); m.classList.remove('hidden'); m.classList.add('flex')"
                             class="rounded-lg bg-blue-600 px-4 py-2 text-sm font-medium text-white hover:bg-blue-700"
                         >
                             Edit Jadwal
                         </button>
                     </div>
-
                 </div>
             </div>
-        </div>
 
-        {{-- Modal Edit Jadwal --}}
-        <div
-            id="edit-acara-{{ $session->acara_id }}"
-            class="hidden fixed inset-0 z-50 items-center justify-center overflow-y-auto bg-black/40 p-4"
-        >
-            <div class="my-auto w-full max-w-lg rounded-2xl bg-white p-6 shadow-xl">
+<div id="edit-acara-{{ $session->acara_id }}"
+     class="hidden fixed inset-0 z-50 items-center justify-center bg-black/40 p-4">
 
                 <div class="mb-5 flex items-center justify-between">
                     <div>
@@ -298,8 +292,6 @@
         </div>
 
     @empty
-
-        {{-- Jika Belum Ada Booking --}}
         <div class="rounded-2xl border border-dashed border-gray-300 bg-white px-6 py-14 text-center">
             <div class="mx-auto flex h-14 w-14 items-center justify-center rounded-2xl bg-blue-50">
                 <x-lucide-calendar-days class="h-7 w-7 text-blue-600" />
@@ -313,7 +305,6 @@
                 Booking dari customer akan muncul di sini setelah terhubung dengan paket fotografer kamu.
             </p>
         </div>
-
     @endforelse
 
 </div>

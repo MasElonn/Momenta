@@ -127,23 +127,24 @@ class TransaksiController extends Controller
             ]);
     }
     public function destroy(string $id){
-        $acara_id = Acara::where('trans_id', $id)->first()->acara_id;
-
-        $acara = Acara::where('trans_id', $id)->firstOrFail();
-        $foto = Foto::where('acara_id', $acara_id)->get();
-        $transaksi = Transaksi::where('trans_id', $id)->firstOrFail();
-
-        if($foto->isNotEmpty()){
-            if(Storage::disk('r2')->deleteDirectory('foto/' . $acara_id)){
-                $foto->each->delete();
+        $acara = Acara::where('trans_id', $id)->first();
+        if ($acara) {
+            $acara_id = $acara->acara_id;
+            $foto = Foto::where('acara_id', $acara_id)->get();
+            if ($foto->isNotEmpty()) {
+                if (Storage::disk('r2')->deleteDirectory('foto/' . $acara_id)) {
+                    $foto->each->delete();
+                }
             }
-
+            $acara->delete();
         }
-        $acara->delete();
-        $transaksi->delete();
 
+        $transaksi = Transaksi::where('trans_id', $id)->first();
+        if ($transaksi) {
+            $transaksi->delete();
+        }
 
-        return redirect()->route('dashboard');
+        return redirect()->route('dashboard')->with('success', 'Booking berhasil dibatalkan');
     }
 
     public function accept(string $id)

@@ -1,6 +1,6 @@
 @props(['user' => Auth::user()])
 
-<div x-show="tab === 'account'" x-data="{ editMode: false, modalConfirm: false }">
+<div x-show="tab === 'account'" x-data="{ editMode: {{ $errors->has('name') || $errors->has('email') || $errors->has('no_hp') ? 'true' : 'false' }}, modalConfirm: {{ $errors->userDeletion->isNotEmpty() ? 'true' : 'false' }} }">
     <div class="flex flex-col my-3 mb-4">
         <span class="text-2xl font-semibold">My Account</span>
         <span class="text-gray-500">Manage Your Profile and Account Settings</span>
@@ -41,6 +41,7 @@
                                 <x-lucide-user class="shrink-0 size-4 text-muted-foreground-1" />
                             </div>
                         </div>
+                        <x-input-error class="mt-2" :messages="$errors->get('name')" />
                     </div>
 
                     <div>
@@ -53,6 +54,7 @@
                                 <x-lucide-mail class="shrink-0 size-4 text-muted-foreground-1" />
                             </div>
                         </div>
+                        <x-input-error class="mt-2" :messages="$errors->get('email')" />
                     </div>
 
                     <div>
@@ -65,6 +67,7 @@
                                 <x-lucide-phone class="shrink-0 size-4 text-muted-foreground-1" />
                             </div>
                         </div>
+                        <x-input-error class="mt-2" :messages="$errors->get('no_hp')" />
                     </div>
 
                     <div x-show="editMode" class="flex justify-end gap-2 pt-2">
@@ -208,8 +211,8 @@
                     <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
 
                 <div class="mt-6 flex justify-end">
-                    <button class="py-1 px-6 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-layer-line text-muted-foreground-1 hover:border-primary-hover hover:text-primary-hover focus:outline-hidden focus:border-primary-focus focus:text-primary-focus  disabled:opacity-50 disabled:pointer-events-none"
-                        x-on:click="$dispatch('close')">
+                    <button type="button" class="py-1 px-6 inline-flex items-center gap-x-1 text-sm font-medium rounded-lg border border-layer-line text-muted-foreground-1 hover:border-primary-hover hover:text-primary-hover focus:outline-hidden focus:border-primary-focus focus:text-primary-focus  disabled:opacity-50 disabled:pointer-events-none"
+                        @click="modalConfirm = false">
                         {{ __('Cancel') }}
                     </button>
 

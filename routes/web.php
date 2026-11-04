@@ -6,6 +6,7 @@ use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\AcaraController;
 use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\PaketBrowseController;
 use App\Models\Paket;
@@ -62,6 +63,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/download', [FotoController::class, 'downloadFoto'])->name('foto.download');
     Route::post('/delete/{id}', [FotoController::class, 'destroy'])->name('foto.delete');
+
+    Route::patch('/fotografer/acara/{id}', [AcaraController::class, 'update'])->name('fotografer.acara.update');
+    Route::delete('/fotografer/acara/{id}', [AcaraController::class, 'destroy'])->name('fotografer.acara.destroy');
 
     // Fitur Cek Ketersediaan Jadwal Fotografer.
     // GET shows the form + empty results shell; POST is called via fetch()

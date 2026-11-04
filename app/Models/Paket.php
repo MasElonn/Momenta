@@ -64,6 +64,11 @@ class Paket extends Model
         return $this->belongsTo(User::class, 'fotografer_id', 'user_id');
     }
 
+    public function transaksi()
+    {
+        return $this->hasMany(Transaksi::class, 'paket_id', 'paket_id');
+    }
+
     /**
      * Harga formatted into short Indonesian Rupiah notation.
      *

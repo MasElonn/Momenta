@@ -12,6 +12,12 @@
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
 
+    <style>
+        [x-cloak] {
+            display: none !important;
+        }
+    </style>
+
     <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
           crossorigin=""/>
@@ -22,13 +28,12 @@
     <script src="https://unpkg.com/dropzone@6/dist/dropzone-min.js"></script>
     <link rel="stylesheet" href="https://unpkg.com/dropzone@6/dist/dropzone.css" type="text/css" />
 
-
 </head>
 <body>
 
 <div class="w-screen h-screen flex" x-data="{
-    tab: $persist('overview').as('dashboard_tab'),
-    section: $persist('').as('dashboard_section')}">
+    tab: $persist('overview').as('customer_dashboard_tab'),
+    section: $persist('').as('customer_dashboard_section')}">
 
     <x-dashboard.sidebar :user="$user ?? Auth::user()" />
 
@@ -38,13 +43,6 @@
         <x-dashboard.gallery  :transaksis="$transaksis"/>
         <x-dashboard.account :user="$user ?? Auth::user()" />
         <x-alert />
-
-
-
-
-
-
-
     </main>
 
 </div>

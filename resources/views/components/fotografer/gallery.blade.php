@@ -1,119 +1,115 @@
-
-<div
-    x-show="tab === 'gallery'"
-    x-cloak
-    x-data="{
-        section: 'list',
-        transId: null
-    }"
-    class="space-y-6"
->
-    {{-- Header --}}
-    <div class="flex items-center justify-between">
-        <div>
-            <h1 class="text-2xl font-semibold text-gray-900">
-                Gallery
-            </h1>
+<div x-data="{ section: '',transId: null, modalOpen: false, selectedImage: null }" class="space-y-6">
+    <div x-show="section !== 'gallery'">
+        <div class="flex flex-col my-3 mb-4">
+            <span class="text-2xl font-semibold">My Gallery</span>
+            <span class="text-gray-500">See All Your Completed Sessions</span>
         </div>
-    </div>
 
-    {{-- Daftar booking --}}
-    <div x-show="section === 'list'" class="space-y-4">
-        @forelse ($transaksis as $transaksi)
-            @if ($transaksi->acara)
-                <div
-                    class="rounded-xl border border-gray-200 bg-white p-4 transition hover:border-gray-300"
-                >
-                    <div class="flex flex-col gap-4 sm:flex-row sm:items-center">
-                        <div class="flex h-16 w-16 shrink-0 items-center justify-center rounded-lg bg-gray-100">
-                            <x-lucide-images class="h-7 w-7 text-gray-500" />
+        <div class="space-y-4">
+            @foreach($transaksis as $transaksi)
+                @if($transaksi->acara)
+                    @php
+                    $trans_id = $transaksi->trans_id;
+                    $acara = $transaksi->acara;
+                    @endphp
+
+                    <div @click="section = 'gallery'; transId = '{{ $transaksi->trans_id }}'"
+                         class="mb-4 w-full rounded-lg border border-gray-200 shadow-sm p-4 cursor-pointer hover:border-gray-300 transition-colors">
+                        <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
+                            <div class="flex items-center gap-2">
+                                <x-lucide-calendar-1 class="w-5 h-5" />
+                                <span class="font-semibold">Booking</span>
+                                <span class="text-gray-400 text-sm">ID Booking:</span>
+                                <span class="text-gray-500 text-sm">#{{$transaksi->trans_id }}</span>
+                            </div>
+
+                            <span class="text-gray-400 text-sm">{{ $acara->tanggal->translatedFormat('d M Y') }}</span>
                         </div>
 
-                        <div class="min-w-0 flex-1">
-                            <h2 class="font-semibold text-gray-900">
-                                {{ $transaksi->acara->judul }}
-                            </h2>
+                        <div class="flex items-start gap-4">
+                            <img class="rounded-lg w-25 h-25 object-cover" loading="lazy" src="{{ $acara->foto->first()?->thumbnail_url ?? 'https://placehold.co/100/2C5CF3/white?text='.ucfirst(substr($acara->judul,0,1)).'&font=poppins' }}" alt="gambar">
 
-                            <p class="mt-1 text-sm text-gray-500">
-                                Booking #{{ $transaksi->trans_id }}
-                            </p>
+                            <div class="flex-1">
+                                <div class="flex items-start justify-between">
+                                    <h1 class="font-semibold text-lg">{{ $acara->judul }}</h1>
 
-                            <div class="mt-2 flex flex-wrap gap-x-4 gap-y-1 text-sm text-gray-500">
-                                <span class="flex items-center gap-1">
-                                    <x-lucide-calendar class="h-4 w-4" />
-                                    {{ $transaksi->acara->tanggal?->translatedFormat('d M Y') ?? '-' }}
-                                </span>
+                                    <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+                                        {{ ucfirst($acara->status) }}
+                                    </span>
+                                </div>
 
-                                <span>
-                                    Paket: {{ $transaksi->paket->judul ?? '-' }}
-                                </span>
+                                <div class="flex items-center gap-6 mt-2 text-sm text-gray-600">
+                                    <span class="flex items-center gap-1">
+                                        <x-lucide-circle-dollar-sign class="w-4 h-4 rounded-full" />
+                                        Harga: Rp {{ number_format($transaksi->paket->harga ?? 0, 0, ',', '.') }}
+                                    </span>
+
+                                    <span class="flex items-center gap-1">
+                                        <x-lucide-package-2 class="w-4 h-4 rounded-full" />
+                                        Paket: {{ $transaksi->paket->judul ?? '-' }}
+                                    </span>
+                                </div>
+
+                                <div class="flex items-center gap-2 mt-3">
+                                    <x-lucide-user class="w-6 h-6 rounded-full" />
+                                    <span class="text-sm text-gray-600">{{ $transaksi->paket->fotografer->name ?? '-' }} - Fotografer</span>
+                                </div>
                             </div>
                         </div>
-
-                        <button
-                            type="button"
-                            @click="section = 'detail'; transId = '{{ $transaksi->trans_id }}'"
-                            class="inline-flex items-center justify-center gap-2 rounded-lg border border-gray-200 px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
-                        >
-                            Lihat Gallery
-                            <x-lucide-arrow-right class="h-4 w-4" />
-                        </button>
                     </div>
-                </div>
-            @endif
-        @empty
-            <div class="rounded-xl border border-dashed border-gray-300 bg-white px-6 py-12 text-center">
-                <x-lucide-images class="mx-auto h-10 w-10 text-gray-400" />
-
-                <h2 class="mt-3 font-medium text-gray-900">
-                    Belum ada gallery
-                </h2>
-
-                <p class="mt-1 text-sm text-gray-500">
-                    Gallery akan ditampilkan jika booking sudah memiliki data acara.
-                </p>
-            </div>
-        @endforelse
-
-        <div>
-            {{ $transaksis->links('vendor.pagination.preline') }}
+                @endif
+            @endforeach
         </div>
+
+        {{ $transaksis->links('vendor.pagination.preline') }}
     </div>
 
-    {{-- Detail gallery --}}
-    <div x-show="section === 'detail'" x-cloak>
-        <div class="mb-5 flex items-center justify-between">
-            <div class="flex items-center gap-3">
-                <button
-                    type="button"
-                    @click="section = 'list'; transId = null"
-                    class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 hover:bg-gray-50"
-                >
-                    <x-lucide-arrow-left class="h-5 w-5" />
-                </button>
+    <div x-show="section === 'gallery'">
+        <div class="flex justify-between">
+            <div class="flex items-center gap-2">
+                <div @click="section = '';transId = null"
+                     class="border border-gray-200 flex items-center justify-center shadow w-12 h-12 rounded-full cursor-pointer hover:bg-gray-50 transition-colors">
+                    <x-lucide-arrow-left class="w-6 h-6" />
+                </div>
 
-                <div>
-                    <h2 class="text-xl font-semibold text-gray-900">
-                        Foto Acara
-                    </h2>
-                    <p class="text-sm text-gray-500">
-                        Booking #<span x-text="transId"></span>
-                    </p>
+                <div class="flex flex-col">
+                    <span class="flex-row text-xl font-semibold">My Gallery</span>
+                    <span class="text-xs text-gray-400">ID Booking: <span x-text="transId"></span></span>
                 </div>
             </div>
+
+            @foreach($transaksis as $transaksi)
+                @if($transaksi->acara)
+                    <div x-show="transId === '{{ $transaksi->trans_id }}'" class="mr-5" x-cloak>
+                        <span class="px-3 py-1 rounded-full bg-blue-100 text-blue-700 text-xs font-medium">
+                            {{ ucfirst($transaksi->acara->status) }}
+                        </span>
+                    </div>
+                @endif
+            @endforeach
         </div>
 
-        <div class="rounded-xl border border-gray-200 bg-white p-4 sm:p-6">
-            @foreach ($transaksis as $transaksi)
-                @if ($transaksi->acara)
-                    <div
-                        x-show="transId === '{{ $transaksi->trans_id }}'"
-                        x-cloak
-                    >
-                        <livewire:gallery-pinterest
-                            :trans-id="$transaksi->trans_id"
-                            :key="'gallery-'.$transaksi->trans_id"
-                        />
+        @foreach($transaksis as $transaksi)
+            @if($transaksi->acara)
+                <div x-show="transId === '{{ $transaksi->trans_id }}'" class="mt-2 mb-3 flex justify-end gap-4 mr-5" x-cloak>
+                    <a href="{{ route('foto.downloadAll', ['acaraId' => $transaksi->acara->acara_id]) }}"
+                       class="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden">
+                        Download All
+                    </a>
+                </div>
+            @endif
+        @endforeach
+
+        <form action="{{ route('foto.upload') }}" method="post" class="dropzone" id="my-dropzone">
+            @csrf
+            <input type="hidden" name="trans_id" id="trans_id" :value="transId">
+        </form>
+
+        <div class="mt-6 max-h-screen overflow-y-auto pr-2 rounded-2xl">
+            @foreach($transaksis as $transaksi)
+                @if($transaksi->acara)
+                    <div x-show="transId === '{{ $transaksi->trans_id }}'" x-cloak>
+                        <livewire:gallery-pinterest :acara-id="$transaksi->acara->acara_id" :wire:key="'fotografer-gallery-'.$transaksi->trans_id" />
                     </div>
                 @endif
             @endforeach
