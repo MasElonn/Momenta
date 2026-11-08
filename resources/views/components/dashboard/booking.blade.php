@@ -231,7 +231,7 @@
                             Confirm Cancel
                         </button>
                     </form>
-                </div>
+                </dQiv>
             </div>
         @endif
     @endforeach

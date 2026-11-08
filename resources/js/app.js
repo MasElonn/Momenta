@@ -3,6 +3,7 @@ import 'preline';
 import './availability-check';
 import "./paket.js";
 import './paket-slider';
+import "./animation.js";
 import Alpine from 'alpinejs';
 import 'sweetalert2/dist/sweetalert2.min.css';
 import intersect from '@alpinejs/intersect';

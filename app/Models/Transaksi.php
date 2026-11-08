@@ -37,14 +37,13 @@ class Transaksi extends Model
         return $this->belongsTo(User::class, 'customer_id', 'user_id');
     }
     public function paket()
-    {
-        return $this->belongsTo(Paket::class, 'paket_id', 'paket_id');
-    }
+{
+    return $this->belongsTo(Paket::class, 'paket_id', 'paket_id');
+}
 
     public function acara()
     {
         return $this->hasOne(Acara::class, 'trans_id', 'trans_id');
     }
-
-
+    
 }

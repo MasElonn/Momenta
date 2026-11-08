@@ -1,10 +1,14 @@
 .package-slider {
     cursor: grab;
+    user-select: none;
     scroll-behavior: smooth;
-    scrollbar-width: none;
-    scroll-snap-type: x proximity;
+    touch-action: pan-y;
 }
 
+.package-slider .package-card {
+    flex-shrink: 0;
+}
+    
 .package-slider::-webkit-scrollbar {
     display: none;
 }

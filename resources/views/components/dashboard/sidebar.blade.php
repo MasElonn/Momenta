@@ -71,13 +71,7 @@
             </button>
 
             {{-- CEK KETERSEDIAAN --}}
-            <a
-                href="{{ route('availability.index') }}"
-                class="{{ $itemClass }} {{ $current === 'availability' ? $activeClass : $idleClass }}"
-            >
-                <x-lucide-calendar-check class="h-5 w-5" />
-                Cek Ketersediaan
-            </a>
+            
 
             {{-- DAFTAR PAKET --}}
             <a
