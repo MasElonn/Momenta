@@ -7,6 +7,7 @@ use App\Http\Controllers\GeocodingController;
 use App\Http\Controllers\TransaksiController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\PaketController;
+use App\Http\Controllers\AcaraController;
 use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\PaketBrowseController;
 use App\Models\User;

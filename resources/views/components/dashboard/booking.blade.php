@@ -183,9 +183,9 @@
                                 </a>
                             @endif
 
-                            <button type="button" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
+                            <a href="https://wa.me/+6212121212?text=Halo%20Saya%20Ingin%20Bertanya%20-%20{{$transaksi->trans_id}}" type="button" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
                                 Contact
-                            </button>
+                            </a>
                             <button @click="modalConfirm = true"
                                     type="button" class="text-red-400 text-center py-3 px-4 border-red-400 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border hover:border-red-600 hover:text-red-600 focus:outline-hidden focus:text-red-400 disabled:opacity-50 disabled:pointer-events-none">
                                 Cancel Booking
@@ -219,7 +219,7 @@
                         Are you sure you want to Cancel your Booking? All of your photo will be permanently removed. This action cannot be undone.
                     </p>
 
-                    <form action="{{route('cancel.booking',['id' => $transaksi->trans_id])}}" method="POST" class="flex justify-end gap-3">
+                    <form action="{{route('cancel.booking',['id' => $transaksi->trans_id])}}" method="POST" @submit="section = ''" class="flex justify-end gap-3">
                         @csrf
                         @method('DELETE')
                         <button type="button" @click="modalConfirm = false"

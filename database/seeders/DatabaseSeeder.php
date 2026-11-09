@@ -20,38 +20,36 @@ class DatabaseSeeder extends Seeder
      */
     public function run(): void
     {
-        // User::factory(10)->create();
-
-        User::factory()->create([
+        $customer = User::factory()->create([
             'name' => 'Customer',
             'email' => 'customer@c.c',
             'password' => Hash::make('customer'),
             'role' => 'customer',
             'no_hp' => 80808080808
         ]);
-        User::factory()->create([
+        $fotografer = User::factory()->create([
             'name' => 'Fotografer',
             'email' => 'fotografer@f.f',
             'password' => Hash::make('fotografer'),
             'role' => 'fotografer',
             'no_hp' => 80808080808
         ]);
-        Paket::factory()->create([
-            'fotografer_id' => 2,
+        $paket = Paket::factory()->create([
+            'fotografer_id' => $fotografer->user_id,
             'judul' => 'Paket 1',
             'deskripsi' => 'Paket 1 deskripsi lorem ipsum',
             'harga' => 100000,
         ]);
-        Transaksi::factory()->create([
+        $transaksi = Transaksi::factory()->create([
             'trans_id' => 'BK-1-1-l9iB9',
-            'customer_id' => 1,
-            'paket_id' => 1,
+            'customer_id' => $customer->user_id,
+            'paket_id' => $paket->paket_id,
             'status' => 'unpaid',
             'verified_at' => now(),
             'paid_at' => now(),
         ]);
         Acara::factory()->create([
-            'trans_id' => 'BK-1-1-l9iB9',
+            'trans_id' => $transaksi->trans_id,
             'judul' => 'Acara 1',
             'lokasi' => 'SMK PGRI 3 Malang',
             'tanggal' => date('Y-m-d'),

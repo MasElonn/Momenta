@@ -56,11 +56,6 @@ Alpine.plugin(persist);
 
 window.Alpine = Alpine;
 
-document.addEventListener('livewire:init', () => {
-    Alpine.plugin(intersect);
-    Alpine.plugin(persist);
-});
-
 document.addEventListener('DOMContentLoaded', () => {
     if (!window.Alpine.started) {
         Alpine.start();

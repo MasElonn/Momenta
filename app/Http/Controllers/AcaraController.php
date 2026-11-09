@@ -70,7 +70,7 @@ class AcaraController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function destroy(Acara $acara)
+    public function destroy($id)
     {
         $acara = Acara::where('acara_id', $id)
             ->whereHas('transaksi.paket', function ($query) {
@@ -82,5 +82,5 @@ class AcaraController extends Controller
 
         return back()->with('success', 'Jadwal berhasil dihapus.');
     }
-    }
+}
 
