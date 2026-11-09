@@ -70,17 +70,13 @@ class AcaraController extends Controller
      * Update the specified resource in storage.
      */
 
-    public function destroy(Acara $acara)
-    {
-        $acara = Acara::where('acara_id', $id)
-            ->whereHas('transaksi.paket', function ($query) {
-                $query->where('fotografer_id', auth()->id());
-            })
-            ->firstOrFail();
+    public function destroy($id)
+{
+    $acara = Acara::findOrFail($id);
 
-        $acara->delete();
+    $acara->delete();
 
-        return back()->with('success', 'Jadwal berhasil dihapus.');
-    }
+    return redirect()->back()->with('success', 'Jadwal berhasil dihapus.');
+}
     }
 
