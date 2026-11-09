@@ -1,8 +1,17 @@
 @props(['user' => Auth::user(), 'transaksis'])
 
 <div x-show="tab === 'overview'">
-    <h1 class="pt-5 text-4xl font-semibold">Hello, {{ $user->name ?? Auth::user()->name }}!</h1>
-    <h2>Welcome back to your Momenta dashboard. Your next session is coming up soon.</h2>
+    <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2 mb-6">
+        <div>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Hello, {{ $user->name ?? Auth::user()->name }}!</h1>
+            <p class="text-sm text-gray-500 mt-1">Welcome back to your Momenta dashboard. Your next session is coming up soon.</p>
+        </div>
+        <a href="{{ route('fotografer.browse') }}"
+           class="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-xs transition shrink-0">
+            <x-lucide-camera class="w-4 h-4" />
+            Cari Fotografer
+        </a>
+    </div>
 
     <div class="mt-5 flex justify-between">
         <div class="flex-auto w-full p-2">
@@ -69,7 +78,16 @@
                     </div>
                 @endif
             @empty
-                <div class="text-sm text-gray-400 py-4">Belum ada booking.</div>
+                <div class="rounded-xl border border-dashed border-gray-300 p-8 text-center bg-white my-4">
+                    <x-lucide-calendar-days class="w-10 h-10 mx-auto text-gray-300 mb-2" />
+                    <p class="text-sm font-medium text-gray-700">Belum ada booking sesi</p>
+                    <p class="text-xs text-gray-400 mt-1 mb-4">Temukan fotografer sekolah terbaik untuk mengabadikan momen acaramu.</p>
+                    <a href="{{ route('fotografer.browse') }}"
+                       class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-xs transition">
+                        <x-lucide-camera class="w-3.5 h-3.5" />
+                        Cari Fotografer Sekarang
+                    </a>
+                </div>
             @endforelse
             {{$transaksis->links('vendor.pagination.preline')}}
         </div>

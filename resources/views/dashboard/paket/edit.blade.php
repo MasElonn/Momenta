@@ -24,9 +24,10 @@
         class="mx-auto max-w-5xl px-4 py-10"
     >
         {{-- Logo header --}}
-        <div class="mb-6 flex items-center gap-2">
-            <x-application-logo class="h-6 w-auto" />
-            <span class="text-lg font-bold text-ink">Momenta</span>
+        <div class="mb-6">
+            <a href="{{ route('dashboard') }}">
+                <img src="{{ asset('images/Logo.svg') }}" alt="Momenta" class="h-9 w-auto">
+            </a>
         </div>
         <div class="mb-8 border-t border-line"></div>
 
@@ -39,7 +40,7 @@
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1.3fr_1fr]">
             {{-- Form card --}}
             <div class="rounded-2xl border border-line bg-surface p-7 shadow-sm sm:p-8">
-                <form action="{{ route('paket.update', $paket) }}" method="POST">
+                <form action="{{ route('paket.update', $paket) }}" method="POST" enctype="multipart/form-data">
                     @include('dashboard.paket._form')
                 </form>
             </div>

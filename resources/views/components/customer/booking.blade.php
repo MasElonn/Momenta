@@ -7,7 +7,7 @@
 
         @forelse($transaksis as $transaksi)
             @if($transaksi->acara)
-                @php($acara = $transaksi->acara)
+                @php $acara = $transaksi->acara; @endphp
 
                 <div @click="section = 'booking-{{$acara->acara_id}}'"
                      :class="section ? 'hidden': ''"
@@ -44,9 +44,20 @@
                                 </span>
                             </div>
 
-                            <div class="flex items-center gap-2 mt-3">
-                                <x-lucide-user class="w-6 h-6 rounded-full" />
-                                <span class="text-sm text-gray-600">{{ $transaksi->paket->fotografer->name ?? '-' }} - Fotografer</span>
+                            <div class="flex items-center justify-between mt-3">
+                                <div class="flex items-center gap-2">
+                                    <x-lucide-user class="w-6 h-6 rounded-full" />
+                                    <span class="text-sm text-gray-600">{{ $transaksi->paket->fotografer->name ?? '-' }} - Fotografer</span>
+                                </div>
+                                @if($transaksi->status === 'paid' || $transaksi->status === 'pending')
+                                    <a href="{{ route('transaksi.invoice', ['id' => $transaksi->trans_id]) }}"
+                                       target="_blank"
+                                       @click.stop
+                                       class="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-md border border-emerald-200 transition-colors">
+                                        <x-lucide-receipt class="w-3.5 h-3.5" />
+                                        Invoice
+                                    </a>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -60,7 +71,7 @@
 
     @foreach($transaksis as $transaksi)
         @if($transaksi->acara)
-            @php($acara = $transaksi->acara)
+            @php $acara = $transaksi->acara; @endphp
 
             <div x-show="section === 'booking-{{$acara->acara_id}}'">
                 <div class="flex justify-between">
@@ -175,16 +186,26 @@
                         </div>
 
                         <div class="flex flex-col mt-3 gap-2">
-                            @if($transaksi->status == 'paid')
-
+                            @if($transaksi->status == 'paid' || $transaksi->status == 'pending')
+                                <a href="{{ route('transaksi.invoice', ['id' => $transaksi->trans_id]) }}" target="_blank" class="text-center py-3 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm">
+                                    <x-lucide-receipt class="w-4 h-4" />
+                                    Lihat / Cetak Struk
+                                </a>
                             @else
                                 <a href="{{ route('pembayaran', ['id' => $transaksi->trans_id]) }}" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors">
                                     Bayar Sekarang
                                 </a>
                             @endif
 
-                            <a href="https://wa.me/+6212121212?text=Halo%20Saya%20Ingin%20Bertanya%20-%20{{$transaksi->trans_id}}" type="button" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
-                                Contact
+                            @php
+                                $ftPhone = $transaksi->paket?->fotografer?->no_hp ?? '';
+                                $ftWa = $ftPhone ? preg_replace('/[^0-9]/', '', $ftPhone) : '';
+                                if ($ftWa && str_starts_with($ftWa, '0')) {
+                                    $ftWa = '62' . substr($ftWa, 1);
+                                }
+                            @endphp
+                            <a href="{{ $ftWa ? 'https://wa.me/' . $ftWa . '?text=' . urlencode('Halo, saya ingin bertanya tentang booking #' . $transaksi->trans_id) : 'mailto:' . ($transaksi->paket?->fotografer?->email ?? '') }}" target="_blank" type="button" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
+                                Contact Fotografer
                             </a>
                             <button @click="modalConfirm = true"
                                     type="button" class="text-red-400 text-center py-3 px-4 border-red-400 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border hover:border-red-600 hover:text-red-600 focus:outline-hidden focus:text-red-400 disabled:opacity-50 disabled:pointer-events-none">
@@ -231,7 +252,7 @@
                             Confirm Cancel
                         </button>
                     </form>
-                </dQiv>
+                </div>
             </div>
         @endif
     @endforeach

@@ -21,11 +21,8 @@
             {{-- Left brand / image panel — same diagonal-cut design as before. --}}
             <div class="relative hidden overflow-hidden rounded-l-2xl bg-[#1447E6] p-6 md:flex md:w-[45%] md:flex-col md:justify-between lg:p-8">
 
-                <a href="/" class="relative z-20 flex items-center gap-2 text-lg font-semibold text-white">
-                    <svg class="h-6 w-6" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
-                        <path d="M12 2 3 20h4.2L12 10.5 16.8 20H21L12 2Z" />
-                    </svg>
-                    Momenta
+                <a href="/" class="relative z-20 block">
+                    <img src="{{ asset('images/Logo.svg') }}" alt="Momenta" class="h-10 w-auto brightness-0 invert">
                 </a>
 
                 {{-- Simple diagonally-clipped photo, same angle as the reference. --}}
@@ -53,6 +50,11 @@
             {{-- Right form panel --}}
             <div class="flex w-full flex-1 items-center justify-center bg-[#FDFFFF] px-6 py-8 sm:px-10 md:py-10">
                 <div class="w-full max-w-md">
+                    <div class="mb-6 md:hidden">
+                        <a href="/">
+                            <img src="{{ asset('images/Logo.svg') }}" alt="Momenta" class="h-8 w-auto">
+                        </a>
+                    </div>
                     {{ $slot }}
                 </div>
             </div>

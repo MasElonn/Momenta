@@ -71,35 +71,7 @@
 <x-navbar />
 
 <div class="p-6 max-w-6xl mx-auto">
-
-    <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-5 mb-6">
-        <div class="flex items-center justify-between px-10">
-            <div class="flex flex-col items-center gap-2">
-                <div class="size-10 rounded-full bg-blue-600 text-white font-semibold text-sm flex items-center justify-center shadow-xs">
-                    1
-                </div>
-                <span class="font-semibold text-sm text-blue-600">Booking</span>
-            </div>
-
-            <div class="flex-1 h-px bg-blue-600 mx-6"></div>
-
-            <div class="flex flex-col items-center gap-2">
-                <div class="size-10 rounded-full bg-blue-600 text-white font-semibold text-sm flex items-center justify-center shadow-xs">
-                    2
-                </div>
-                <span class="font-semibold text-sm text-blue-600">Payment</span>
-            </div>
-
-            <div class="flex-1 h-px bg-blue-600 mx-6"></div>
-
-            <div class="flex flex-col items-center gap-2">
-                <div class="size-10 rounded-full bg-blue-600 text-white font-semibold text-sm flex items-center justify-center ring-4 ring-blue-100 shadow-xs">
-                    3
-                </div>
-                <span class="font-semibold text-sm text-blue-600">Finish</span>
-            </div>
-        </div>
-    </div>
+    <x-booking-steps :step="3" />
 
     <div class="border border-b-gray-200 bg-white p-5 rounded-xl flex justify-center items-center h-full shadow-sm overflow-hidden">
         <div class="w-full max-w-lg flex flex-col items-center text-center py-8">
@@ -147,16 +119,33 @@
                         {{ is_numeric($paidAmount) ? Number::currency($paidAmount, in: 'IDR', locale: 'id') : $paidAmount }}
                     </span>
                 </div>
+                @php
+                    $finalTransId = $trans_id ?? session('trans_id');
+                @endphp
+                @if($finalTransId)
+                    <div class="pt-2 flex justify-end">
+                        <a href="{{ route('transaksi.invoice', ['id' => $finalTransId]) }}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline">
+                            <x-lucide-receipt class="w-3.5 h-3.5" />
+                            Lihat Struk Lengkap
+                        </a>
+                    </div>
+                @endif
             </div>
 
             <p class="fade-up-3 text-xs text-gray-400 mb-6">{{__('Please Note that the Fotografer can change the Date if the schecdule is taken, if it taken Fotografer will notify you')}}</p>
 
-            <div class="fade-up-4 flex gap-3">
-                <a href="/" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">
-                    Back to Home
-                </a>
+            <div class="fade-up-4 flex flex-wrap justify-center gap-3">
+                @if($finalTransId)
+                    <a href="{{ route('transaksi.invoice', ['id' => $finalTransId]) }}" target="_blank" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm">
+                        <x-lucide-printer class="w-4 h-4" />
+                        Cetak Struk / Invoice
+                    </a>
+                @endif
                 <a href="{{ route('dashboard') }}" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 transition-colors">
                     View My Bookings
+                </a>
+                <a href="/" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">
+                    Back to Home
                 </a>
             </div>
 

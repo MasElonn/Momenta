@@ -44,7 +44,13 @@
                         </td>
 
                         <td class="px-4 py-3">
-                            {{ $transaksi->customer->name}}
+                            <span class="font-medium text-gray-900 block">{{ $transaksi->customer->name ?? '-' }}</span>
+                            @if(!empty($transaksi->customer?->no_hp))
+                                <span class="text-xs text-gray-500 block">{{ $transaksi->customer->no_hp }}</span>
+                            @endif
+                            @if(!empty($transaksi->customer?->email))
+                                <span class="text-xs text-gray-500 block">{{ $transaksi->customer->email }}</span>
+                            @endif
                         </td>
 
                         <td class="px-4 py-3">
@@ -108,40 +114,83 @@
             </div>
 
 
-            <div class="flex items-center gap-3 mb-4">
-                <span class="text-2xl font-semibold">
-                    {{ $transaksi->trans_id }}
-                </span>
+            <div class="flex flex-wrap items-center justify-between gap-3 mb-4">
+                <div class="flex items-center gap-3">
+                    <span class="text-2xl font-semibold">
+                        {{ $transaksi->trans_id }}
+                    </span>
 
-                @if ($transaksi->status === 'pending')
-                    <span class="border rounded px-2 py-0.5 text-xs text-yellow-700 bg-yellow-50 border-yellow-500">
-                        pending
-                    </span>
-                @elseif ($transaksi->status === 'paid')
-                    <span class="border rounded px-2 py-0.5 text-xs text-green-700 bg-green-50 border-teal-500 bg-green-50">
-                        paid
-                    </span>
-                @elseif ($transaksi->status === 'rejected')
-                    <span class="border rounded px-2 py-0.5 text-xs text-red-700 border-red-400 bg-red-50">
-                        rejected
-                    </span>
-                @elseif ($transaksi->status === 'unpaid')
-                    <span class="border rounded px-2 py-0.5 text-xs text-gray-600 border-line-8">
-                        unpaid
-                    </span>
-                @elseif ($transaksi->status === 'expired')
-                    <span class="border rounded px-2 py-0.5 text-xs text-gray-500 border-gray-300 bg-gray-50">
-                        expired
-                    </span>
-                @endif
+                    @if ($transaksi->status === 'pending')
+                        <span class="border rounded px-2 py-0.5 text-xs text-yellow-700 bg-yellow-50 border-yellow-500">
+                            pending
+                        </span>
+                    @elseif ($transaksi->status === 'paid')
+                        <span class="border rounded px-2 py-0.5 text-xs text-green-700 bg-green-50 border-teal-500 bg-green-50">
+                            paid
+                        </span>
+                    @elseif ($transaksi->status === 'rejected')
+                        <span class="border rounded px-2 py-0.5 text-xs text-red-700 border-red-400 bg-red-50">
+                            rejected
+                        </span>
+                    @elseif ($transaksi->status === 'unpaid')
+                        <span class="border rounded px-2 py-0.5 text-xs text-gray-600 border-line-8">
+                            unpaid
+                        </span>
+                    @elseif ($transaksi->status === 'expired')
+                        <span class="border rounded px-2 py-0.5 text-xs text-gray-500 border-gray-300 bg-gray-50">
+                            expired
+                        </span>
+                    @endif
+                </div>
+
+                <a href="{{ route('transaksi.invoice', ['id' => $transaksi->trans_id]) }}" target="_blank"
+                   class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-lg border border-gray-200 text-xs font-semibold text-gray-700 hover:bg-gray-50 transition-colors">
+                    <x-lucide-receipt class="w-3.5 h-3.5 text-gray-500" />
+                    Lihat Invoice
+                </a>
             </div>
 
             <div class="grid md:grid-cols-2 gap-6">
                 <dl class="text-sm border rounded divide-y h-fit">
                     <div class="flex justify-between px-4 py-3">
                         <dt class="text-gray-500">Customer</dt>
+                        <dd class="font-medium text-gray-900">
+                            {{ $transaksi->customer->name ?? '-' }}
+                        </dd>
+                    </div>
+
+                    <div class="flex justify-between px-4 py-3">
+                        <dt class="text-gray-500">Phone</dt>
                         <dd>
-                            {{ $transaksi->customer->name}}
+                            @php
+                                $tcPhone = $transaksi->customer?->no_hp ?? '';
+                                $tcWa = $tcPhone ? preg_replace('/[^0-9]/', '', $tcPhone) : '';
+                                if ($tcWa && str_starts_with($tcWa, '0')) {
+                                    $tcWa = '62' . substr($tcWa, 1);
+                                }
+                            @endphp
+                            @if($tcWa)
+                                <a href="https://wa.me/{{ $tcWa }}?text={{ urlencode('Halo ' . ($transaksi->customer->name ?? 'Kak') . ', mengenai transaksi #' . $transaksi->trans_id) }}"
+                                   target="_blank"
+                                   class="text-blue-600 hover:underline">
+                                    {{ $tcPhone }}
+                                </a>
+                            @else
+                                <span class="text-gray-400">{{ $tcPhone ?: '-' }}</span>
+                            @endif
+                        </dd>
+                    </div>
+
+                    <div class="flex justify-between px-4 py-3">
+                        <dt class="text-gray-500">Email</dt>
+                        <dd>
+                            @if(!empty($transaksi->customer?->email))
+                                <a href="mailto:{{ $transaksi->customer->email }}" class="text-blue-600 hover:underline">
+                                    {{ $transaksi->customer->email }}
+                                </a>
+                            @else
+                                <span class="text-gray-400">-</span>
+                            @endif
                         </dd>
                     </div>
 

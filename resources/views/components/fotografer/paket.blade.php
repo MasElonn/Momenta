@@ -45,6 +45,11 @@
         <div class="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3">
             @foreach ($pakets as $paket)
                 <div class="group relative flex flex-col rounded-2xl border border-line bg-surface p-6 transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-lg">
+                    @if ($paket->foto)
+                        <div class="mb-4 aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-100">
+                            <img src="{{ $paket->foto_url }}" alt="{{ $paket->judul }}" class="h-full w-full object-cover">
+                        </div>
+                    @endif
 
                     <div class="mb-3 flex items-center justify-between">
                         <span class="font-mono text-[11px] text-ink-soft">#{{ $paket->paket_id }}</span>

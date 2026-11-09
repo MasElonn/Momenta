@@ -3,7 +3,8 @@
     x-cloak
     x-data="{
         section: 'list',
-        transId: null
+        transId: null,
+        transStatus: null
     }"
     class="space-y-6"
 >
@@ -23,7 +24,7 @@
             </span>
 
             <span class="font-semibold text-gray-900">
-                {{ $transaksis->total() }}
+                {{ method_exists($transaksis, 'total') ? $transaksis->total() : $transaksis->count() }}
             </span>
         </div>
     </div>
@@ -177,7 +178,7 @@
 
                             <button
                                 type="button"
-                                @click="section = 'detail'; transId = @js((string) $transaksi->trans_id)"
+                                @click="section = 'detail'; transId = @js((string) $transaksi->trans_id); transStatus = @js((string) $transaksi->acara->status)"
                                 class="inline-flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white transition hover:bg-blue-700"
                             >
                                 <x-lucide-images class="h-4 w-4" />
@@ -228,26 +229,58 @@
     <div x-show="section === 'detail'" x-cloak>
 
         {{-- HEADER DETAIL --}}
-        <div class="mb-5 flex items-center gap-3">
+        <div class="mb-5 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+                <button
+                    type="button"
+                    @click="section = 'list'; transId = null; transStatus = null"
+                    class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white transition hover:bg-gray-50"
+                >
+                    <x-lucide-arrow-left class="h-5 w-5" />
+                </button>
 
-            <button
-                type="button"
-                @click="section = 'list'; transId = null"
-                class="flex h-10 w-10 items-center justify-center rounded-full border border-gray-200 bg-white transition hover:bg-gray-50"
-            >
-                <x-lucide-arrow-left class="h-5 w-5" />
-            </button>
-
-            <div>
-                <h2 class="text-xl font-semibold text-gray-900">
-                    Gallery Acara
-                </h2>
+                <div>
+                    <h2 class="text-xl font-semibold text-gray-900">
+                        Foto Acara
+                    </h2>
+                    <p class="text-xs text-gray-500">
+                        Booking #<span x-text="transId"></span>
+                    </p>
+                </div>
             </div>
-
         </div>
 
         {{-- KONTEN GALLERY --}}
         <div class="rounded-xl border border-gray-200 bg-white p-4 shadow-sm sm:p-6">
+
+            <div x-show="transStatus === 'completed'" class="mb-8">
+                <div class="mb-3 flex items-center justify-between">
+                    <div>
+                        <h3 class="text-sm font-semibold text-gray-800">Upload Foto Dokumentasi</h3>
+                        <p class="text-xs text-gray-500">Unggah foto hasil pemotretan untuk acara yang sudah selesai</p>
+                    </div>
+                    <span class="rounded-full bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-700 border border-emerald-200">
+                        Acara Selesai
+                    </span>
+                </div>
+
+                <form action="{{ route('foto.upload') }}" method="post" class="dropzone rounded-xl border-2 border-dashed border-blue-300 bg-gray-50/50 p-6 text-center transition hover:bg-blue-50/30" id="my-dropzone">
+                    @csrf
+                    <input type="hidden" name="trans_id" id="trans_id" :value="transId">
+                    <div class="dz-message flex flex-col items-center justify-center py-4">
+                        <x-lucide-upload-cloud class="mb-2 h-10 w-10 text-blue-500" />
+                        <p class="font-medium text-gray-800">Tarik dan lepas foto ke sini, atau klik untuk memilih file</p>
+                        <p class="mt-1 text-xs text-gray-400">Mendukung upload banyak foto sekaligus (chunked upload)</p>
+                    </div>
+                </form>
+            </div>
+
+            <div x-show="transStatus !== 'completed'" class="mb-8 rounded-xl border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800">
+                <div class="flex items-center gap-2">
+                    <x-lucide-alert-circle class="h-5 w-5 shrink-0 text-amber-600" />
+                    <span>Upload foto hanya tersedia jika status acara sudah <strong>Selesai (Completed)</strong>.</span>
+                </div>
+            </div>
 
             @foreach ($transaksis as $transaksi)
 

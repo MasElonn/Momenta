@@ -5,9 +5,9 @@ window.bookingForm = function (config) {
         pakets: config.pakets,
         checkUrl: config.checkUrl,
 
-        selectedPackage: config.pakets.length
+        selectedPackage: config.initialPackage || (config.pakets.length
             ? String(config.pakets[0].paket_id)
-            : '',
+            : ''),
 
         tanggal: '',
         jam: '',

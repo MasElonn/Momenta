@@ -37,6 +37,26 @@
             </div>
 
             <div>
+                <label class="mb-2 block text-sm text-ink-soft">Foto Terbaik Paket</label>
+                <div class="space-y-2">
+                    <input type="file" name="foto" id="foto" accept="image/jpeg,image/png,image/webp"
+                           class="block w-full text-sm text-ink-soft file:mr-4 file:rounded-lg file:border-0 file:bg-brand-soft file:px-4 file:py-2.5 file:text-xs file:font-semibold file:text-brand hover:file:bg-brand hover:file:text-white file:transition-colors file:cursor-pointer border border-line rounded-lg bg-surface">
+                    <p class="text-xs text-ink-soft">
+                        Foto terbaik hasil jepretan dari paket ini yang akan ditampilkan di landing page. Format: JPG, PNG, atau WebP (maks. 5MB).
+                    </p>
+                    @if (isset($paket) && $paket->foto)
+                        <div class="mt-2 flex items-center gap-3 rounded-lg border border-line bg-page p-2.5">
+                            <img src="{{ $paket->foto_url }}" alt="Foto paket" class="h-12 w-16 rounded object-cover">
+                            <span class="text-xs text-ink-soft">Foto paket saat ini</span>
+                        </div>
+                    @endif
+                </div>
+                @error('foto')
+                    <p class="mt-1.5 text-xs text-red-600">{{ $message }}</p>
+                @enderror
+            </div>
+
+            <div>
                 <label class="mb-2 block text-sm text-ink-soft">Harga Paket</label>
                 <div class="flex items-center rounded-lg border border-line px-4 py-3 focus-within:border-brand focus-within:ring-1 focus-within:ring-brand">
                     <span class="mr-2 text-sm text-ink-soft">Rp</span>

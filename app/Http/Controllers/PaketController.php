@@ -6,6 +6,7 @@ use App\Models\Paket;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\View\View;
 
 class PaketController extends Controller
@@ -27,6 +28,10 @@ class PaketController extends Controller
         $data['fotografer_id'] = Auth::id();
         $data['is_populer'] = $request->boolean('is_populer');
         $data['tersedia'] = $request->boolean('tersedia');
+
+        if ($request->hasFile('foto')) {
+            $data['foto'] = $request->file('foto')->store('pakets', 'public');
+        }
 
         Paket::create($data);
 
@@ -60,6 +65,13 @@ class PaketController extends Controller
         $data['is_populer'] = $request->boolean('is_populer');
         $data['tersedia'] = $request->boolean('tersedia');
 
+        if ($request->hasFile('foto')) {
+            if ($paket->foto && Storage::disk('public')->exists($paket->foto)) {
+                Storage::disk('public')->delete($paket->foto);
+            }
+            $data['foto'] = $request->file('foto')->store('pakets', 'public');
+        }
+
         $paket->update($data);
 
         return redirect()
@@ -73,6 +85,10 @@ class PaketController extends Controller
     public function destroy(Paket $paket): RedirectResponse
     {
         $this->authorizeOwner($paket);
+
+        if ($paket->foto && Storage::disk('public')->exists($paket->foto)) {
+            Storage::disk('public')->delete($paket->foto);
+        }
 
         $paket->delete();
 
@@ -94,6 +110,7 @@ class PaketController extends Controller
             'jumlah_foto' => ['required', 'string', 'max:100'],
             'jumlah_fotografer' => ['required', 'string', 'max:100'],
             'durasi_galeri' => ['required', 'string', 'max:100'],
+            'foto' => ['nullable', 'image', 'mimes:jpeg,png,jpg,webp', 'max:5120'],
         ]);
     }
 

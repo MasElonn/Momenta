@@ -13,47 +13,55 @@
     <title>Dashboard</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
-    {{-- Vite --}}
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
 
-    {{-- Alpine x-cloak --}}
     <style>
         [x-cloak] {
             display: none !important;
         }
     </style>
 
-    {{-- Leaflet CSS --}}
     <link rel="stylesheet"
           href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
           integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY="
           crossorigin="" />
 
-    {{-- Leaflet JS --}}
     <script
         src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
         integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
         crossorigin="">
     </script>
-    <script src="https://unpkg.com/dropzone@6/dist/dropzone-min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@6/dist/dropzone.css" type="text/css" />
+
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 </head>
 
-<body>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
 
-<div class="w-screen h-screen flex" x-data="{
+<div class="w-screen h-screen flex bg-gray-50 overflow-hidden" x-data="{
     tab: $persist('overview').as('fotografer_dashboard_tab'),
     section: $persist('').as('fotografer_dashboard_section')}">
 
-    {{-- SIDEBAR --}}
     <x-fotografer.sidebar :user="$user ?? Auth::user()" />
 
-    {{-- MAIN CONTENT --}}
-    <main class="static flex-1 p-4 justify-between overflow-y-auto">
+    <main class="static flex-1 p-6 lg:p-8 overflow-y-auto">
         <div x-show="tab === 'overview'" x-cloak>
-            <x-fotografer.overview :user="$user ?? Auth::user()"  :transaksis="$transaksis"/>
+            <x-fotografer.overview
+                :user="$user ?? Auth::user()"
+                :totalPaket="$totalPaket ?? 0"
+                :totalTransaksi="$totalTransaksi ?? 0"
+                :totalBooking="$totalBooking ?? 0"
+                :totalFoto="$totalFoto ?? 0"
+                :totalPendapatan="$totalPendapatan ?? 0"
+                :revenueLabels="$revenueLabels ?? []"
+                :revenueData="$revenueData ?? []"
+                :filterPeriode="$filterPeriode ?? []"
+                :rekapTransaksi="$rekapTransaksi ?? []"
+                :riwayatTransaksi="$riwayatTransaksi ?? collect()"
+                :upcomingSessions="$upcomingSessions ?? collect()"
+                :paketSaya="$paketSaya ?? collect()"
+            />
         </div>
         <div x-show="tab === 'paket'" x-cloak>
             <x-fotografer.paket  :transaksis="$transaksis"/>
@@ -64,9 +72,6 @@
         <div x-show="tab === 'gallery'" x-cloak>
             <x-fotografer.gallery  :transaksis="$transaksis"/>
         </div>
-        <div x-show="tab === 'event'" x-cloak>
-            <x-fotografer.event  :transaksis="$transaksis"/>
-        </div>
         <div x-show="tab === 'transaksi'" x-cloak>
             <x-fotografer.transaksi  :transaksis="$transaksis"/>
         </div>
@@ -75,7 +80,6 @@
         </div>
         <x-alert />
     </main>
-<!-- menandai saja -->
 </div>
 
 </body>

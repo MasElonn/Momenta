@@ -16,119 +16,7 @@
 
 <body class="bg-surface font-sans text-ink antialiased">
 
-<header x-data="{ open: false }"
-        @keydown.escape.window="open = false"
-        class="sticky top-0 z-50 border-b border-line bg-surface">
-
-    <nav class="mx-auto flex max-w-[1180px] items-center justify-between px-6 py-3 md:px-8"
-         aria-label="Navigasi utama">
-
-        <a href="#beranda" class="shrink-0">
-            <img src="{{ asset('images/Logo.svg') }}"
-                 alt="Momenta"
-                 width="100"
-                 class="h-auto">
-        </a>
-
-        <div class="hidden items-center gap-7 md:flex">
-            <a href="#beranda" data-nav-link class="text-sm font-medium text-brand transition-colors hover:text-brand">
-                Beranda
-            </a>
-
-            <a href="#cara-kerja" data-nav-link class="text-sm text-ink-soft transition-colors hover:text-brand">
-                Cara Kerja
-            </a>
-
-            <a href="#fitur" data-nav-link class="text-sm text-ink-soft transition-colors hover:text-brand">
-                Fitur
-            </a>
-
-            <a href="#fotografer" data-nav-link class="text-sm text-ink-soft transition-colors hover:text-brand">
-                Fotografer
-            </a>
-        </div>
-
-        <div class="hidden items-center gap-3 md:flex">
-            @auth
-                <a href="{{ url('/dashboard') }}"
-                   class="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">
-                    Dashboard
-                </a>
-            @else
-                <a href="{{ route('login') }}"
-                   class="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand">
-                    Masuk
-                </a>
-
-                <a href="{{ route('register') }}"
-                   class="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">
-                    Daftar
-                </a>
-            @endauth
-        </div>
-
-        <button type="button"
-                class="rounded-lg p-2 text-ink transition-colors hover:bg-brand-soft md:hidden"
-                @click="open = !open"
-                :aria-expanded="open.toString()"
-                aria-controls="menu-mobile"
-                aria-label="Buka menu">
-
-            <svg x-show="!open" class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M4 7h16M4 12h16M4 17h16"/>
-            </svg>
-
-            <svg x-show="open" x-cloak class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                <path d="M6 6l12 12M18 6 6 18"/>
-            </svg>
-        </button>
-    </nav>
-
-    <div id="menu-mobile"
-         x-show="open"
-         x-cloak
-         x-transition.opacity.duration.200ms
-         class="border-t border-line bg-surface md:hidden">
-
-        <div class="mx-auto max-w-[1180px] px-6 py-3">
-
-            <a href="#beranda" @click="open = false" class="block border-b border-line py-3 text-sm text-ink transition-colors hover:text-brand">
-                Beranda
-            </a>
-
-            <a href="#cara-kerja" @click="open = false" class="block border-b border-line py-3 text-sm text-ink transition-colors hover:text-brand">
-                Cara Kerja
-            </a>
-
-            <a href="#fitur" @click="open = false" class="block border-b border-line py-3 text-sm text-ink transition-colors hover:text-brand">
-                Fitur
-            </a>
-
-            <a href="#fotografer" @click="open = false" class="block border-b border-line py-3 text-sm text-ink transition-colors hover:text-brand">
-                Fotografer
-            </a>
-
-            <div class="flex gap-3 py-4">
-                @auth
-                    <a href="{{ url('/dashboard') }}"
-                       class="w-full rounded-lg bg-brand px-5 py-3 text-center text-sm font-semibold text-white">
-                        Dashboard
-                    </a>
-                @else
-                    <a href="{{ route('login') }}"
-                       class="flex-1 rounded-lg border border-line px-5 py-3 text-center text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand">
-                        Masuk
-                    </a>
-
-                    <a href="{{ route('register') }}"
-                       class="flex-1 rounded-lg bg-brand px-5 py-3 text-center text-sm font-semibold text-white transition-colors hover:bg-brand-dark">
-                        Daftar
-                    </a>
-                @endauth
-            </div>
-        </div>
-    </div>
-</header>
+<x-navbar />
 
 <section id="beranda" class="scroll-mt-20 bg-surface py-14 md:py-20">
     <div class="mx-auto max-w-[1180px] px-6 md:px-8">
@@ -327,80 +215,22 @@
             </p>
         @else
             <div class="reveal-stagger mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
-
                 @foreach ($fotografer as $item)
-                    <div x-data="{ open: false }"
-                         class="rounded-xl border border-line bg-white p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg">
-
-                        <div class="flex items-center gap-4">
-                            <div class="flex h-14 w-14 shrink-0 items-center justify-center rounded-full bg-brand-soft text-xl font-bold text-brand">
-                                {{ strtoupper(substr($item->name, 0, 1)) }}
-                            </div>
-
-                            <div class="min-w-0">
-                                <h3 class="font-display text-lg font-semibold text-ink">
-                                    {{ $item->name }}
-                                </h3>
-
-                                <p class="text-sm text-ink-soft">
-                                    Fotografer Momenta
-                                </p>
-                            </div>
-                        </div>
-
-                        <button type="button"
-                                @click="open = !open"
-                                :aria-expanded="open.toString()"
-                                class="mt-6 w-full rounded-lg bg-brand px-5 py-3 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">
-
-                            <span x-show="!open">Lihat paket</span>
-                            <span x-show="open" x-cloak>Tutup paket</span>
-                        </button>
-
-                        <div x-show="open"
-                             x-cloak
-                             x-transition.opacity.duration.200ms
-                             class="mt-5 border-t border-line pt-5">
-
-                            @forelse ($item->pakets as $paket)
-                                <div class="border-b border-line py-4 last:border-0">
-
-                                    <h4 class="font-semibold text-ink">
-                                        {{ $paket->judul }}
-                                    </h4>
-
-                                    <p class="mt-1 text-sm text-ink-soft">
-                                        {{ $paket->deskripsi }}
-                                    </p>
-
-                                    <p class="mt-3 font-display text-xl font-bold text-ink">
-                                        {{ $paket->harga_formatted }}
-                                    </p>
-
-                                    <ul class="mt-3 space-y-1 text-sm text-ink-soft">
-                                        <li>Durasi: {{ $paket->durasi }}</li>
-                                        <li>Jumlah foto: {{ $paket->jumlah_foto }}</li>
-                                        <li>Fotografer: {{ $paket->jumlah_fotografer }}</li>
-                                        <li>Durasi galeri: {{ $paket->durasi_galeri }}</li>
-                                    </ul>
-
-                                    <a href="{{ route('booking.show', ['id' => $item->user_id, 'paket' => $paket->paket_id]) }}"
-                                       class="mt-4 inline-flex w-full items-center justify-center rounded-lg border border-brand px-4 py-2.5 text-sm font-semibold text-brand transition-all duration-300 hover:bg-brand hover:text-white">
-                                        Pilih paket
-                                    </a>
-                                </div>
-
-                            @empty
-                                <p class="text-sm text-ink-soft">
-                                    Belum ada paket yang tersedia.
-                                </p>
-                            @endforelse
-
-                        </div>
-                    </div>
+                    <x-fotografer-card :item="$item" />
                 @endforeach
-
             </div>
+
+            @if ($totalFotografer > $fotografer->count())
+                <div class="mt-10 text-center">
+                    <a href="{{ route('fotografer.browse') }}"
+                       class="inline-flex items-center gap-2 rounded-xl border border-line bg-white px-6 py-3 text-sm font-semibold text-ink shadow-xs transition hover:border-brand hover:text-brand">
+                        Lihat Semua Fotografer
+                        <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
+                        </svg>
+                    </a>
+                </div>
+            @endif
         @endif
 
     </div>

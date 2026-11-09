@@ -10,19 +10,29 @@ use App\Http\Controllers\PaketController;
 use App\Http\Controllers\AcaraController;
 use App\Http\Controllers\AvailabilityController;
 use App\Http\Controllers\PaketBrowseController;
+use App\Http\Controllers\FotograferBrowseController;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\Auth;
 
 Route::get('/', function () {
-    $fotografer = User::where('role', 'fotografer')
+    $fotograferQuery = User::where('role', 'fotografer')
+        ->where('status_akun', 'active');
+
+    $totalFotografer = (clone $fotograferQuery)->count();
+
+    $fotografer = $fotograferQuery
         ->with(['pakets' => function ($query) {
             $query->where('tersedia', true);
         }])
+        ->take(3)
         ->get();
 
-    return view('LandingPage', compact('fotografer'));
+    return view('LandingPage', compact('fotografer', 'totalFotografer'));
 });
+
+Route::get('/fotografer', [FotograferBrowseController::class, 'index'])
+    ->name('fotografer.browse');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])
@@ -48,16 +58,18 @@ Route::middleware('auth')->group(function () {
 
     Route::post('/get-coordinates', [GeocodingController::class, 'getCoordinates']);
 
-    Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
-    Route::post('/booking', [TransaksiController::class, 'create'])->name('booking.create');
-    Route::post('/booking/cek-jadwal', [AvailabilityController::class, 'check'])
-    ->middleware('auth')
-    ->name('booking.availability.check');
+    Route::middleware([\App\Http\Middleware\EnsureIsCustomer::class])->group(function () {
+        Route::get('/booking/{id}', [TransaksiController::class, 'show'])->name('booking.show');
+        Route::post('/booking', [TransaksiController::class, 'create'])->name('booking.create');
+        Route::post('/booking/cek-jadwal', [AvailabilityController::class, 'check'])->name('booking.availability.check');
 
-    Route::get('/pembayaran/{id}', [TransaksiController::class, 'index'])->name('pembayaran');
-    Route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
-    Route::get('/finish/{id}', [TransaksiController::class, 'finish'])->name('finish');
-    Route::delete('/cancel/{id}', [TransaksiController::class, 'destroy'])->name('cancel.booking');
+        Route::get('/pembayaran/{id}', [TransaksiController::class, 'index'])->name('pembayaran');
+        Route::post('/bayar', [TransaksiController::class, 'upload'])->name('pembayaran.upload');
+        Route::get('/finish/{id}', [TransaksiController::class, 'finish'])->name('finish');
+        Route::delete('/cancel/{id}', [TransaksiController::class, 'destroy'])->name('cancel.booking');
+    });
+
+    Route::get('/transaksi/{id}/invoice', [TransaksiController::class, 'invoice'])->name('transaksi.invoice');
 
     Route::post('/transaksi/{id}/accept', [TransaksiController::class, 'accept'])->name('transaksi.accept');
     Route::post('/transaksi/{id}/reject', [TransaksiController::class, 'reject'])->name('transaksi.reject');
@@ -67,6 +79,9 @@ Route::middleware('auth')->group(function () {
 
     Route::get('/download', [FotoController::class, 'downloadFoto'])->name('foto.download');
     Route::post('/delete/{id}', [FotoController::class, 'destroy'])->name('foto.delete');
+
+    Route::patch('/fotografer/acara/{id}', [AcaraController::class, 'update'])->name('fotografer.acara.update');
+    Route::delete('/fotografer/acara/{id}', [AcaraController::class, 'destroy'])->name('fotografer.acara.destroy');
 
     Route::get('/paket', [PaketBrowseController::class, 'index'])->name('packages.index');
 });
@@ -83,17 +98,11 @@ Route::middleware([
         Route::get('/fotografer', [FotograferController::class, 'index'])
             ->name('fotografer.index');
 
-        Route::get('/fotografer/create', [FotograferController::class, 'create'])
-            ->name('fotografer.create');
+        Route::post('/fotografer/{id}/accept', [FotograferController::class, 'accept'])
+            ->name('fotografer.accept');
 
-        Route::post('/fotografer', [FotograferController::class, 'store'])
-            ->name('fotografer.store');
-
-        Route::get('/fotografer/{id}/edit', [FotograferController::class, 'edit'])
-            ->name('fotografer.edit');
-
-        Route::put('/fotografer/{id}', [FotograferController::class, 'update'])
-            ->name('fotografer.update');
+        Route::post('/fotografer/{id}/reject', [FotograferController::class, 'reject'])
+            ->name('fotografer.reject');
 
         Route::delete('/fotografer/{id}', [FotograferController::class, 'destroy'])
             ->name('fotografer.destroy');

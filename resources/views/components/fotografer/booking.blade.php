@@ -173,6 +173,17 @@
 
                     <div class="ml-auto flex min-w-0 flex-1 items-center gap-2">
 
+                        @if(!empty($session->trans_id))
+                            <a
+                                href="{{ route('transaksi.invoice', ['id' => $session->trans_id]) }}"
+                                target="_blank"
+                                class="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-gray-200 px-2 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
+                            >
+                                <x-lucide-receipt class="h-4 w-4 shrink-0 text-gray-500" />
+                                Invoice
+                            </a>
+                        @endif
+
                         {{-- EDIT --}}
                         <button
                             type="button"

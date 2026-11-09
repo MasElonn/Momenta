@@ -31,6 +31,8 @@ class RegisteredUserController extends Controller
                 'max:255',
                 'unique:users,email',
             ],
+            'role' => ['nullable', 'in:customer,fotografer'],
+            'no_hp' => ['nullable', 'string', 'max:20'],
             'password' => [
                 'required',
                 'confirmed',
@@ -38,14 +40,23 @@ class RegisteredUserController extends Controller
             ],
         ]);
 
+        $role = $request->input('role', 'customer');
+        $statusAkun = $role === 'fotografer' ? 'pending' : 'active';
+
         $user = User::create([
             'name' => $request->name,
             'email' => $request->email,
-            'role' => 'customer',
+            'role' => $role,
+            'status_akun' => $statusAkun,
+            'no_hp' => $request->no_hp,
             'password' => Hash::make($request->password),
         ]);
 
         event(new Registered($user));
+
+        if ($role === 'fotografer') {
+            return redirect()->route('login')->with('status', 'Pendaftaran fotografer berhasil! Akun Anda sedang menunggu persetujuan dari Admin.');
+        }
 
         Auth::login($user);
 

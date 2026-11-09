@@ -18,8 +18,9 @@ return new class extends Migration
             $table->string('judul');
             $table->text('lokasi');
             $table->date('tanggal');
-            $table->text('deskripsi');
             $table->time('jam');
+            $table->time('jam_selesai')->nullable();
+            $table->text('deskripsi')->nullable();
             $table->enum('status', ['upcoming', 'ongoing', 'completed'])->default('upcoming');
             $table->timestamps();
         });

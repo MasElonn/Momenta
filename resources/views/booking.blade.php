@@ -12,35 +12,15 @@
     <x-navbar />
 
     <div class="max-w-6xl mx-auto p-5 md:p-6">
-        <div class="bg-white border border-gray-200 rounded-xl p-4 md:p-5 mb-5">
-            <div class="flex items-center justify-between px-2 md:px-10">
-                <div class="flex flex-col items-center gap-2">
-                    <div class="size-9 rounded-full bg-[#1447E6] text-white font-semibold text-sm flex items-center justify-center">1</div>
-                    <span class="font-semibold text-xs md:text-sm text-[#1447E6]">Booking</span>
-                </div>
-
-                <div class="flex-1 h-px bg-gray-200 mx-3 md:mx-6"></div>
-
-                <div class="flex flex-col items-center gap-2">
-                    <div class="size-9 rounded-full bg-gray-100 border border-gray-200 text-gray-400 font-semibold text-sm flex items-center justify-center">2</div>
-                    <span class="text-gray-400 font-medium text-xs md:text-sm">Payment</span>
-                </div>
-
-                <div class="flex-1 h-px bg-gray-200 mx-3 md:mx-6"></div>
-
-                <div class="flex flex-col items-center gap-2">
-                    <div class="size-9 rounded-full bg-gray-100 border border-gray-200 text-gray-400 font-semibold text-sm flex items-center justify-center">3</div>
-                    <span class="text-gray-400 font-medium text-xs md:text-sm">Finish</span>
-                </div>
-            </div>
-        </div>
+        <x-booking-steps :step="1" />
 
         <div
             class="flex flex-col md:flex-row gap-5 items-start"
             x-data="bookingForm({
                 fotograferId: @js($fid),
                 pakets: @js($pakets),
-                checkUrl: @js(route('booking.availability.check'))
+                checkUrl: @js(route('booking.availability.check')),
+                initialPackage: @js(request('paket') ? (string) request('paket') : '')
             })"
         >
             <div class="w-full md:w-2/3 bg-white border border-gray-200 rounded-xl p-5 md:p-6">
@@ -73,6 +53,35 @@
                                 </option>
                             @endforeach
                         </select>
+                    </div>
+
+                    <div x-show="currentPackage" class="rounded-xl border border-gray-200 bg-gray-50/70 p-4 text-xs">
+                        <div class="flex items-start justify-between gap-3 border-b border-gray-200/70 pb-3">
+                            <div>
+                                <h3 class="font-bold text-sm text-gray-900" x-text="currentPackage?.judul"></h3>
+                                <p class="mt-1 text-gray-500 line-clamp-2 leading-relaxed" x-show="currentPackage?.deskripsi" x-text="currentPackage?.deskripsi"></p>
+                            </div>
+                            <span class="shrink-0 font-bold text-sm text-[#1447E6]" x-text="'Rp ' + formatPrice()"></span>
+                        </div>
+
+                        <div class="mt-3 grid grid-cols-2 gap-2 sm:grid-cols-4">
+                            <div class="rounded-lg border border-gray-200 bg-white p-2.5">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Durasi</span>
+                                <span class="mt-0.5 block font-bold text-gray-800" x-text="currentPackage?.durasi || '-'"></span>
+                            </div>
+                            <div class="rounded-lg border border-gray-200 bg-white p-2.5">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Jumlah Foto</span>
+                                <span class="mt-0.5 block font-bold text-gray-800" x-text="currentPackage?.jumlah_foto || '-'"></span>
+                            </div>
+                            <div class="rounded-lg border border-gray-200 bg-white p-2.5">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Fotografer</span>
+                                <span class="mt-0.5 block font-bold text-gray-800" x-text="currentPackage?.jumlah_fotografer || '-'"></span>
+                            </div>
+                            <div class="rounded-lg border border-gray-200 bg-white p-2.5">
+                                <span class="block text-[10px] font-semibold text-gray-400 uppercase tracking-wider">Galeri Online</span>
+                                <span class="mt-0.5 block font-bold text-gray-800" x-text="currentPackage?.durasi_galeri || '-'"></span>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="flex gap-3">
@@ -139,6 +148,21 @@
                         <div class="flex justify-between gap-3">
                             <span class="text-gray-500">Durasi</span>
                             <span class="font-medium text-gray-800" x-text="currentPackage ? currentPackage.durasi : '-'"></span>
+                        </div>
+
+                        <div class="flex justify-between gap-3" x-show="currentPackage?.jumlah_foto">
+                            <span class="text-gray-500">Jumlah Foto</span>
+                            <span class="font-medium text-gray-800 text-right" x-text="currentPackage?.jumlah_foto"></span>
+                        </div>
+
+                        <div class="flex justify-between gap-3" x-show="currentPackage?.jumlah_fotografer">
+                            <span class="text-gray-500">Fotografer</span>
+                            <span class="font-medium text-gray-800 text-right" x-text="currentPackage?.jumlah_fotografer"></span>
+                        </div>
+
+                        <div class="flex justify-between gap-3" x-show="currentPackage?.durasi_galeri">
+                            <span class="text-gray-500">Durasi Galeri</span>
+                            <span class="font-medium text-gray-800 text-right" x-text="currentPackage?.durasi_galeri"></span>
                         </div>
                     </div>
 

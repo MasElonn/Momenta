@@ -33,6 +33,7 @@ class Paket extends Model
         'fotografer_id',
         'judul',
         'deskripsi',
+        'foto',
         'harga',
         'durasi',
         'jumlah_foto',
@@ -40,6 +41,11 @@ class Paket extends Model
         'durasi_galeri',
         'is_populer',
         'tersedia',
+    ];
+
+    protected $appends = [
+        'harga_formatted',
+        'foto_url',
     ];
 
     /**
@@ -67,6 +73,24 @@ class Paket extends Model
     public function transaksi()
     {
         return $this->hasMany(Transaksi::class, 'paket_id', 'paket_id');
+    }
+
+    protected function fotoUrl(): Attribute
+    {
+        return Attribute::make(
+            get: function () {
+                if (! $this->foto) {
+                    return null;
+                }
+                if (str_starts_with($this->foto, 'http://') || str_starts_with($this->foto, 'https://')) {
+                    return $this->foto;
+                }
+                if (file_exists(public_path($this->foto))) {
+                    return asset($this->foto);
+                }
+                return asset('storage/' . ltrim($this->foto, '/'));
+            }
+        );
     }
 
     /**

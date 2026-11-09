@@ -24,24 +24,28 @@
     <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
             integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo="
             crossorigin=""></script>
-
-    <script src="https://unpkg.com/dropzone@6/dist/dropzone-min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@6/dist/dropzone.css" type="text/css" />
-
 </head>
-<body>
+<body class="bg-gray-50 text-gray-900 font-sans antialiased">
 
-<div class="w-screen h-screen flex" x-data="{
+<div class="w-screen h-screen flex bg-gray-50 overflow-hidden" x-data="{
     tab: $persist('overview').as('customer_dashboard_tab'),
     section: $persist('').as('customer_dashboard_section')}">
 
-    <x-dashboard.sidebar :user="$user ?? Auth::user()" />
+    <x-customer.sidebar :user="$user ?? Auth::user()" />
 
-    <main class="static flex-1 p-4 justify-between overflow-y-auto">
-        <x-dashboard.overview :user="$user ?? Auth::user()" :transaksis="$transaksis"/>
-        <x-dashboard.booking  :transaksis="$transaksis"/>
-        <x-dashboard.gallery  :transaksis="$transaksis"/>
-        <x-dashboard.account :user="$user ?? Auth::user()" />
+    <main class="static flex-1 p-6 lg:p-8 overflow-y-auto">
+        <div x-show="tab === 'overview'" x-cloak>
+            <x-customer.overview :user="$user ?? Auth::user()" :transaksis="$transaksis"/>
+        </div>
+        <div x-show="tab === 'booking'" x-cloak>
+            <x-customer.booking  :transaksis="$transaksis"/>
+        </div>
+        <div x-show="tab === 'gallery'" x-cloak>
+            <x-customer.gallery  :transaksis="$transaksis"/>
+        </div>
+        <div x-show="tab === 'account'" x-cloak>
+            <x-customer.account :user="$user ?? Auth::user()" />
+        </div>
         <x-alert />
     </main>
 

@@ -11,6 +11,9 @@ class PaketBrowseController extends Controller
     {
         $pakets = Paket::with('fotografer')
             ->where('tersedia', true)
+            ->whereHas('fotografer', function ($query) {
+                $query->where('status_akun', 'active');
+            })
             ->get();
 
         return view('packages', compact('pakets'));

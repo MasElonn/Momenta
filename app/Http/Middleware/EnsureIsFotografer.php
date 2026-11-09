@@ -15,6 +15,10 @@ class EnsureIsFotografer
      */
     public function handle(Request $request, Closure $next): Response
     {
+        if (!auth()->check() || auth()->user()->role !== 'fotografer' || auth()->user()->status_akun !== 'active') {
+            abort(403, 'Akses khusus fotografer yang telah diverifikasi.');
+        }
+
         return $next($request);
     }
 }

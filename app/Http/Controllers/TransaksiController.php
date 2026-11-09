@@ -136,11 +136,17 @@ class TransaksiController extends Controller
             ],
         ]);
 
-        $customerId = auth()->id();
+        $user = auth()->user();
 
-        if (!$customerId) {
+        if (!$user) {
             return redirect()->route('login');
         }
+
+        if ($user->role !== 'customer') {
+            return redirect()->route('dashboard')->with('error', 'Hanya akun customer yang dapat melakukan booking.');
+        }
+
+        $customerId = $user->user_id;
 
         $fotografer = User::where('user_id', $validated['fotografer_id'])
             ->where('role', 'fotografer')
@@ -242,6 +248,11 @@ class TransaksiController extends Controller
 
     public function show(string $id)
     {
+        $user = auth()->user();
+        if ($user && $user->role !== 'customer') {
+            return redirect()->route('dashboard')->with('error', 'Hanya akun customer yang dapat melakukan booking.');
+        }
+
         $fotografer = User::where('role', 'fotografer')
             ->where('user_id', $id)
             ->firstOrFail();
@@ -325,5 +336,18 @@ class TransaksiController extends Controller
         $transaksi->save();
 
         return back()->with('success', 'Payment rejected');
+    }
+
+    public function invoice(string $id)
+    {
+        $transaksi = Transaksi::with(['paket.fotografer', 'customer', 'acara'])->where('trans_id', $id)->firstOrFail();
+
+        $user = auth()->user();
+        $userId = $user?->user_id ?? auth()->id();
+        if ($user?->role !== 'admin' && $userId !== (int) $transaksi->customer_id && $userId !== (int) $transaksi->paket?->fotografer_id) {
+            abort(403, 'Akses invoice tidak diizinkan.');
+        }
+
+        return view('invoice', compact('transaksi'));
     }
 }

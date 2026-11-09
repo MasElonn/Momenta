@@ -16,34 +16,7 @@
     <x-navbar />
 
     <div class="p-6 max-w-6xl mx-auto">
-        <div class="bg-white border border-gray-200 shadow-sm rounded-xl p-5 mb-6">
-            <div class="flex items-center justify-between px-10">
-                <div class="flex flex-col items-center gap-2">
-                    <div class="size-10 rounded-full bg-blue-600 text-white font-semibold text-sm flex items-center justify-center shadow-xs">
-                        1
-                    </div>
-                    <span class="font-semibold text-sm text-blue-600">Booking</span>
-                </div>
-
-                <div class="flex-1 h-px bg-blue-600 mx-6"></div>
-
-                <div class="flex flex-col items-center gap-2">
-                    <div class="size-10 rounded-full bg-blue-600 text-white font-semibold text-sm flex items-center justify-center ring-4 ring-blue-100 shadow-xs">
-                        2
-                    </div>
-                    <span class="font-semibold text-sm text-blue-600">Payment</span>
-                </div>
-
-                <div class="flex-1 h-px bg-gray-200 mx-6"></div>
-
-                <div class="flex flex-col items-center gap-2">
-                    <div class="size-10 rounded-full bg-gray-100 border border-gray-200 text-gray-400 font-semibold text-sm flex items-center justify-center">
-                        3
-                    </div>
-                    <span class="text-gray-400 font-medium text-sm">Finish</span>
-                </div>
-            </div>
-        </div>
+        <x-booking-steps :step="2" />
 
         <div class="flex gap-6 items-start">
             <div class="w-2/3 flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-6">

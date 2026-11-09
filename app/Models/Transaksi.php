@@ -30,6 +30,7 @@ class Transaksi extends Model
     ];
     protected $casts = [
         'paid_at' => 'datetime',
+        'verified_at' => 'datetime',
     ];
 
     public function customer()
@@ -45,5 +46,5 @@ class Transaksi extends Model
     {
         return $this->hasOne(Acara::class, 'trans_id', 'trans_id');
     }
-    
+
 }

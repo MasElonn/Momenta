@@ -1,13 +1,22 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Daftar Paket — Momenta</title>
+    @vite(['resources/css/app.css', 'resources/js/app.js'])
+</head>
+<body class="bg-surface font-sans text-ink antialiased min-h-screen">
+    <x-navbar />
 
-<x-dashboard.shell current="packages" title="Daftar Paket">
-    <div class="mx-auto max-w-6xl">
+    <main class="mx-auto max-w-6xl px-6 py-10 md:px-8">
         <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
                 <h1 class="font-display text-[26px] font-bold tracking-tight text-navy sm:text-[30px]">
                     Daftar Paket
                 </h1>
                 <p class="mt-2 text-[14.5px] leading-relaxed text-ink-soft">
-                    Semua paket dari fotografer kami. Pilih paket yang sesuai dengan kebutuhan acara kamu. Ketersediaan jadwal akan diperiksa saat proses booking.
+                    Semua paket dari fotografer kami. Pilih paket yang sesuai dengan kebutuhan acara kamu.
                 </p>
             </div>
         </div>
@@ -23,6 +32,12 @@
             <div class="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
                 @foreach ($pakets as $paket)
                     <div class="flex flex-col rounded-2xl border border-line bg-surface p-6 shadow-sm transition-all duration-300 hover:-translate-y-1 hover:border-brand/40 hover:shadow-lg">
+                        @if ($paket->foto)
+                            <div class="mb-4 aspect-[16/10] w-full overflow-hidden rounded-xl bg-slate-100">
+                                <img src="{{ $paket->foto_url }}" alt="{{ $paket->judul }}" class="h-full w-full object-cover">
+                            </div>
+                        @endif
+
                         <div class="mb-3 flex items-start justify-between gap-3">
                             <h3 class="text-[17px] font-semibold text-navy">
                                 {{ $paket->judul }}
@@ -76,10 +91,17 @@
                         </p>
 
                         @if ($paket->tersedia)
-                            <a href="{{ route('booking.show', ['id' => $paket->fotografer_id, 'paket' => $paket->paket_id]) }}"
-                               class="mt-auto inline-flex items-center justify-center rounded-[10px] bg-brand px-4 py-2.5 text-sm font-semibold text-surface transition hover:bg-brand-dark">
-                                Pilih Paket
-                            </a>
+                            @if (auth()->check() && auth()->user()->role !== 'customer')
+                                <button type="button" disabled
+                                       class="mt-auto inline-flex cursor-not-allowed items-center justify-center rounded-[10px] bg-slate-100 px-4 py-2.5 text-xs font-semibold text-slate-400" aria-disabled="true" title="Hanya akun customer yang dapat melakukan booking">
+                                    Booking Khusus Customer
+                                </button>
+                            @else
+                                <a href="{{ route('booking.show', ['id' => $paket->fotografer_id, 'paket' => $paket->paket_id]) }}"
+                                   class="mt-auto inline-flex items-center justify-center rounded-[10px] bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark">
+                                    Pilih Paket
+                                </a>
+                            @endif
                         @else
                             <span class="mt-auto inline-flex cursor-not-allowed items-center justify-center rounded-[10px] bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-500" aria-disabled="true">
                                 Tidak tersedia
@@ -89,5 +111,6 @@
                 @endforeach
             </div>
         @endif
-    </div>
-</x-dashboard.shell>
+    </main>
+</body>
+</html>

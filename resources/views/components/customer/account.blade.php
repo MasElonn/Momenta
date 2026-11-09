@@ -1,6 +1,6 @@
 @props(['user' => Auth::user()])
 
-<div x-show="tab === 'account'" x-data="{ editMode: {{ $errors->has('name') || $errors->has('email') || $errors->has('no_hp') ? 'true' : 'false' }}, modalConfirm: {{ $errors->userDeletion->isNotEmpty() ? 'true' : 'false' }} }">
+<div x-show="tab === 'account'" x-data="{ editMode: {{ (isset($errors) && ($errors->has('name') || $errors->has('email') || $errors->has('no_hp'))) ? 'true' : 'false' }}, modalConfirm: {{ (isset($errors) && $errors->getBag('userDeletion')->isNotEmpty()) ? 'true' : 'false' }} }">
     <div class="flex flex-col my-3 mb-4">
         <span class="text-2xl font-semibold">My Account</span>
         <span class="text-gray-500">Manage Your Profile and Account Settings</span>
@@ -47,7 +47,7 @@
                     <div>
                         <label for="email" class="block text-sm font-medium text-foreground mb-1.5">Email Address</label>
                         <div class="relative">
-                            <input type="email" id="email" name="email" value="{{ $user->email ?? Auth::user()->email }}" :disabled="!editMode"
+                            <input type="email" id="email" name="email" value="{{ $user->email ?? Auth::user()?->email }}" :disabled="!editMode"
                                    class="peer py-2.5 sm:py-3 px-4 ps-11 block w-full bg-surface border-transparent rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:bg-layer focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
                                    placeholder="Enter email">
                             <div class="absolute inset-y-0 inset-s-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
@@ -60,7 +60,7 @@
                     <div>
                         <label for="no_hp" class="block text-sm font-medium text-foreground mb-1.5">Phone Number</label>
                         <div class="relative">
-                            <input type="text" id="no_hp" name="no_hp" value="{{ $user->no_hp ?? Auth::user()->no_hp }}" :disabled="!editMode"
+                            <input type="text" id="no_hp" name="no_hp" value="{{ $user->no_hp ?? Auth::user()?->no_hp }}" :disabled="!editMode"
                                    class="peer py-2.5 sm:py-3 px-4 ps-11 block w-full bg-surface border-transparent rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:bg-layer focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
                                    placeholder="Enter phone number">
                             <div class="absolute inset-y-0 inset-s-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
@@ -141,7 +141,7 @@
                         </div>
                         <div>
                             <h5 class="text-xs font-semibold text-gray-500">Member Since</h5>
-                            <h1 class="font-semibold">{{ ($user->created_at ?? Auth::user()->created_at)->format('Y-m-d') }}</h1>
+                            <h1 class="font-semibold">{{ ($user->created_at ?? Auth::user()?->created_at)?->format('Y-m-d') ?? '-' }}</h1>
                         </div>
                     </div>
 
@@ -151,7 +151,7 @@
                         </div>
                         <div>
                             <h5 class="text-xs font-semibold text-gray-500">User ID</h5>
-                            <h1 class="font-semibold">#{{ $user->user_id ?? Auth::user()->user_id }}</h1>
+                            <h1 class="font-semibold">#{{ $user->user_id ?? Auth::user()?->user_id ?? '-' }}</h1>
                         </div>
                     </div>
                 </div>
@@ -198,7 +198,7 @@
                 @csrf
                 @method('delete')
 
-                    <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+                    <label for="password" class="sr-only">{{ __('Password') }}</label>
 
                     <input class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-hidden focus:border-primary"
                         id="password"
@@ -216,9 +216,9 @@
                         {{ __('Cancel') }}
                     </button>
 
-                    <x-danger-button class="ms-3">
+                    <button type="submit" class="ms-3 inline-flex items-center px-4 py-2 bg-red-600 border border-transparent rounded-lg font-semibold text-xs text-white uppercase tracking-widest hover:bg-red-500 focus:outline-hidden">
                         {{ __('Delete Account') }}
-                    </x-danger-button>
+                    </button>
                 </div>
             </form>
         </div>
