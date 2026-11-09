@@ -14,7 +14,7 @@
         <x-auth-status status="A new verification link has been sent to the email address you provided during registration." />
     @endif
 
-    <form method="POST" action="{{ route('verification.send') }}" class="space-y-5">
+    <form method="POST" action="{{ Route::has('verification.send') ? route('verification.send') : '#' }}" class="space-y-5">
         @csrf
         <x-auth-button>Resend Verification Email</x-auth-button>
     </form>

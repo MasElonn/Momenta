@@ -44,8 +44,8 @@
 <body>
 
 <div class="w-screen h-screen flex" x-data="{
-    tab: $persist('overview').as('dashboard_tab'),
-    section: $persist('').as('dashboard_section')}">
+    tab: $persist('overview').as('fotografer_dashboard_tab'),
+    section: $persist('').as('fotografer_dashboard_section')}">
 
     {{-- SIDEBAR --}}
     <x-fotografer.sidebar :user="$user ?? Auth::user()" />

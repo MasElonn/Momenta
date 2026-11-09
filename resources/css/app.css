@@ -12,17 +12,14 @@
 @source "../**/*.blade.php";
 @source "../**/*.js";
 @source "../../node_modules/preline/dist/*.js";
-
 @source "../node_modules/@preline/remove-element/*.js";
 
 @theme {
     --font-sans: 'Instrument Sans', ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
-    'Segoe UI Symbol', 'Noto Color Emoji';
+        'Segoe UI Symbol', 'Noto Color Emoji';
     --font-display: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
     --font-mono: 'JetBrains Mono', ui-monospace, monospace;
 
-    /* Brand colors — edit these HEX values here to change the palette
-       site-wide (auth pages + landing page both use these tokens). */
     --color-brand: #1447E6;
     --color-brand-dark: #1138C2;
     --color-brand-soft: #EAF0FE;
@@ -34,4 +31,89 @@
     --color-ink-soft: #5B6178;
     --color-accent: #0B2A8C;
     --color-accent-soft: #E7ECFB;
+}
+
+/* Hero Animation */
+.hero-in {
+    opacity: 0;
+    animation: heroIn .7s ease forwards;
+}
+
+.hero-in:nth-child(2) {
+    animation-delay: .1s;
+}
+
+.hero-in:nth-child(3) {
+    animation-delay: .2s;
+}
+
+.hero-in:nth-child(4) {
+    animation-delay: .3s;
+}
+
+@keyframes heroIn {
+    from {
+        opacity: 0;
+        transform: translateY(18px);
+    }
+
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/* Scroll Reveal */
+.reveal,
+.reveal-stagger {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .6s ease, transform .6s ease;
+}
+
+.reveal.is-visible,
+.reveal-stagger.is-visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* Stagger Animation */
+.reveal-stagger > * {
+    opacity: 0;
+    transform: translateY(14px);
+    transition: opacity .5s ease, transform .5s ease;
+}
+
+.reveal-stagger.is-visible > * {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.reveal-stagger.is-visible > *:nth-child(2) {
+    transition-delay: .08s;
+}
+
+.reveal-stagger.is-visible > *:nth-child(3) {
+    transition-delay: .16s;
+}
+
+.reveal-stagger.is-visible > *:nth-child(4) {
+    transition-delay: .24s;
+}
+
+.reveal-stagger.is-visible > *:nth-child(5) {
+    transition-delay: .32s;
+}
+
+/* Reduced Motion */
+@media (prefers-reduced-motion: reduce) {
+    .hero-in,
+    .reveal,
+    .reveal-stagger,
+    .reveal-stagger > * {
+        opacity: 1 !important;
+        transform: none !important;
+        animation: none !important;
+        transition: none !important;
+    }
 }

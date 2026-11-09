@@ -1,96 +1,87 @@
-// Alpine component for resources/views/availability/index.blade.php.
-// Registered on 'alpine:init' so it's available before Alpine scans the DOM.
-document.addEventListener('alpine:init', () => {
-    Alpine.data('availabilityCheck', () => ({
-        checkUrl: '',
-        tanggal: '',
-        waktuMulai: '',
-        waktuSelesai: '',
-        loading: false,
-        submitted: false,
-        errors: {},
-        jumlahTersedia: 0,
-        fotografer: [],
-        checked: { tanggal: '', mulai: '', selesai: '' },
 
-        init() {
-            this.checkUrl = this.$el.dataset.checkUrl;
+window.bookingForm = function (config) {
+    return {
+        fotograferId: config.fotograferId,
+        pakets: config.pakets,
+        checkUrl: config.checkUrl,
+
+        selectedPackage: config.pakets.length
+            ? String(config.pakets[0].paket_id)
+            : '',
+
+        tanggal: '',
+        jam: '',
+        jamSelesai: '',
+        loading: false,
+        checked: false,
+        tersedia: false,
+        message: '',
+
+        get currentPackage() {
+            return this.pakets.find(
+                item => String(item.paket_id) === String(this.selectedPackage)
+            );
         },
 
-        async check() {
+        get currentPrice() {
+            return this.currentPackage
+                ? Number(this.currentPackage.harga)
+                : 0;
+        },
+
+        async checkAvailability() {
+            this.checked = false;
+            this.tersedia = false;
+            this.jamSelesai = '';
+            this.message = '';
+
+            if (!this.selectedPackage || !this.tanggal || !this.jam) {
+                return;
+            }
+
             this.loading = true;
-            this.errors = {};
 
             try {
                 const response = await fetch(this.checkUrl, {
                     method: 'POST',
                     headers: {
                         'Content-Type': 'application/json',
-                        Accept: 'application/json',
-                        'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').content,
+                        'Accept': 'application/json',
+                        'X-CSRF-TOKEN': document.querySelector(
+                            'meta[name="csrf-token"]'
+                        ).content
                     },
                     body: JSON.stringify({
+                        fotografer_id: this.fotograferId,
+                        paket_id: this.selectedPackage,
                         tanggal: this.tanggal,
-                        waktu_mulai: this.waktuMulai,
-                        waktu_selesai: this.waktuSelesai,
-                    }),
+                        jam_mulai: this.jam
+                    })
                 });
 
-                if (response.status === 422) {
-                    const data = await response.json();
-                    this.errors = data.errors || {};
-                    this.submitted = false;
+                const data = await response.json();
+
+                if (!response.ok) {
+                    this.message = data.message || 'Gagal memeriksa jadwal.';
+                    this.checked = true;
                     return;
                 }
 
-                if (!response.ok) {
-                    throw new Error('Gagal mengecek ketersediaan.');
-                }
+                this.checked = true;
+                this.tersedia = data.tersedia;
+                this.jamSelesai = data.jam_selesai || '';
+                this.message = data.message;
 
-                const data = await response.json();
-                this.jumlahTersedia = data.jumlah_tersedia;
-                this.fotografer = data.fotografer;
-                // Snapshot the window that was actually checked, so the
-                // booking link below can't drift if the inputs are edited.
-                this.checked = {
-                    tanggal: this.tanggal,
-                    mulai: this.waktuMulai,
-                    selesai: this.waktuSelesai,
-                };
-                this.submitted = true;
-            } catch (e) {
-                this.errors = { general: ['Terjadi kesalahan. Coba beberapa saat lagi.'] };
+            } catch (error) {
+                this.message = 'Terjadi kesalahan saat memeriksa jadwal.';
+                this.checked = true;
             } finally {
                 this.loading = false;
             }
         },
 
-        bookingUrl(fotograferId) {
-            const query = new URLSearchParams({
-                tanggal: this.checked.tanggal,
-                mulai: this.checked.mulai,
-                selesai: this.checked.selesai,
-            });
-
-            return `/booking/${fotograferId}?${query.toString()}`;
-        },
-
-        reset() {
-            this.submitted = false;
-            this.fotografer = [];
-            this.errors = {};
-        },
-
-        firstError(field) {
-            return this.errors[field]?.[0] ?? null;
-        },
-
-        initials(name) {
-            return name
-                .split(' ')
-                .slice(0, 2)
-                .map((part) => part.charAt(0).toUpperCase())
-                .join('');
-        },
-    }));
-});
+        formatPrice() {
+            return Number(this.currentPrice).toLocaleString('id-ID');
+        }
+    };
+};
