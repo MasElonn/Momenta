@@ -8,7 +8,7 @@
 
     <div class="flex-1 px-4 py-7">
         <p class="mb-3 px-3 text-[10px] font-semibold uppercase tracking-[.18em] text-slate-400">
-            Menu Utama
+            {{ __('Main Menu') }}
         </p>
 
         @php
@@ -23,7 +23,7 @@
                     <circle cx="10" cy="7" r="4"/>
                     <polyline points="16 11 18 13 22 9"/>
                 </svg>
-                Verifikasi Fotografer
+                {{ __('Photographer Verification') }}
             </span>
             @if($pendingNavCount > 0)
                 <span class="rounded-full bg-amber-500 px-2 py-0.5 text-[10px] font-bold text-white shadow-xs">
@@ -47,14 +47,14 @@
         <form action="{{ route('logout') }}" method="POST">
             @csrf
             <button type="submit"
-                onclick="return confirm('Apakah Anda yakin ingin keluar?')"
+                onclick="return confirm('{{ __('Are you sure you want to log out?') }}')"
                 class="flex w-full items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium text-slate-500 transition hover:bg-red-50 hover:text-red-600">
                 <svg class="h-5 w-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
                     <path d="M10 17l5-5-5-5"/>
                     <path d="M15 12H3"/>
                     <path d="M12 3h6a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-6"/>
                 </svg>
-                Keluar
+                {{ __('Logout') }}
             </button>
         </form>
     </div>

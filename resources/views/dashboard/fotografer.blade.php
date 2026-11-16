@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
     <meta charset="UTF-8">
@@ -10,7 +10,7 @@
 
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
-    <title>Dashboard</title>
+    <title>{{ __('Dashboard') }} — Momenta</title>
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     @vite('resources/css/app.css')

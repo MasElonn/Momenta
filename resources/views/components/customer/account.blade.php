@@ -2,8 +2,8 @@
 
 <div x-show="tab === 'account'" x-data="{ editMode: {{ (isset($errors) && ($errors->has('name') || $errors->has('email') || $errors->has('no_hp'))) ? 'true' : 'false' }}, modalConfirm: {{ (isset($errors) && $errors->getBag('userDeletion')->isNotEmpty()) ? 'true' : 'false' }} }">
     <div class="flex flex-col my-3 mb-4">
-        <span class="text-2xl font-semibold">My Account</span>
-        <span class="text-gray-500">Manage Your Profile and Account Settings</span>
+        <span class="text-2xl font-semibold">{{ __('My Account') }}</span>
+        <span class="text-gray-500">{{ __('Manage Your Profile and Account Settings') }}</span>
     </div>
 
     <div class="flex flex-col lg:flex-row gap-4">
@@ -23,7 +23,7 @@
                     <button @click="editMode = !editMode" type="button"
                             class="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
                         <x-lucide-pencil class="w-4 h-4" />
-                        <span x-text="editMode ? 'Cancel' : 'Edit Profile'"></span>
+                        <span x-text="editMode ? @js(__('Cancel')) : @js(__('Edit Profile'))"></span>
                     </button>
                 </div>
 
@@ -32,11 +32,11 @@
                     @method('PATCH')
 
                     <div>
-                        <label for="name" class="block text-sm font-medium text-foreground mb-1.5">Full Name</label>
+                        <label for="name" class="block text-sm font-medium text-foreground mb-1.5">{{ __('Full Name') }}</label>
                         <div class="relative">
                             <input type="text" id="name" name="name" value="{{ $user->name ?? Auth::user()->name }}" :disabled="!editMode"
                                    class="peer py-2.5 sm:py-3 px-4 ps-11 block w-full bg-surface border-transparent rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:bg-layer focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
-                                   placeholder="Enter name">
+                                   placeholder="{{ __('Full Name') }}">
                             <div class="absolute inset-y-0 inset-s-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
                                 <x-lucide-user class="shrink-0 size-4 text-muted-foreground-1" />
                             </div>
@@ -45,11 +45,11 @@
                     </div>
 
                     <div>
-                        <label for="email" class="block text-sm font-medium text-foreground mb-1.5">Email Address</label>
+                        <label for="email" class="block text-sm font-medium text-foreground mb-1.5">{{ __('Email address') }}</label>
                         <div class="relative">
                             <input type="email" id="email" name="email" value="{{ $user->email ?? Auth::user()?->email }}" :disabled="!editMode"
                                    class="peer py-2.5 sm:py-3 px-4 ps-11 block w-full bg-surface border-transparent rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:bg-layer focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
-                                   placeholder="Enter email">
+                                   placeholder="{{ __('Email address') }}">
                             <div class="absolute inset-y-0 inset-s-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
                                 <x-lucide-mail class="shrink-0 size-4 text-muted-foreground-1" />
                             </div>
@@ -58,11 +58,11 @@
                     </div>
 
                     <div>
-                        <label for="no_hp" class="block text-sm font-medium text-foreground mb-1.5">Phone Number</label>
+                        <label for="no_hp" class="block text-sm font-medium text-foreground mb-1.5">{{ __('Phone / WhatsApp Number') }}</label>
                         <div class="relative">
                             <input type="text" id="no_hp" name="no_hp" value="{{ $user->no_hp ?? Auth::user()?->no_hp }}" :disabled="!editMode"
                                    class="peer py-2.5 sm:py-3 px-4 ps-11 block w-full bg-surface border-transparent rounded-lg sm:text-sm text-foreground placeholder:text-muted-foreground-1 focus:bg-layer focus:border-primary-focus focus:ring-primary-focus disabled:opacity-50 disabled:pointer-events-none"
-                                   placeholder="Enter phone number">
+                                   placeholder="08123456789">
                             <div class="absolute inset-y-0 inset-s-0 flex items-center pointer-events-none ps-4 peer-disabled:opacity-50 peer-disabled:pointer-events-none">
                                 <x-lucide-phone class="shrink-0 size-4 text-muted-foreground-1" />
                             </div>
@@ -73,11 +73,11 @@
                     <div x-show="editMode" class="flex justify-end gap-2 pt-2">
                         <button type="button" @click="editMode = false"
                                 class="py-2 px-4 text-sm font-medium rounded-lg border border-gray-200 hover:bg-gray-50 focus:outline-hidden">
-                            Discard
+                            {{ __('Cancel') }}
                         </button>
                         <button type="submit"
                                 class="py-2 px-4 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden">
-                            Save Changes
+                            {{ __('Save Changes') }}
                         </button>
                     </div>
                 </form>
@@ -86,7 +86,7 @@
             <div class="rounded-lg border border-gray-200 shadow-sm p-5">
                 <div class="flex items-center gap-2 pb-4 mb-4 border-b border-gray-100">
                     <x-lucide-lock class="w-5 h-5" />
-                    <h1 class="font-semibold text-lg">Change Password</h1>
+                    <h1 class="font-semibold text-lg">{{ __('Change Password') }}</h1>
                 </div>
 
                 <form action="{{ route('dashboard.updatePassword') }}" method="POST" class="space-y-4">
@@ -96,13 +96,13 @@
 
                     <div class="flex gap-4">
                         <div class="flex-1">
-                            <label class="text-sm font-medium text-gray-600">New Password</label>
+                            <label class="text-sm font-medium text-gray-600">{{ __('New Password') }}</label>
                             <input type="password" name="new_password" placeholder="••••••••"
                                    class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-hidden focus:border-primary">
                             <x-input-error :messages="$errors->get('new_password')" class="mt-2" />
                         </div>
                         <div class="flex-1">
-                            <label class="text-sm font-medium text-gray-600">Confirm New Password</label>
+                            <label class="text-sm font-medium text-gray-600">{{ __('Confirm Password') }}</label>
                             <input type="password" name="new_password_confirmation" placeholder="••••••••"
                                    class="mt-1 w-full border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-hidden focus:border-primary"
                                    autocomplete="new-password">
@@ -113,7 +113,7 @@
                     <div class="flex justify-end pt-2">
                         <button type="submit"
                                 class="py-2 px-4 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden">
-                            Update Password
+                            {{ __('Save Changes') }}
                         </button>
                     </div>
                 </form>
@@ -122,7 +122,7 @@
 
         <div class="w-full lg:w-1/3 flex flex-col gap-4">
             <div class="rounded-lg border border-gray-200 shadow-sm p-5">
-                <h1 class="font-semibold text-lg pb-4 mb-4 border-b border-gray-100">Account Information</h1>
+                <h1 class="font-semibold text-lg pb-4 mb-4 border-b border-gray-100">{{ __('Personal Information') }}</h1>
 
                 <div class="flex flex-col gap-4">
                     <div class="flex items-center gap-3">
@@ -130,7 +130,7 @@
                             <x-lucide-shield class="w-5 h-5" />
                         </div>
                         <div>
-                            <h5 class="text-xs font-semibold text-gray-500">Role</h5>
+                            <h5 class="text-xs font-semibold text-gray-500">{{ __('Role') }}</h5>
                             <h1 class="font-semibold capitalize">{{ $user->role ?? Auth::user()->role }}</h1>
                         </div>
                     </div>
@@ -140,7 +140,7 @@
                             <x-lucide-calendar class="w-5 h-5" />
                         </div>
                         <div>
-                            <h5 class="text-xs font-semibold text-gray-500">Member Since</h5>
+                            <h5 class="text-xs font-semibold text-gray-500">{{ __('Member Since') }}</h5>
                             <h1 class="font-semibold">{{ ($user->created_at ?? Auth::user()?->created_at)?->format('Y-m-d') ?? '-' }}</h1>
                         </div>
                     </div>
@@ -150,7 +150,7 @@
                             <x-lucide-hash class="w-5 h-5" />
                         </div>
                         <div>
-                            <h5 class="text-xs font-semibold text-gray-500">User ID</h5>
+                            <h5 class="text-xs font-semibold text-gray-500">{{ __('User ID') }}</h5>
                             <h1 class="font-semibold">#{{ $user->user_id ?? Auth::user()?->user_id ?? '-' }}</h1>
                         </div>
                     </div>
@@ -158,13 +158,13 @@
             </div>
 
             <div class="rounded-lg border border-red-200 shadow-sm p-5">
-                <h1 class="font-semibold text-lg text-red-500 pb-4 mb-4 border-b border-red-100">Danger Zone</h1>
+                <h1 class="font-semibold text-lg text-red-500 pb-4 mb-4 border-b border-red-100">{{ __('Danger Zone') }}</h1>
                 <p class="text-sm text-gray-500 mb-4">
-                    Once you delete your account, there is no going back. Please be certain.
+                    {{ __('Once your account is deleted, all of its resources and data will be permanently deleted.') }}
                 </p>
                 <button type="button" @click="modalConfirm = true"
                         class="w-full py-2.5 px-4 text-sm font-medium rounded-lg border border-red-500 text-red-500 hover:bg-red-50 focus:outline-hidden">
-                    Delete Account
+                    {{ __('Delete Account') }}
                 </button>
             </div>
         </div>

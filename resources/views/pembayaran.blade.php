@@ -1,16 +1,16 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment</title>
+    <title>{{ __('Payment') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 @php
     $status = ucfirst($status ?? session('status', 'unpaid'));
     $trans_id = $trans_id ?? session('trans_id', '');
     $rawTotal = $total_harga ?? session('total_harga', 0);
-    $total_harga = is_numeric($rawTotal) ? \Illuminate\Support\Number::currency($rawTotal, in: 'IDR', locale: 'id') : $rawTotal;
+    $total_harga = is_numeric($rawTotal) ? \Illuminate\Support\Number::currency($rawTotal, in: 'IDR', locale: app()->getLocale()) : $rawTotal;
 @endphp
 <body class="bg-white text-gray-900 font-sans">
     <x-navbar />
@@ -21,8 +21,8 @@
         <div class="flex gap-6 items-start">
             <div class="w-2/3 flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-6">
                 <div class="pb-3 border-b border-gray-200 mb-4">
-                    <h1 class="font-bold text-xl text-gray-800">Payment Details</h1>
-                    <span class="text-xs text-gray-400">Choose payment method & upload receipt</span>
+                    <h1 class="font-bold text-xl text-gray-800">{{ __('Payment Details') }}</h1>
+                    <span class="text-xs text-gray-400">{{ __('Choose payment method & upload receipt') }}</span>
                 </div>
 
                 <div class="border border-gray-200 rounded-xl p-4 flex justify-between items-center mb-4 bg-gray-50/50">
@@ -31,7 +31,7 @@
                         <span class="font-mono font-bold text-lg text-gray-800">8830-1928-3491</span>
                         <span class="text-xs text-gray-500 block">PT Momenta</span>
                     </div>
-                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-100 text-blue-800">Bank Transfer</span>
+                    <span class="inline-flex items-center gap-x-1.5 py-1.5 px-3 rounded-full text-xs font-medium bg-blue-100 text-blue-800">{{ __('Bank Transfer') }}</span>
                 </div>
 
                 <form
@@ -94,7 +94,7 @@
                     <input name="trans_id" value="{{ $trans_id }}" hidden>
 
                     <div class="flex flex-col gap-1">
-                        <h5 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">Upload Payment Receipt</h5>
+                        <h5 class="text-xs font-semibold text-gray-500 uppercase tracking-wide">{{ __('Upload Payment Receipt') }}</h5>
 
 
                         <input
@@ -148,8 +148,8 @@
                         :disabled="!file || uploading"
                         class="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none mt-2"
                     >
-                        <span x-show="!uploading">Submit Payment</span>
-                        <span x-show="uploading">Uploading...</span>
+                        <span x-show="!uploading">{{ __('Submit Payment') }}</span>
+                        <span x-show="uploading">{{ __('Uploading...') }}</span>
                     </button>
                 </form>
             </div>
@@ -157,42 +157,42 @@
             <div class="w-1/3 flex flex-col gap-3">
                 <div class="flex flex-col bg-white border border-gray-200 shadow-sm rounded-xl p-6 gap-4">
                     <div class="pb-3 border-b border-gray-200">
-                        <h1 class="font-bold text-xl text-gray-800">Payment Summary</h1>
+                        <h1 class="font-bold text-xl text-gray-800">{{ __('Payment Summary') }}</h1>
                     </div>
 
                     <div class="flex justify-between items-center text-sm">
-                        <span class="text-gray-500">Booking ID</span>
+                        <span class="text-gray-500">{{ __('Booking ID') }}</span>
                         <span class="font-semibold text-gray-800">#{{$trans_id}}</span>
                     </div>
 
                     @if(!empty($paket))
                     <div class="flex justify-between items-center text-sm">
-                        <span class="text-gray-500">Package</span>
+                        <span class="text-gray-500">{{ __('Package') }}</span>
                         <span class="font-semibold text-gray-800">{{$paket}}</span>
                     </div>
                     @endif
 
                     @if(!empty($date_time))
                     <div class="flex justify-between items-center text-sm">
-                        <span class="text-gray-500">Schedule</span>
+                        <span class="text-gray-500">{{ __('Date & Time') }}</span>
                         <span class="font-semibold text-gray-800">{{$date_time}}</span>
                     </div>
                     @endif
 
                     @if(!empty($lokasi))
                     <div class="flex justify-between items-center text-sm">
-                        <span class="text-gray-500">Location</span>
+                        <span class="text-gray-500">{{ __('Location') }}</span>
                         <span class="font-semibold text-gray-800 text-right">{{$lokasi}}</span>
                     </div>
                     @endif
 
                     <div class="flex justify-between items-center text-sm">
-                        <span class="text-gray-500">Status</span>
+                        <span class="text-gray-500">{{ __('Status') }}</span>
                         <span class="inline-flex items-center gap-x-1.5 py-1 px-3 rounded-full text-xs font-medium bg-blue-100 text-blue-800">{{$status}}</span>
                     </div>
 
                     <div class="border-t border-gray-200 pt-3 flex justify-between items-center">
-                        <span class="font-semibold text-gray-800">Total Price</span>
+                        <span class="font-semibold text-gray-800">{{ __('Total Price') }}</span>
                         <span class="font-bold text-xl text-blue-600">{{$total_harga}}</span>
                     </div>
                 </div>

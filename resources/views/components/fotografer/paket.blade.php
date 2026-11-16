@@ -7,15 +7,15 @@
 <div>
     <div class="mb-6 flex flex-wrap items-center justify-between gap-3">
         <div>
-            <h2 class="text-lg font-semibold text-ink">Paket Saya</h2>
+            <h2 class="text-lg font-semibold text-ink">{{ __('My Packages') }}</h2>
             <p class="mt-0.5 text-sm text-ink-soft">
-                {{ $pakets->count() }} paket aktif · tampil otomatis di landing page
+                {{ $pakets->count() }} {{ __('packages available') }}
             </p>
         </div>
         <a href="{{ route('paket.create') }}"
            class="inline-flex items-center gap-2 rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-surface shadow-sm transition hover:-translate-y-0.5 hover:bg-brand-dark hover:shadow-md">
             <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-            Tambah Paket
+            {{ __('Add Package') }}
         </a>
     </div>
 
@@ -32,13 +32,13 @@
                 <svg class="h-6 w-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="7" width="18" height="13" rx="2"/><path d="M8 7V5a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
             </div>
             <div>
-                <p class="font-semibold text-ink">Belum ada paket</p>
-                <p class="mt-1 text-sm text-ink-soft">Paket yang kamu buat bakal langsung muncul di landing page.</p>
+                <p class="font-semibold text-ink">{{ __('No packages available yet') }}</p>
+                <p class="mt-1 text-sm text-ink-soft">{{ __('Photographers haven\'t added packages yet. Please check back later.') }}</p>
             </div>
             <a href="{{ route('paket.create') }}"
                class="inline-flex items-center gap-2 rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-surface transition hover:bg-brand-dark">
                 <svg class="h-4 w-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 5v14M5 12h14"/></svg>
-                Buat paket fotografi pertamamu
+                {{ __('Add Package') }}
             </a>
         </div>
     @else
@@ -56,7 +56,7 @@
                         @if ($paket->is_populer)
                             <span class="inline-flex items-center gap-1 rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-semibold text-brand">
                                 <svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l2.9 6.6 7.1.6-5.4 4.7 1.7 6.9-6.3-3.8-6.3 3.8 1.7-6.9L2 9.2l7.1-.6L12 2z"/></svg>
-                                Populer
+                                {{ __('Popular') }}
                             </span>
                         @endif
                     </div>
@@ -66,7 +66,7 @@
 
                     <div class="mb-4 flex items-baseline gap-1">
                         <span class="text-2xl font-extrabold text-brand">{{ $paket->harga_formatted }}</span>
-                        <span class="text-xs font-medium text-ink-soft">/sesi</span>
+                        <span class="text-xs font-medium text-ink-soft">/{{ __('session') }}</span>
                     </div>
 
                     <div class="mb-5 grid grid-cols-2 gap-2.5 border-t border-line pt-4 text-xs text-ink-soft">
@@ -92,17 +92,17 @@
                         <a href="{{ route('paket.edit', $paket) }}"
                            class="flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-line py-2 text-xs font-semibold text-navy transition hover:border-brand hover:bg-brand-soft hover:text-brand">
                             <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.12 2.12 0 0 1 3 3L7 19l-4 1 1-4Z"/></svg>
-                            Edit
+                            {{ __('Edit') }}
                         </a>
                         <form action="{{ route('paket.destroy', $paket) }}" method="POST"
-                              onsubmit="return confirm('Apakah kamu yakin ingin menghapus paket ini?');"
+                              onsubmit="return confirm('{{ __('Are you sure you want to delete this package?') }}');"
                               class="flex-1">
                             @csrf
                             @method('DELETE')
                             <button type="submit"
                                     class="flex w-full items-center justify-center gap-1.5 rounded-lg border border-line py-2 text-xs font-semibold text-red-600 transition hover:border-red-200 hover:bg-red-50">
                                 <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 6h18"/><path d="M8 6V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><path d="M19 6l-1 14a2 2 0 0 1-2 2H8a2 2 0 0 1-2-2L5 6"/></svg>
-                                Hapus
+                                {{ __('Delete') }}
                             </button>
                         </form>
                     </div>

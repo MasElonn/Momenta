@@ -3,19 +3,19 @@
 <div x-show="tab === 'overview'">
     <div class="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4 pt-2 mb-6">
         <div>
-            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">Hello, {{ $user->name ?? Auth::user()->name }}!</h1>
-            <p class="text-sm text-gray-500 mt-1">Welcome back to your Momenta dashboard. Your next session is coming up soon.</p>
+            <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">{{ __('Hello, :name!', ['name' => $user->name ?? Auth::user()->name]) }}</h1>
+            <p class="text-sm text-gray-500 mt-1">{{ __('Welcome back to your Momenta dashboard. Your next session is coming up soon.') }}</p>
         </div>
         <a href="{{ route('fotografer.browse') }}"
            class="inline-flex items-center gap-2 px-4 py-2.5 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-xs transition shrink-0">
             <x-lucide-camera class="w-4 h-4" />
-            Cari Fotografer
+            {{ __('Find Photographer') }}
         </a>
     </div>
 
     <div class="mt-5 flex justify-between">
         <div class="flex-auto w-full p-2">
-            <h2 class="py-2 text-xl font-semibold">Bookings</h2>
+            <h2 class="py-2 text-xl font-semibold">{{ __('Bookings') }}</h2>
 
             @forelse($transaksis as $transaksi)
                 @if($transaksi->acara)
@@ -25,8 +25,8 @@
                         <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
                             <div class="flex items-center gap-2">
                                 <x-lucide-calendar-1 class="w-5 h-5" />
-                                <span class="font-semibold">Booking</span>
-                                <span class="text-gray-400 text-sm">ID Booking:</span>
+                                <span class="font-semibold">{{ __('Booking') }}</span>
+                                <span class="text-gray-400 text-sm">{{ __('Booking ID') }}:</span>
                                 <span class="text-gray-500 text-sm">#{{ $transaksi->trans_id }}</span>
                             </div>
                             <span class="text-gray-400 text-sm">{{ $acara->tanggal->translatedFormat('d M Y') }}</span>
@@ -46,30 +46,30 @@
                                 <div class="flex items-center gap-6 mt-2 text-sm text-gray-600">
                                     <span class="flex items-center gap-1">
                                         <x-lucide-circle-dollar-sign class="w-4 h-4 rounded-full" />
-                                        Harga: Rp {{ number_format($transaksi->paket->harga ?? 0, 0, ',', '.') }}
+                                        {{ __('Price') }}: Rp {{ number_format($transaksi->paket->harga ?? 0, 0, ',', '.') }}
                                     </span>
 
                                     <span class="flex items-center gap-1">
                                         <x-lucide-package-2 class="w-4 h-4 rounded-full" />
-                                        Paket: {{ $transaksi->paket->judul ?? '-' }}
+                                        {{ __('Package') }}: {{ $transaksi->paket->judul ?? '-' }}
                                     </span>
                                 </div>
 
                                 <div class="flex justify-between mt-3">
                                     <div class="flex gap-1">
                                         <x-lucide-user class="w-6 h-6 rounded-full" />
-                                        <span class="text-sm text-gray-600">{{ $transaksi->paket->fotografer->name ?? '-' }} - Fotografer</span>
+                                        <span class="text-sm text-gray-600">{{ $transaksi->paket->fotografer->name ?? '-' }} - {{ __('Photographer') }}</span>
                                     </div>
 
                                     <div class="flex gap-2">
                                         <button type="button" @click="section = 'booking-{{$acara->acara_id}}', tab = 'booking'"
                                                 class="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
-                                            Manage
+                                            {{ __('Manage') }}
                                         </button>
 
                                         <button type="button" @click="section = 'gallery-{{$acara->acara_id}}', tab = 'gallery'"
                                                 class="py-1.5 px-4 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg bg-primary border border-primary-line text-primary-foreground hover:bg-primary-hover focus:outline-hidden disabled:opacity-50 disabled:pointer-events-none">
-                                            Gallery
+                                            {{ __('Gallery') }}
                                         </button>
                                     </div>
                                 </div>
@@ -80,12 +80,12 @@
             @empty
                 <div class="rounded-xl border border-dashed border-gray-300 p-8 text-center bg-white my-4">
                     <x-lucide-calendar-days class="w-10 h-10 mx-auto text-gray-300 mb-2" />
-                    <p class="text-sm font-medium text-gray-700">Belum ada booking sesi</p>
-                    <p class="text-xs text-gray-400 mt-1 mb-4">Temukan fotografer sekolah terbaik untuk mengabadikan momen acaramu.</p>
+                    <p class="text-sm font-medium text-gray-700">{{ __('No bookings yet') }}</p>
+                    <p class="text-xs text-gray-400 mt-1 mb-4">{{ __('Find the best school photographers to capture your special moments.') }}</p>
                     <a href="{{ route('fotografer.browse') }}"
                        class="inline-flex items-center gap-1.5 px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs font-semibold rounded-lg shadow-xs transition">
                         <x-lucide-camera class="w-3.5 h-3.5" />
-                        Cari Fotografer Sekarang
+                        {{ __('Find Photographers Now') }}
                     </a>
                 </div>
             @endforelse
@@ -93,7 +93,7 @@
         </div>
 
         <div class="w-70 flex-auto p-2">
-            <h2 class="py-2 text-xl font-semibold">Gallery</h2>
+            <h2 class="py-2 text-xl font-semibold">{{ __('Gallery') }}</h2>
             @php
                 $recentFotos = $transaksis->pluck('acara.foto')->flatten()->filter()->take(3);
             @endphp
@@ -105,7 +105,7 @@
                     </div>
                 @endforeach
             @else
-                <div class="text-sm text-gray-400 py-4">Belum ada foto.</div>
+                <div class="text-sm text-gray-400 py-4">{{ __('No gallery available yet.') }}</div>
             @endif
         </div>
     </div>

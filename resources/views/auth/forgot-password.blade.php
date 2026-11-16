@@ -1,11 +1,11 @@
 <x-auth-layout
-    :title="'Forgot password — Momenta'"
-    headline="Setiap acara punya ceritanya sendiri."
-    subheadline="Kami akan bantu kamu masuk kembali."
+    :title="__('Forgot Password') . ' — Momenta'"
+    :headline="__('Every event has its own story.')"
+    :subheadline="__('We will help you get back in.')"
 >
-    <h1 class="mb-2 text-4xl font-bold text-[#1447E6]">Forgot Password?</h1>
+    <h1 class="mb-2 text-4xl font-bold text-[#1447E6]">{{ __('Forgot Password?') }}</h1>
     <p class="mb-8 text-sm text-gray-500">
-        No worries, enter your email and we'll send you a reset link.
+        {{ __("No worries, enter your email and we'll send you a reset link.") }}
     </p>
 
     <x-auth-status :status="session('status')" />
@@ -14,7 +14,7 @@
         @csrf
 
         <x-auth-input
-            label="Email address"
+            :label="__('Email Address')"
             name="email"
             type="email"
             icon="mail"
@@ -23,11 +23,11 @@
             autofocus
         />
 
-        <x-auth-button>Send Password Reset Link</x-auth-button>
+        <x-auth-button>{{ __('Send Password Reset Link') }}</x-auth-button>
     </form>
 
     <p class="mt-6 text-center text-sm text-gray-500">
-        Remembered your password?
-        <a href="{{ route('login') }}" class="font-semibold text-[#1447E6] hover:underline">Back to login</a>
+        {{ __('Remembered your password?') }}
+        <a href="{{ route('login') }}" class="font-semibold text-[#1447E6] hover:underline">{{ __('Back to login') }}</a>
     </p>
 </x-auth-layout>

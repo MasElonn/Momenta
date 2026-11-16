@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="id" class="scroll-smooth motion-reduce:scroll-auto">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" class="scroll-smooth motion-reduce:scroll-auto">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Momenta | Galeri & Booking Fotografer Acara Sekolah</title>
-    <meta name="description" content="Booking fotografer untuk acara sekolah, pilih paket, dan simpan hasil foto di galeri online.">
+    <title>Momenta | {{ __('School Event Photographer Booking & Gallery') }}</title>
+    <meta name="description" content="{{ __('Book photographers for school events, choose packages, and store photo results in online gallery.') }}">
 
     <link rel="shortcut icon" type="image/x-icon" href="{{ asset('favicon.ico') }}">
     <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -24,38 +24,37 @@
 
             <div>
                 <p class="hero-in text-sm font-semibold text-brand">
-                    Untuk acara sekolah
+                    {{ __('For school events') }}
                 </p>
 
                 <h1 class="hero-in mt-3 font-display text-4xl font-bold leading-[1.08] tracking-tight text-ink sm:text-5xl lg:text-[3.5rem]">
-                    Atur fotografer, simpan hasilnya,
-                    <span class="text-brand">bagikan ke orang tua.</span>
+                    {{ __('Organize photographers, save results, share with parents.') }}
                 </h1>
 
                 <p class="hero-in mt-5 max-w-lg text-base leading-relaxed text-ink-soft md:text-lg">
-                    Panitia pilih tanggal dan paket, fotografer datang sesuai jadwal, lalu hasil foto masuk ke galeri. Nggak perlu lagi kirim file lewat WhatsApp.
+                    {{ __('Committees choose dates and packages, photographers arrive on schedule, and photos go straight into the online gallery. No more sending files via WhatsApp.') }}
                 </p>
 
                 <div class="hero-in mt-8 flex flex-wrap gap-3">
                     @auth
                         <a href="#fotografer"
                            class="rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark">
-                            Cek Ketersediaan
+                            {{ __('Check Availability') }}
                         </a>
 
                         <a href="{{ url('/dashboard') }}"
                            class="rounded-lg border border-line px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand">
-                            Buka Dashboard
+                            {{ __('Open Dashboard') }}
                         </a>
                     @else
                         <a href="{{ route('register') }}"
                            class="rounded-lg bg-brand px-6 py-3 text-sm font-semibold text-white transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-dark">
-                            Daftar untuk Booking
+                            {{ __('Register to Book') }}
                         </a>
 
                         <a href="{{ route('login') }}"
                            class="rounded-lg border border-line px-6 py-3 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand">
-                            Masuk
+                            {{ __('Log in') }}
                         </a>
                     @endauth
                 </div>
@@ -82,11 +81,11 @@
 
         <div class="reveal max-w-xl">
             <h2 class="font-display text-2xl font-bold tracking-tight text-ink md:text-3xl">
-                Dari booking sampai galeri
+                {{ __('From booking to gallery') }}
             </h2>
 
             <p class="mt-3 text-ink-soft">
-                Prosesnya sama untuk acara apa pun, dari rapat kelas sampai wisuda.
+                {{ __('The process is the same for any event, from class meetings to graduations.') }}
             </p>
         </div>
 
@@ -96,9 +95,9 @@
                     <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand font-display text-xl font-bold text-white">1</span>
                     <span class="ml-4 hidden h-0.5 flex-1 bg-brand/30 lg:block"></span>
                 </div>
-                <h3 class="mt-5 font-semibold text-ink">Pilih fotografer dan paket</h3>
+                <h3 class="mt-5 font-semibold text-ink">{{ __('Choose photographer and package') }}</h3>
                 <p class="mt-1.5 text-sm leading-relaxed text-ink-soft">
-                    Pilih fotografer dan paket. Ketersediaan jadwal akan diperiksa langsung pada formulir booking.
+                    {{ __('Choose photographer and package. Schedule availability will be checked directly on the booking form.') }}
                 </p>
             </li>
 
@@ -107,9 +106,9 @@
                     <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand font-display text-xl font-bold text-white">2</span>
                     <span class="ml-4 hidden h-0.5 flex-1 bg-brand/30 lg:block"></span>
                 </div>
-                <h3 class="mt-5 font-semibold text-ink">Booking dan bayar</h3>
+                <h3 class="mt-5 font-semibold text-ink">{{ __('Book and pay') }}</h3>
                 <p class="mt-1.5 text-sm leading-relaxed text-ink-soft">
-                    Isi detail acara, kirim bukti pembayaran, dan tunggu konfirmasi fotografer.
+                    {{ __('Fill in event details, submit proof of payment, and wait for photographer confirmation.') }}
                 </p>
             </li>
 
@@ -118,9 +117,9 @@
                     <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand font-display text-xl font-bold text-white">3</span>
                     <span class="ml-4 hidden h-0.5 flex-1 bg-brand/30 lg:block"></span>
                 </div>
-                <h3 class="mt-5 font-semibold text-ink">Fotografer datang</h3>
+                <h3 class="mt-5 font-semibold text-ink">{{ __('Photographer arrives') }}</h3>
                 <p class="mt-1.5 text-sm leading-relaxed text-ink-soft">
-                    Fotografer meliput acara sesuai tanggal, jam, dan lokasi yang kamu isi.
+                    {{ __('Photographer covers the event according to your scheduled date, time, and location.') }}
                 </p>
             </li>
 
@@ -128,9 +127,9 @@
                 <div class="flex items-center">
                     <span class="flex h-12 w-12 shrink-0 items-center justify-center rounded-full bg-brand font-display text-xl font-bold text-white">4</span>
                 </div>
-                <h3 class="mt-5 font-semibold text-ink">Terima foto di galeri</h3>
+                <h3 class="mt-5 font-semibold text-ink">{{ __('Receive photos in gallery') }}</h3>
                 <p class="mt-1.5 text-sm leading-relaxed text-ink-soft">
-                    Hasil foto masuk ke galeri acara. Unduh sekaligus, lalu bagikan ke siswa dan orang tua.
+                    {{ __('Photos are delivered to the event gallery. Download all at once, then share with students and parents.') }}
                 </p>
             </li>
         </ol>
@@ -142,52 +141,52 @@
 
         <div class="reveal max-w-xl">
             <h2 class="font-display text-2xl font-bold tracking-tight text-ink md:text-3xl">
-                Yang bisa panitia lakukan di Momenta
+                {{ __('What committees can do on Momenta') }}
             </h2>
 
             <p class="mt-3 text-ink-soft">
-                Dari mencari fotografer yang kosong sampai menerima hasil foto, semuanya ada di satu tempat.
+                {{ __('From finding available photographers to receiving final photos, everything is in one place.') }}
             </p>
         </div>
 
         <div class="reveal mt-10 grid overflow-hidden rounded-xl border border-line lg:grid-cols-2">
 
             <div class="flex flex-col justify-center bg-brand p-8 text-white md:p-12">
-                <p class="text-sm font-semibold text-blue-100">Fitur utama</p>
+                <p class="text-sm font-semibold text-blue-100">{{ __('Key Features') }}</p>
 
                 <h3 class="mt-2 font-display text-2xl font-bold md:text-3xl">
-                    Pengecekan jadwal saat booking
+                    {{ __('Schedule check during booking') }}
                 </h3>
 
                 <p class="mt-3 max-w-md leading-relaxed text-blue-100">
-                    Pilih fotografer dan paket terlebih dahulu. Selanjutnya, masukkan tanggal serta jam acara pada formulir booking untuk memeriksa apakah jadwal fotografer tersedia.
+                    {{ __("Select photographer and package first. Then enter the event date and time to verify the photographer's availability.") }}
                 </p>
 
                 <a href="#fotografer"
                    class="mt-7 inline-flex w-fit items-center justify-center rounded-lg bg-white px-6 py-3 text-sm font-semibold text-brand transition-all duration-300 hover:-translate-y-0.5 hover:bg-brand-soft">
-                    Pilih fotografer
+                    {{ __('Select photographer') }}
                 </a>
             </div>
 
             <div class="space-y-4 bg-surface p-6 md:p-10">
                 <div class="border-l-4 border-cyan-500 bg-slate-50 p-5 transition-transform duration-300 hover:translate-x-1">
-                    <h3 class="font-semibold text-ink">Booking dan pembayaran online</h3>
+                    <h3 class="font-semibold text-ink">{{ __('Online booking and payment') }}</h3>
                     <p class="mt-1 text-sm leading-relaxed text-ink-soft">
-                        Pilih paket, isi jadwal dan lokasi, lalu unggah bukti pembayaran dari satu alur.
+                        {{ __('Choose a package, set schedule and location, and upload payment receipt in one flow.') }}
                     </p>
                 </div>
 
                 <div class="border-l-4 border-cyan-500 bg-slate-50 p-5 transition-transform duration-300 hover:translate-x-1">
-                    <h3 class="font-semibold text-ink">Galeri per acara</h3>
+                    <h3 class="font-semibold text-ink">{{ __('Gallery per event') }}</h3>
                     <p class="mt-1 text-sm leading-relaxed text-ink-soft">
-                        Foto hasil sesi dikumpulkan per acara dan bisa diunduh sekaligus.
+                        {{ __('Photos from the session are grouped by event and can be downloaded all at once.') }}
                     </p>
                 </div>
 
                 <div class="border-l-4 border-cyan-500 bg-slate-50 p-5 transition-transform duration-300 hover:translate-x-1">
-                    <h3 class="font-semibold text-ink">Status booking</h3>
+                    <h3 class="font-semibold text-ink">{{ __('Booking status') }}</h3>
                     <p class="mt-1 text-sm leading-relaxed text-ink-soft">
-                        Pantau booking dari diajukan sampai acara selesai.
+                        {{ __('Track booking from submission until the event is finished.') }}
                     </p>
                 </div>
             </div>
@@ -201,17 +200,17 @@
 
         <div class="reveal max-w-xl">
             <h2 class="font-display text-2xl font-bold tracking-tight text-ink md:text-3xl">
-                Pilih fotografer
+                {{ __('Choose photographer') }}
             </h2>
 
             <p class="mt-3 text-ink-soft">
-                Lihat fotografer yang tersedia dan pilih paket sesuai kebutuhan acaramu.
+                {{ __('See available photographers and choose the package for your event needs.') }}
             </p>
         </div>
 
         @if ($fotografer->isEmpty())
             <p class="mt-8 rounded-lg border border-dashed border-slate-300 bg-white p-10 text-center text-sm text-ink-soft">
-                Belum ada fotografer yang tersedia.
+                {{ __('No photographers available yet.') }}
             </p>
         @else
             <div class="reveal-stagger mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
@@ -224,7 +223,7 @@
                 <div class="mt-10 text-center">
                     <a href="{{ route('fotografer.browse') }}"
                        class="inline-flex items-center gap-2 rounded-xl border border-line bg-white px-6 py-3 text-sm font-semibold text-ink shadow-xs transition hover:border-brand hover:text-brand">
-                        Lihat Semua Fotografer
+                        {{ __('See All Photographers') }}
                         <svg class="h-4 w-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"/>
                         </svg>
@@ -241,11 +240,11 @@
 
         <div class="reveal max-w-lg">
             <h2 class="font-display text-2xl font-bold tracking-tight text-white md:text-3xl">
-                Ada acara sekolah bulan depan?
+                {{ __('Have a school event next month?') }}
             </h2>
 
             <p class="mt-3 text-blue-100">
-                Pilih fotografer, tentukan jadwal, lalu lanjutkan proses booking dari satu tempat.
+                {{ __('Choose a photographer, set the schedule, and proceed with booking from one place.') }}
             </p>
         </div>
 
@@ -253,22 +252,22 @@
             @auth
                 <a href="#fotografer"
                    class="rounded-lg bg-white px-6 py-3 text-sm font-semibold text-navy transition-colors hover:bg-brand-soft">
-                    Pilih fotografer
+                    {{ __('Select photographer') }}
                 </a>
 
                 <a href="{{ url('/dashboard') }}"
                    class="rounded-lg border border-white/40 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white">
-                    Buka Dashboard
+                    {{ __('Open Dashboard') }}
                 </a>
             @else
                 <a href="{{ route('register') }}"
                    class="rounded-lg bg-white px-6 py-3 text-sm font-semibold text-navy transition-colors hover:bg-brand-soft">
-                    Daftar sekarang
+                    {{ __('Register now') }}
                 </a>
 
                 <a href="{{ route('login') }}"
                    class="rounded-lg border border-white/40 px-6 py-3 text-sm font-semibold text-white transition-colors hover:border-white">
-                    Masuk
+                    {{ __('Log in') }}
                 </a>
             @endauth
         </div>
@@ -288,11 +287,11 @@
         <nav aria-label="Footer"
              class="flex flex-wrap gap-x-6 gap-y-2 text-sm text-ink-soft">
 
-            <a href="#beranda" class="transition-colors hover:text-ink">Beranda</a>
-            <a href="#cara-kerja" class="transition-colors hover:text-ink">Cara Kerja</a>
-            <a href="#fitur" class="transition-colors hover:text-ink">Fitur</a>
-            <a href="#fotografer" class="transition-colors hover:text-ink">Fotografer</a>
-            <a href="{{ url('/dashboard') }}" class="transition-colors hover:text-ink">Dashboard</a>
+            <a href="#beranda" class="transition-colors hover:text-ink">{{ __('Home') }}</a>
+            <a href="#cara-kerja" class="transition-colors hover:text-ink">{{ __('How It Works') }}</a>
+            <a href="#fitur" class="transition-colors hover:text-ink">{{ __('Features') }}</a>
+            <a href="#fotografer" class="transition-colors hover:text-ink">{{ __('Photographers') }}</a>
+            <a href="{{ url('/dashboard') }}" class="transition-colors hover:text-ink">{{ __('Dashboard') }}</a>
         </nav>
 
         <p class="text-sm text-ink-soft">

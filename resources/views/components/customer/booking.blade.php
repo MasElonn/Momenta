@@ -1,8 +1,8 @@
 <div x-show="tab === 'booking'" x-data="{modalConfirm: false}">
     <div :class="section ? 'hidden' : ''">
         <div class="flex flex-col my-3 mb-4">
-            <span class="text-2xl font-semibold">My Booking</span>
-            <span class="text-gray-500">Manage All Your Sessions</span>
+            <span class="text-2xl font-semibold">{{ __('My Booking') }}</span>
+            <span class="text-gray-500">{{ __('Manage All Your Sessions') }}</span>
         </div>
 
         @forelse($transaksis as $transaksi)
@@ -15,8 +15,8 @@
                     <div class="flex items-center justify-between pb-3 mb-3 border-b border-gray-100">
                         <div class="flex items-center gap-2">
                             <x-lucide-calendar-1 class="w-5 h-5" />
-                            <span class="font-semibold">Booking</span>
-                            <span class="text-gray-400 text-sm">ID Booking:</span>
+                            <span class="font-semibold">{{ __('Booking') }}</span>
+                            <span class="text-gray-400 text-sm">{{ __('Booking ID') }}:</span>
                             <span class="text-gray-500 text-sm">#{{ $transaksi->trans_id }}</span>
                         </div>
                         <span class="text-gray-400 text-sm">{{ $acara->tanggal->translatedFormat('d M Y') }}</span>
@@ -36,18 +36,18 @@
                             <div class="flex items-center gap-6 mt-2 text-sm text-gray-600">
                                 <span class="flex items-center gap-1">
                                     <x-lucide-circle-dollar-sign class="w-4 h-4 rounded-full" />
-                                    Harga: Rp {{ number_format($transaksi->paket->harga ?? 0, 0, ',', '.') }}
+                                    {{ __('Price') }}: Rp {{ number_format($transaksi->paket->harga ?? 0, 0, ',', '.') }}
                                 </span>
                                 <span class="flex items-center gap-1">
                                     <x-lucide-package-2 class="w-4 h-4 rounded-full" />
-                                    Paket: {{ $transaksi->paket->judul ?? '-' }}
+                                    {{ __('Package') }}: {{ $transaksi->paket->judul ?? '-' }}
                                 </span>
                             </div>
 
                             <div class="flex items-center justify-between mt-3">
                                 <div class="flex items-center gap-2">
                                     <x-lucide-user class="w-6 h-6 rounded-full" />
-                                    <span class="text-sm text-gray-600">{{ $transaksi->paket->fotografer->name ?? '-' }} - Fotografer</span>
+                                    <span class="text-sm text-gray-600">{{ $transaksi->paket->fotografer->name ?? '-' }} - {{ __('Photographer') }}</span>
                                 </div>
                                 @if($transaksi->status === 'paid' || $transaksi->status === 'pending')
                                     <a href="{{ route('transaksi.invoice', ['id' => $transaksi->trans_id]) }}"
@@ -55,7 +55,7 @@
                                        @click.stop
                                        class="inline-flex items-center gap-1 text-xs font-semibold text-emerald-700 bg-emerald-50 hover:bg-emerald-100 px-2.5 py-1 rounded-md border border-emerald-200 transition-colors">
                                         <x-lucide-receipt class="w-3.5 h-3.5" />
-                                        Invoice
+                                        {{ __('Invoice') }}
                                     </a>
                                 @endif
                             </div>
@@ -64,7 +64,7 @@
                 </div>
             @endif
         @empty
-            <div class="text-sm text-gray-400 py-4">Belum ada booking.</div>
+            <div class="text-sm text-gray-400 py-4">{{ __('No bookings yet') }}</div>
         @endforelse
         {{$transaksis->links('vendor.pagination.preline')}}
     </div>
@@ -82,8 +82,8 @@
                         </div>
 
                         <div class="flex flex-col">
-                            <span class="flex-row text-xl font-semibold">Manage Booking</span>
-                            <span class="text-xs text-gray-400">ID Booking: #{{$transaksi->trans_id}}</span>
+                            <span class="flex-row text-xl font-semibold">{{ __('Manage Booking') }}</span>
+                            <span class="text-xs text-gray-400">{{ __('Booking ID') }}: #{{$transaksi->trans_id}}</span>
                         </div>
                     </div>
                     <div class="mr-5">
@@ -100,14 +100,14 @@
                                 {{ substr($transaksi->paket->fotografer->name,0,1)}}
                             </div>
                             <div class="ml-3 flex-1">
-                                <h1 class="text-blue-500 font-semibold">Your Fotografer</h1>
+                                <h1 class="text-blue-500 font-semibold">{{ __('Your Photographer') }}</h1>
                                 <h1 class="font-bold text-xl">{{ $transaksi->paket->fotografer->name ?? '-' }}</h1>
                             </div>
                         </div>
 
                         <div class="rounded-xl p-3 mt-3 border border-gray-200 shadow">
                             <div class="pb-3 border-b border-b-black/20">
-                                <h1 class="font-bold text-xl">Session Schedule & Location</h1>
+                                <h1 class="font-bold text-xl">{{ __('Session Schedule & Location') }}</h1>
                             </div>
 
                             <div class="flex flex-col m-2 gap-3">
@@ -116,7 +116,7 @@
                                         <x-lucide-calendar class="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h5 class="text-xs font-semibold text-gray-500">Date</h5>
+                                        <h5 class="text-xs font-semibold text-gray-500">{{ __('Date') }}</h5>
                                         <h1 class="font-semibold">{{$acara->tanggal->translatedFormat('l, d M Y')}}</h1>
                                     </div>
                                 </div>
@@ -126,7 +126,7 @@
                                         <x-lucide-pin class="w-6 h-6" />
                                     </div>
                                     <div>
-                                        <h5 class="text-xs font-semibold text-gray-500">Meeting Point</h5>
+                                        <h5 class="text-xs font-semibold text-gray-500">{{ __('Meeting Point') }}</h5>
                                         <h1 class="font-semibold">{{$acara->lokasi}}</h1>
                                     </div>
                                 </div>
@@ -161,7 +161,7 @@
                     <div class="w-full flex flex-col">
                         <div class="bg-[#123ABB] mt-2 p-5 border border-gray-200 shadow rounded-xl">
                             <div class="flex justify-between">
-                                <h1 class="text-amber-300 font-semibold">Selected Package</h1>
+                                <h1 class="text-amber-300 font-semibold">{{ __('Selected Package') }}</h1>
                                 <span class="px-3 py-1 rounded-full bg-white/20 text-white text-xs font-medium">
                                     {{ucfirst($transaksi->status)}}
                                 </span>
@@ -173,13 +173,13 @@
                             </div>
 
                             <div class="text-white flex justify-between mt-2">
-                                <h1 class="text-gray-300 text-sm">Total Harga</h1>
+                                <h1 class="text-gray-300 text-sm">{{ __('Total Price') }}</h1>
                                 <h1 class="text-xl font-bold">Rp {{ number_format($transaksi->paket->harga ?? 0, 0, ',', '.') }}</h1>
                             </div>
                         </div>
 
                         <div class="mt-3 border border-gray-200 shadow rounded-xl p-4">
-                            <h1 class="text-xl font-semibold">Description</h1>
+                            <h1 class="text-xl font-semibold">{{ __('Description') }}</h1>
                             <p class="mt-1 text-gray-500">
                                 {{$acara->deskripsi}}
                             </p>
@@ -189,11 +189,11 @@
                             @if($transaksi->status == 'paid' || $transaksi->status == 'pending')
                                 <a href="{{ route('transaksi.invoice', ['id' => $transaksi->trans_id]) }}" target="_blank" class="text-center py-3 px-4 inline-flex items-center justify-center gap-x-2 text-sm font-semibold rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm">
                                     <x-lucide-receipt class="w-4 h-4" />
-                                    Lihat / Cetak Struk
+                                    {{ __('View / Print Receipt') }}
                                 </a>
                             @else
                                 <a href="{{ route('pembayaran', ['id' => $transaksi->trans_id]) }}" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-semibold rounded-lg bg-blue-600 text-white hover:bg-blue-700 transition-colors">
-                                    Bayar Sekarang
+                                    {{ __('Pay Now') }}
                                 </a>
                             @endif
 
@@ -205,11 +205,11 @@
                                 }
                             @endphp
                             <a href="{{ $ftWa ? 'https://wa.me/' . $ftWa . '?text=' . urlencode('Halo, saya ingin bertanya tentang booking #' . $transaksi->trans_id) : 'mailto:' . ($transaksi->paket?->fotografer?->email ?? '') }}" target="_blank" type="button" class="text-center py-3 px-4 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
-                                Contact Fotografer
+                                {{ __('Contact Photographer') }}
                             </a>
                             <button @click="modalConfirm = true"
                                     type="button" class="text-red-400 text-center py-3 px-4 border-red-400 items-center justify-center gap-x-2 text-sm font-medium rounded-lg border hover:border-red-600 hover:text-red-600 focus:outline-hidden focus:text-red-400 disabled:opacity-50 disabled:pointer-events-none">
-                                Cancel Booking
+                                {{ __('Cancel Booking') }}
                             </button>
                         </div>
                     </div>
@@ -233,11 +233,11 @@
 
                     <div class="flex items-center gap-3 text-red-500 mb-3">
                         <x-lucide-alert-triangle class="w-6 h-6 shrink-0" />
-                        <h3 class="text-lg font-bold text-gray-900">Cancel Booking</h3>
+                        <h3 class="text-lg font-bold text-gray-900">{{ __('Cancel Booking') }}</h3>
                     </div>
 
                     <p class="text-sm text-gray-600 mb-6">
-                        Are you sure you want to Cancel your Booking? All of your photo will be permanently removed. This action cannot be undone.
+                        {{ __('Are you sure you want to cancel your booking? This action cannot be undone.') }}
                     </p>
 
                     <form action="{{route('cancel.booking',['id' => $transaksi->trans_id])}}" method="POST" @submit="section = ''" class="flex justify-end gap-3">
@@ -245,11 +245,11 @@
                         @method('DELETE')
                         <button type="button" @click="modalConfirm = false"
                                 class="py-2 px-4 text-sm font-medium rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 focus:outline-hidden">
-                            Cancel
+                            {{ __('Cancel') }}
                         </button>
                         <button type="submit"
                                 class="py-2 px-4 text-sm font-medium rounded-lg bg-red-600 text-white hover:bg-red-700 focus:outline-hidden">
-                            Confirm Cancel
+                            {{ __('Confirm Cancel') }}
                         </button>
                     </form>
                 </div>

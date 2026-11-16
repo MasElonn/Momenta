@@ -17,22 +17,22 @@
 <div class="mb-6 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
     <div>
         <h1 class="text-2xl sm:text-3xl font-bold text-gray-900 tracking-tight">
-            Hello, {{ $user->name ?? 'Fotografer' }}!
+            {{ __('Hello, :name!', ['name' => $user->name ?? __('Photographer')]) }}
         </h1>
         <p class="text-sm text-gray-500 mt-1">
-            Welcome back to your Momenta dashboard. Your next photo session is about to begin.
+            {{ __('Welcome back to your Momenta dashboard. Your next photo session is about to begin.') }}
         </p>
     </div>
     <div class="flex items-center gap-2.5">
         <button @click="tab = 'paket'; section = 'create'"
             class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white text-xs sm:text-sm font-semibold rounded-xl shadow-xs transition">
             <x-lucide-plus class="w-4 h-4" />
-            Tambah Paket
+            {{ __('Add Package') }}
         </button>
         <button @click="tab = 'gallery'"
             class="inline-flex items-center gap-1.5 px-3.5 py-2 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 text-xs sm:text-sm font-semibold rounded-xl shadow-xs transition">
             <x-lucide-upload class="w-4 h-4" />
-            Upload Foto
+            {{ __('Upload Photos') }}
         </button>
     </div>
 </div>
@@ -46,7 +46,7 @@
                 <x-lucide-wallet class="w-5 h-5" />
             </div>
             <div class="min-w-0 flex-1">
-                <p class="text-xs text-gray-500 font-medium truncate">Total Pendapatan</p>
+                <p class="text-xs text-gray-500 font-medium truncate">{{ __('Total Earnings') }}</p>
                 <h2 class="text-base sm:text-lg font-bold text-gray-900 whitespace-nowrap" title="Rp {{ number_format($totalPendapatan, 0, ',', '.') }}">
                     Rp {{ number_format($totalPendapatan, 0, ',', '.') }}
                 </h2>
@@ -61,7 +61,7 @@
                 <x-lucide-circle-dollar-sign class="w-5 h-5" />
             </div>
             <div class="min-w-0 flex-1">
-                <p class="text-xs text-gray-500 font-medium truncate">Total Transaksi</p>
+                <p class="text-xs text-gray-500 font-medium truncate">{{ __('Total Transactions') }}</p>
                 <h2 class="text-base sm:text-xl font-bold text-gray-900">{{ $totalTransaksi }}</h2>
             </div>
         </div>
@@ -74,7 +74,7 @@
                 <x-lucide-package-2 class="w-5 h-5" />
             </div>
             <div class="min-w-0 flex-1">
-                <p class="text-xs text-gray-500 font-medium truncate">Total Paket</p>
+                <p class="text-xs text-gray-500 font-medium truncate">{{ __('Total Packages') }}</p>
                 <h2 class="text-base sm:text-xl font-bold text-gray-900">{{ $totalPaket }}</h2>
             </div>
         </div>
@@ -87,7 +87,7 @@
                 <x-lucide-calendar-1 class="w-5 h-5" />
             </div>
             <div class="min-w-0 flex-1">
-                <p class="text-xs text-gray-500 font-medium truncate">Booking Session</p>
+                <p class="text-xs text-gray-500 font-medium truncate">{{ __('Booking Sessions') }}</p>
                 <h2 class="text-base sm:text-xl font-bold text-gray-900">{{ $totalBooking }}</h2>
             </div>
         </div>
@@ -100,7 +100,7 @@
                 <x-lucide-image class="w-5 h-5" />
             </div>
             <div class="min-w-0 flex-1">
-                <p class="text-xs text-gray-500 font-medium truncate">Total Foto</p>
+                <p class="text-xs text-gray-500 font-medium truncate">{{ __('Total Photos') }}</p>
                 <h2 class="text-base sm:text-xl font-bold text-gray-900">{{ $totalFoto }}</h2>
             </div>
         </div>
@@ -216,7 +216,7 @@
                             <tr>
                                 <td colspan="5" class="text-center py-8 text-gray-400">
                                     <x-lucide-receipt class="w-8 h-8 mx-auto mb-2 text-gray-300" />
-                                    Belum ada transaksi.
+                                    {{ __('No transactions yet.') }}
                                 </td>
                             </tr>
                         @endforelse
@@ -227,7 +227,7 @@
                     <div x-cloak
                          x-show="periodeAktif !== 'semua' && {{ json_encode($rekapTransaksi) }}[periodeAktif] === 0"
                          class="text-center py-8 text-gray-400 text-xs">
-                        Tidak ada transaksi pada periode ini.
+                        {{ __('No transactions in this period.') }}
                     </div>
                 @endif
             </div>
@@ -296,7 +296,7 @@
                 @empty
                     <div class="text-center py-6 text-gray-400">
                         <x-lucide-calendar-days class="w-8 h-8 mx-auto text-gray-300 mb-2" />
-                        <p class="text-xs text-gray-500">Belum ada booking mendatang.</p>
+                        <p class="text-xs text-gray-500">{{ __('No upcoming bookings.') }}</p>
                     </div>
                 @endforelse
             </div>
@@ -306,15 +306,15 @@
             <div class="flex items-center justify-between px-5 py-4 border-b border-gray-100">
                 <div>
                     <h3 class="font-semibold text-gray-900">
-                        Paket Saya
+                        {{ __('My Packages') }}
                     </h3>
                     <p class="text-xs text-gray-400 mt-0.5">
-                        {{ $totalPaket }} paket terdaftar
+                        {{ $totalPaket }} {{ __('packages registered') }}
                     </p>
                 </div>
                 <button @click="tab = 'paket'; section = ''"
                     class="text-xs font-medium text-blue-600 hover:text-blue-800 transition">
-                    Kelola &rarr;
+                    {{ __('Manage') }} &rarr;
                 </button>
             </div>
 
@@ -333,13 +333,13 @@
                             </p>
                         </div>
                         <span class="text-[10px] px-2 py-0.5 rounded-full font-medium {{ $paket->tersedia ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-gray-100 text-gray-500' }}">
-                            {{ $paket->tersedia ? 'Aktif' : 'Nonaktif' }}
+                            {{ $paket->tersedia ? __('Active') : __('Inactive') }}
                         </span>
                     </div>
                 @empty
                     <div class="text-center py-6 text-gray-400">
                         <x-lucide-package class="w-8 h-8 mx-auto text-gray-300 mb-2" />
-                        <p class="text-xs text-gray-500">Belum ada paket fotografer.</p>
+                        <p class="text-xs text-gray-500">{{ __('No photographer packages yet.') }}</p>
                     </div>
                 @endforelse
             </div>

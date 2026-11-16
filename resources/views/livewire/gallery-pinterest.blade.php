@@ -26,14 +26,14 @@
                     <div class="flex items-center justify-end text-white">
                         <button @click="modalOpen = true; selectedImage = '{{$foto->r2_url}}'"
                                 class="text-xs bg-white text-gray-800 font-semibold px-3 py-1.5 rounded-full hover:bg-gray-100 transition-colors shadow">
-                            View
+                            {{ __('View') }}
                         </button>
                     </div>
                 </div>
             </div>
         @empty
             <div class="col-span-full py-8 text-center text-gray-400">
-                Belum ada foto untuk acara ini.
+                {{ __('No photos for this event yet.') }}
             </div>
         @endforelse
     </div>
@@ -47,7 +47,7 @@
         </div>
     @elseif (! $fotos->isEmpty())
         <div class="text-center py-4 text-gray-400">
-            Kamu sudah mencapai akhir data.
+            {{ __('You have reached the end of the list.') }}
         </div>
     @endif
 

@@ -20,7 +20,7 @@
                     <path d="M14.5 4h-5L7 7H4a2 2 0 0 0-2 2v9a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2h-3l-2.5-3z"/>
                     <circle cx="12" cy="13" r="3"/>
                 </svg>
-                Karya Terbaik
+                {{ __('Featured Work') }}
             </span>
         </div>
 
@@ -54,13 +54,13 @@
                     {{ $item->name }}
                 </h3>
                 <p class="text-xs text-ink-soft truncate">
-                    Fotografer Momenta
+                    {{ __('Momenta Photographer') }}
                 </p>
             </div>
         </div>
 
         <p class="mt-3 text-sm leading-relaxed text-ink-soft line-clamp-2">
-            {{ $item->bio ?? 'Mendokumentasikan setiap momen penting acara sekolah dengan hasil foto yang jernih dan berkesan.' }}
+            {{ $item->bio ?? __('Capturing every important school event moment with clear and memorable photos.') }}
         </p>
 
         @if ($item->pakets->isNotEmpty())
@@ -72,7 +72,7 @@
                 @endforeach
                 @if ($item->pakets->count() > 3)
                     <span class="inline-flex items-center rounded-md bg-page px-2 py-1 text-xs font-medium text-ink-soft border border-line">
-                        +{{ $item->pakets->count() - 3 }} lainnya
+                        +{{ $item->pakets->count() - 3 }} {{ __('more') }}
                     </span>
                 @endif
             </div>
@@ -82,12 +82,12 @@
             <div class="flex items-center justify-between border-t border-line pt-3.5 text-xs text-ink-soft">
                 <span class="inline-flex items-center gap-1.5 font-medium">
                     <span class="h-1.5 w-1.5 rounded-full {{ $item->pakets->isNotEmpty() ? 'bg-emerald-500' : 'bg-slate-300' }}"></span>
-                    {{ $item->pakets->count() }} paket tersedia
+                    {{ $item->pakets->count() }} {{ __('packages available') }}
                 </span>
 
                 @if ($item->pakets->isNotEmpty())
                     <span class="font-medium">
-                        Mulai <span class="font-display text-sm font-bold text-ink">{{ \App\Models\Paket::formatHargaShort((float) $item->pakets->min('harga')) }}</span>
+                        {{ __('From') }} <span class="font-display text-sm font-bold text-ink">{{ \App\Models\Paket::formatHargaShort((float) $item->pakets->min('harga')) }}</span>
                     </span>
                 @endif
             </div>
@@ -95,18 +95,18 @@
             @if ($item->pakets->isNotEmpty())
                 @if (auth()->check() && auth()->user()->role !== 'customer')
                     <button type="button" disabled
-                       class="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-slate-100 px-4 py-2.5 text-xs font-semibold text-slate-400 cursor-not-allowed" title="Hanya akun customer yang dapat melakukan booking">
-                        Booking Khusus Customer
+                       class="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-slate-100 px-4 py-2.5 text-xs font-semibold text-slate-400 cursor-not-allowed" title="{{ __('Customer account only') }}">
+                        {{ __('Customer Account Only') }}
                     </button>
                 @else
                     <a href="{{ route('booking.show', $item->user_id) }}"
                        class="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-brand">
-                        Pilih Fotografer
+                        {{ __('Select Photographer') }}
                     </a>
                 @endif
             @else
                 <span class="mt-4 inline-flex w-full items-center justify-center rounded-lg bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-400 cursor-not-allowed">
-                    Belum ada paket
+                    {{ __('No packages available') }}
                 </span>
             @endif
         </div>

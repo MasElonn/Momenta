@@ -1,9 +1,9 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Paket</title>
+    <title>{{ __('Edit Package') }}</title>
     @vite('resources/css/app.css')
     @vite('resources/js/app.js')
 </head>
@@ -32,9 +32,9 @@
         <div class="mb-8 border-t border-line"></div>
 
         {{-- Title --}}
-        <h1 class="mb-1 text-2xl font-bold text-ink">Edit Paket</h1>
+        <h1 class="mb-1 text-2xl font-bold text-ink">{{ __('Edit Package') }}</h1>
         <p class="mb-6 text-sm text-ink-soft">
-            Perbarui detail paket layanan fotografi Anda.
+            {{ __('Update your photography service package details.') }}
         </p>
 
         <div class="grid grid-cols-1 gap-8 lg:grid-cols-[1.3fr_1fr]">
@@ -49,7 +49,7 @@
             <div class="lg:sticky lg:top-10 lg:self-start">
                 <p class="mb-3 flex items-center gap-1.5 text-xs font-semibold uppercase tracking-wide text-ink-soft">
                     <svg class="h-3.5 w-3.5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8Z"/><circle cx="12" cy="12" r="3"/></svg>
-                    Pratinjau di Landing Page
+                    {{ __('Landing Page Preview') }}
                 </p>
 
                 <div class="transition-all duration-300"
@@ -58,24 +58,24 @@
                         : 'flex flex-col rounded-2xl border border-line bg-page p-7'">
 
                     <template x-if="is_populer">
-                        <div class="absolute -top-[13px] left-6 rounded-full bg-brand px-3 py-1.5 text-[11px] font-semibold text-surface">Paling Populer</div>
+                        <div class="absolute -top-[13px] left-6 rounded-full bg-brand px-3 py-1.5 text-[11px] font-semibold text-surface">{{ __('Most Popular') }}</div>
                     </template>
 
                     <template x-if="!tersedia">
-                        <span class="mb-3 inline-block w-fit rounded-md bg-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700">Tidak tersedia</span>
+                        <span class="mb-3 inline-block w-fit rounded-md bg-slate-200 px-2.5 py-1 text-xs font-semibold text-slate-700">{{ __('Unavailable') }}</span>
                     </template>
 
-                    <h3 class="mb-1 text-lg font-semibold" :class="is_populer ? '' : 'text-navy'" x-text="judul || 'Judul Paket'"></h3>
-                    <p class="mb-5 text-[13px]" :class="is_populer ? 'text-brand-soft/70' : 'text-ink-soft'" x-text="deskripsi || 'Deskripsi paket akan tampil di sini'"></p>
+                    <h3 class="mb-1 text-lg font-semibold" :class="is_populer ? '' : 'text-navy'" x-text="judul || '{{ __('Package Title') }}'"></h3>
+                    <p class="mb-5 text-[13px]" :class="is_populer ? 'text-brand-soft/70' : 'text-ink-soft'" x-text="deskripsi || '{{ __('Package description will appear here') }}'"></p>
 
                     <div class="mb-5 font-display text-[28px] font-bold" :class="is_populer ? 'text-surface' : 'text-navy'">
-                        <span x-text="hargaFormatted"></span><span class="text-sm font-medium" :class="is_populer ? 'text-brand-soft/70' : 'text-ink-soft'">/sesi</span>
+                        <span x-text="hargaFormatted"></span><span class="text-sm font-medium" :class="is_populer ? 'text-brand-soft/70' : 'text-ink-soft'">/{{ __('session') }}</span>
                     </div>
 
                     <ul class="mb-6 space-y-2.5 text-sm" :class="is_populer ? 'text-brand-soft/90' : 'text-ink-soft'">
                         <li class="flex items-start gap-2">
                             <svg class="mt-0.5 h-4 w-4 shrink-0" :class="is_populer ? 'stroke-brand-soft' : 'stroke-brand'" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
-                            <span x-text="(durasi || '—') + ' sesi foto'"></span>
+                            <span x-text="(durasi || '—') + ' {{ __('photo session') }}'"></span>
                         </li>
                         <li class="flex items-start gap-2">
                             <svg class="mt-0.5 h-4 w-4 shrink-0" :class="is_populer ? 'stroke-brand-soft' : 'stroke-brand'" viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 7 9 18l-5-5"/></svg>
@@ -93,10 +93,10 @@
 
                     <div class="w-full rounded-[10px] py-2.5 text-center text-sm font-semibold"
                          :class="!tersedia ? 'bg-slate-200 text-slate-500' : (is_populer ? 'bg-brand text-surface' : 'border border-line text-navy')"
-                         x-text="tersedia ? 'Pilih Paket' : 'Tidak tersedia'"></div>
+                         x-text="tersedia ? '{{ __('Select Package') }}' : '{{ __('Unavailable') }}'"></div>
                 </div>
 
-                <p class="mt-3 text-xs text-ink-soft">Ini simulasi tampilan — otomatis update sambil kamu ngisi form.</p>
+                <p class="mt-3 text-xs text-ink-soft">{{ __('This preview automatically updates as you fill out the form.') }}</p>
             </div>
         </div>
     </div>

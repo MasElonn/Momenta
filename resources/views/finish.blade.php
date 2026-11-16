@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Booking</title>
+    <title>{{ __('Booking Confirmed') }}</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <style>
         @keyframes draw-circle {
@@ -89,34 +89,34 @@
                 </div>
             </div>
 
-            <h1 class="fade-up-1 font-bold text-2xl text-gray-800 mb-1">Booking Confirmed</h1>
-            <p class="fade-up-1 text-sm text-gray-500 mb-6">Your payment has been received and your session is booked.</p>
+            <h1 class="fade-up-1 font-bold text-2xl text-gray-800 mb-1">{{ __('Booking Confirmed') }}</h1>
+            <p class="fade-up-1 text-sm text-gray-500 mb-6">{{ __('Your payment has been received and your session is booked.') }}</p>
 
             <!-- Booking summary -->
             <div class="fade-up-2 w-full border border-gray-200 rounded-xl p-5 text-left flex flex-col gap-3 mb-6">
                 <div class="flex justify-between items-center text-sm">
-                    <span class="text-gray-500">Booking ID</span>
+                    <span class="text-gray-500">{{ __('Booking ID') }}</span>
                     <span class="font-semibold text-gray-800">#{{ $trans_id ?? session('trans_id', '-') }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                    <span class="text-gray-500">Package</span>
+                    <span class="text-gray-500">{{ __('Package') }}</span>
                     <span class="font-semibold text-gray-800">{{ ucfirst($paket ?? session('paket', '-')) }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                    <span class="text-gray-500">Date & Time</span>
+                    <span class="text-gray-500">{{ __('Date & Time') }}</span>
                     <span class="font-semibold text-gray-800">{{ $date_time ?? session('date_time', '-') }}</span>
                 </div>
                 <div class="flex justify-between items-center text-sm">
-                    <span class="text-gray-500">Location</span>
+                    <span class="text-gray-500">{{ __('Location') }}</span>
                     <span class="font-semibold text-gray-800">{{ $lokasi ?? session('lokasi', '-') }}</span>
                 </div>
                 <div class="border-t border-gray-200 pt-3 flex justify-between items-center">
-                    <span class="font-semibold text-gray-800">Total Paid</span>
+                    <span class="font-semibold text-gray-800">{{ __('Total Paid') }}</span>
                     <span class="font-bold text-lg text-blue-600">
                         @php
                             $paidAmount = $total_harga ?? session('total_harga', 0);
                         @endphp
-                        {{ is_numeric($paidAmount) ? Number::currency($paidAmount, in: 'IDR', locale: 'id') : $paidAmount }}
+                        {{ is_numeric($paidAmount) ? Number::currency($paidAmount, in: 'IDR', locale: app()->getLocale()) : $paidAmount }}
                     </span>
                 </div>
                 @php
@@ -126,26 +126,26 @@
                     <div class="pt-2 flex justify-end">
                         <a href="{{ route('transaksi.invoice', ['id' => $finalTransId]) }}" target="_blank" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 hover:underline">
                             <x-lucide-receipt class="w-3.5 h-3.5" />
-                            Lihat Struk Lengkap
+                            {{ __('View Invoice') }}
                         </a>
                     </div>
                 @endif
             </div>
 
-            <p class="fade-up-3 text-xs text-gray-400 mb-6">{{__('Please Note that the Fotografer can change the Date if the schecdule is taken, if it taken Fotografer will notify you')}}</p>
+            <p class="fade-up-3 text-xs text-gray-400 mb-6">{{__('Please note that the photographer can reschedule if necessary and will notify you.')}}</p>
 
             <div class="fade-up-4 flex flex-wrap justify-center gap-3">
                 @if($finalTransId)
                     <a href="{{ route('transaksi.invoice', ['id' => $finalTransId]) }}" target="_blank" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg bg-emerald-600 text-white hover:bg-emerald-700 transition-colors shadow-sm">
                         <x-lucide-printer class="w-4 h-4" />
-                        Cetak Struk / Invoice
+                        {{ __('Invoice') }}
                     </a>
                 @endif
                 <a href="{{ route('dashboard') }}" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 transition-colors">
-                    View My Bookings
+                    {{ __('Back to Dashboard') }}
                 </a>
                 <a href="/" class="py-3 px-5 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors">
-                    Back to Home
+                    {{ __('Home') }}
                 </a>
             </div>
 

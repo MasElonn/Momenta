@@ -48,7 +48,7 @@
             </div>
 
             {{-- Right form panel --}}
-            <div class="flex w-full flex-1 items-center justify-center bg-[#FDFFFF] px-6 py-8 sm:px-10 md:py-10">
+            <div class="relative flex w-full flex-1 items-center justify-center bg-[#FDFFFF] px-6 py-8 sm:px-10 md:py-10">
                 <div class="w-full max-w-md">
                     <div class="mb-6 md:hidden">
                         <a href="/">

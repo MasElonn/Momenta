@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Daftar Paket — Momenta</title>
+    <title>{{ __('Package List') }} — Momenta</title>
     @vite(['resources/css/app.css', 'resources/js/app.js'])
 </head>
 <body class="bg-surface font-sans text-ink antialiased min-h-screen">
@@ -13,19 +13,19 @@
         <div class="mb-8 flex flex-wrap items-end justify-between gap-4">
             <div>
                 <h1 class="font-display text-[26px] font-bold tracking-tight text-navy sm:text-[30px]">
-                    Daftar Paket
+                    {{ __('Package List') }}
                 </h1>
                 <p class="mt-2 text-[14.5px] leading-relaxed text-ink-soft">
-                    Semua paket dari fotografer kami. Pilih paket yang sesuai dengan kebutuhan acara kamu.
+                    {{ __('All packages from our photographers. Choose the package that suits your event needs.') }}
                 </p>
             </div>
         </div>
 
         @if ($pakets->isEmpty())
             <div class="flex flex-col items-center gap-3 rounded-2xl border-2 border-dashed border-line bg-surface px-6 py-16 text-center">
-                <p class="font-semibold text-navy">Belum ada paket yang tersedia</p>
+                <p class="font-semibold text-navy">{{ __('No packages available yet') }}</p>
                 <p class="text-sm text-ink-soft">
-                    Fotografer belum menambahkan paket. Coba cek lagi nanti.
+                    {{ __("Photographers haven't added packages yet. Please check back later.") }}
                 </p>
             </div>
         @else
@@ -45,11 +45,11 @@
 
                             @if (! $paket->tersedia)
                                 <span class="shrink-0 rounded-full bg-slate-200 px-2.5 py-1 text-[11px] font-semibold text-slate-700">
-                                    Tidak tersedia
+                                    {{ __('Unavailable') }}
                                 </span>
                             @elseif ($paket->is_populer)
                                 <span class="shrink-0 rounded-full bg-brand-soft px-2.5 py-1 text-[11px] font-semibold text-brand">
-                                    Populer
+                                    {{ __('Popular') }}
                                 </span>
                             @endif
                         </div>
@@ -60,13 +60,13 @@
 
                         <div class="mb-4 font-display text-[28px] font-bold text-navy">
                             {{ $paket->harga_formatted }}
-                            <span class="text-sm font-medium text-ink-soft">/sesi</span>
+                            <span class="text-sm font-medium text-ink-soft">/{{ __('session') }}</span>
                         </div>
 
                         <ul class="mb-5 space-y-2 text-sm text-ink-soft">
                             <li class="flex items-start gap-2.5">
                                 <span class="text-brand">✓</span>
-                                {{ $paket->durasi }} sesi foto
+                                {{ $paket->durasi }} {{ __('photo session') }}
                             </li>
                             <li class="flex items-start gap-2.5">
                                 <span class="text-brand">✓</span>
@@ -93,18 +93,18 @@
                         @if ($paket->tersedia)
                             @if (auth()->check() && auth()->user()->role !== 'customer')
                                 <button type="button" disabled
-                                       class="mt-auto inline-flex cursor-not-allowed items-center justify-center rounded-[10px] bg-slate-100 px-4 py-2.5 text-xs font-semibold text-slate-400" aria-disabled="true" title="Hanya akun customer yang dapat melakukan booking">
-                                    Booking Khusus Customer
+                                       class="mt-auto inline-flex cursor-not-allowed items-center justify-center rounded-[10px] bg-slate-100 px-4 py-2.5 text-xs font-semibold text-slate-400" aria-disabled="true" title="{{ __('Customer account only') }}">
+                                    {{ __('Customer Account Only') }}
                                 </button>
                             @else
                                 <a href="{{ route('booking.show', ['id' => $paket->fotografer_id, 'paket' => $paket->paket_id]) }}"
                                    class="mt-auto inline-flex items-center justify-center rounded-[10px] bg-brand px-4 py-2.5 text-sm font-semibold text-white transition hover:bg-brand-dark">
-                                    Pilih Paket
+                                    {{ __('Select Package') }}
                                 </a>
                             @endif
                         @else
                             <span class="mt-auto inline-flex cursor-not-allowed items-center justify-center rounded-[10px] bg-slate-100 px-4 py-2.5 text-sm font-semibold text-slate-500" aria-disabled="true">
-                                Tidak tersedia
+                                {{ __('Unavailable') }}
                             </span>
                         @endif
                     </div>

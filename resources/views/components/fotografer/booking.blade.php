@@ -17,13 +17,13 @@
     <div class="flex items-center justify-between">
         <div>
             <h1 class="text-2xl font-semibold text-gray-900">
-                Upcoming Sessions
+                {{ __('Upcoming Sessions') }}
             </h1>
         </div>
 
         <div class="flex items-center gap-2 rounded-xl border border-gray-200 bg-white px-4 py-3 shadow-sm">
             <x-lucide-calendar class="h-5 w-5 text-blue-600" />
-            <span class="text-sm text-gray-600">Total sesi</span>
+            <span class="text-sm text-gray-600">{{ __('Total sessions') }}</span>
             <span class="font-semibold text-gray-900">
                 {{ $upcomingSessions->count() }}
             </span>
@@ -92,7 +92,7 @@
                             <div class="flex min-w-0 items-center gap-2">
                                 <x-lucide-user class="h-4 w-4 shrink-0" />
                                 <span class="truncate">
-                                    {{ $customer->nama ?? 'Customer' }}
+                                    {{ $customer->nama ?? __('Customer') }}
                                 </span>
                             </div>
 
@@ -134,12 +134,12 @@
                                 class="break-words text-sm text-gray-500"
                                 :class="expanded ? 'whitespace-pre-line' : 'line-clamp-2'"
                             >
-                                {{ $session->deskripsi ?: 'Tidak ada deskripsi acara.' }}
+                                {{ $session->deskripsi ?: __('No event description.') }}
                             </p>
 
                             <span
                                 class="mt-2 block text-xs font-medium text-blue-600"
-                                x-text="expanded ? 'Tutup deskripsi' : 'Lihat selengkapnya'"
+                                x-text="expanded ? '{{ __('Collapse description') }}' : '{{ __('View more') }}'"
                             ></span>
 
                         </div>
@@ -168,7 +168,12 @@
 
                     {{-- STATUS --}}
                     <span class="inline-flex shrink-0 rounded-full border px-3 py-1 text-xs font-medium {{ $statusClass }}">
-                        {{ ucfirst($session->status ?? 'upcoming') }}
+                        {{ match ($session->status) {
+                            'upcoming' => __('Upcoming'),
+                            'ongoing' => __('Ongoing'),
+                            'completed' => __('Completed'),
+                            default => ucfirst($session->status ?? 'upcoming'),
+                        } }}
                     </span>
 
                     <div class="ml-auto flex min-w-0 flex-1 items-center gap-2">
@@ -180,7 +185,7 @@
                                 class="inline-flex flex-1 items-center justify-center gap-1.5 rounded-lg border border-gray-200 px-2 py-2 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
                             >
                                 <x-lucide-receipt class="h-4 w-4 shrink-0 text-gray-500" />
-                                Invoice
+                                {{ __('Invoice') }}
                             </a>
                         @endif
 
@@ -191,7 +196,7 @@
                             class="inline-flex flex-1 items-center justify-center gap-2 rounded-lg bg-blue-600 px-2 py-2 text-sm font-medium text-white transition hover:bg-blue-700"
                         >
                             <x-lucide-pencil class="h-4 w-4 shrink-0" />
-                            Edit
+                            {{ __('Edit') }}
                         </button>
 
                         {{-- HAPUS DENGAN SWEETALERT --}}
@@ -208,7 +213,7 @@
                                 class="inline-flex w-full items-center justify-center gap-2 rounded-lg border border-red-200 px-2 py-2 text-sm font-medium text-red-600 transition hover:bg-red-50"
                             >
                                 <x-lucide-trash-2 class="h-4 w-4 shrink-0" />
-                                Hapus
+                                {{ __('Delete') }}
                             </button>
                         </form>
 
@@ -235,7 +240,7 @@
 
                             <div>
                                 <h2 class="text-lg font-semibold text-gray-900">
-                                    Edit Jadwal Acara
+                                    {{ __('Edit Event Schedule') }}
                                 </h2>
                             </div>
 
@@ -261,7 +266,7 @@
                             {{-- TANGGAL --}}
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-700">
-                                    Tanggal Acara
+                                    {{ __('Event Date') }}
                                 </label>
 
                                 <input
@@ -276,7 +281,7 @@
                             {{-- JAM --}}
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-700">
-                                    Jam Acara
+                                    {{ __('Event Time') }}
                                 </label>
 
                                 <input
@@ -290,7 +295,7 @@
                             {{-- LOKASI --}}
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-700">
-                                    Lokasi Acara
+                                    {{ __('Event Location') }}
                                 </label>
 
                                 <input
@@ -304,7 +309,7 @@
                             {{-- STATUS --}}
                             <div>
                                 <label class="mb-1 block text-sm font-medium text-gray-700">
-                                    Status Acara
+                                    {{ __('Event Status') }}
                                 </label>
 
                                 <select
@@ -313,15 +318,15 @@
                                     class="w-full rounded-lg border border-gray-300 px-3 py-2 text-sm focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-100"
                                 >
                                     <option value="upcoming" @selected($session->status === 'upcoming')>
-                                        Upcoming
+                                        {{ __('Upcoming') }}
                                     </option>
 
                                     <option value="ongoing" @selected($session->status === 'ongoing')>
-                                        Ongoing
+                                        {{ __('Ongoing') }}
                                     </option>
 
                                     <option value="completed" @selected($session->status === 'completed')>
-                                        Completed
+                                        {{ __('Completed') }}
                                     </option>
                                 </select>
                             </div>
@@ -334,14 +339,14 @@
                                     @click="openEdit = false"
                                     class="rounded-lg border border-gray-300 px-5 py-3 text-sm font-medium text-gray-700 transition hover:bg-gray-50"
                                 >
-                                    Batal
+                                    {{ __('Cancel') }}
                                 </button>
 
                                 <button
                                     type="submit"
                                     class="rounded-lg bg-blue-600 px-5 py-3 text-sm font-semibold text-white transition hover:bg-blue-700"
                                 >
-                                    Simpan
+                                    {{ __('Save') }}
                                 </button>
 
                             </div>
@@ -361,11 +366,11 @@
                 <x-lucide-calendar class="mx-auto h-10 w-10 text-gray-400" />
 
                 <h2 class="mt-3 font-medium text-gray-900">
-                    Belum ada booking
+                    {{ __('No bookings yet') }}
                 </h2>
 
                 <p class="mt-1 text-sm text-gray-500">
-                    Booking acara akan muncul di sini.
+                    {{ __('Event bookings will appear here.') }}
                 </p>
 
             </div>
@@ -391,14 +396,14 @@ document.addEventListener('DOMContentLoaded', function () {
             e.preventDefault();
 
             Swal.fire({
-                title: "apakah ingin dihapus?",
-                text: "Anda tidak dapat mengembalikan data yang sudah dihapus!",
+                title: @json(__('Are you sure you want to delete this?')),
+                text: @json(__('You will not be able to recover this deleted data!')),
                 icon: "warning",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",
                 cancelButtonColor: "#d33",
-                confirmButtonText: "hapus!",
-                cancelButtonText: "Batal",
+                confirmButtonText: @json(__('Yes, delete!')),
+                cancelButtonText: @json(__('Cancel')),
                 reverseButtons: true
             }).then((result) => {
 
@@ -414,7 +419,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // NOTIFIKASI BERHASIL
     @if (session('success'))
         Swal.fire({
-            title: "Success!",
+            title: @json(__('Success!')),
             text: @json(session('success')),
             icon: "success",
             confirmButtonColor: "#3085d6"
@@ -424,7 +429,7 @@ document.addEventListener('DOMContentLoaded', function () {
     // NOTIFIKASI ERROR
     @if (session('error'))
         Swal.fire({
-            title: "Error!",
+            title: @json(__('Error!')),
             text: @json(session('error')),
             icon: "error",
             confirmButtonColor: "#d33"

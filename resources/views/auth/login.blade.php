@@ -1,11 +1,11 @@
 <x-auth-layout
-    :title="'Sign in — Momenta'"
-    headline="Setiap acara punya ceritanya sendiri."
-    subheadline="Masuk untuk akses fitur-fitur kami."
+    :title="__('Sign in') . ' — Momenta'"
+    :headline="__('Every event has its own story.')"
+    :subheadline="__('Log in to access all features.')"
     image="{{ asset('images/wisuda2.webp') }}"
 >
-    <h1 class="mb-1.5 text-3xl font-bold text-[#1447E6]">Selamat Datang!!</h1>
-    <p class="mb-6 text-sm text-gray-500">Please enter your details to access your account.</p>
+    <h1 class="mb-1.5 text-3xl font-bold text-[#1447E6]">{{ __('Welcome Back!') }}</h1>
+    <p class="mb-6 text-sm text-gray-500">{{ __('Please enter your details to access your account.') }}</p>
 
     <x-auth-status :status="session('status') ?? session('success')" />
 
@@ -25,7 +25,7 @@
         @csrf
 
         <x-auth-input
-            label="Email address"
+            :label="__('Email address')"
             name="email"
             type="email"
             icon="mail"
@@ -36,11 +36,11 @@
         />
 
         <x-auth-input
-            label="Password"
+            :label="__('Password')"
             name="password"
             icon="lock"
             toggle
-            placeholder="Password"
+            placeholder="{{ __('Password') }}"
             required
             autocomplete="current-password"
         />
@@ -52,17 +52,17 @@
                     name="remember"
                     class="h-4 w-4 rounded border-gray-300 text-[#1447E6] focus:ring-[#1447E6]"
                 >
-                Remember for 30 days
+                {{ __('Remember for 30 days') }}
             </label>
 
             @if (Route::has('password.request'))
                 <a href="{{ route('password.request') }}" class="font-medium text-[#1447E6] hover:underline">
-                    Lupa password?
+                    {{ __('Forgot password?') }}
                 </a>
             @endif
         </div>
 
-        <x-auth-button>Sign in</x-auth-button>
+        <x-auth-button>{{ __('Sign in') }}</x-auth-button>
     </form>
 
     <div class="my-5 flex items-center gap-3 text-xs font-medium text-gray-400">
@@ -79,11 +79,11 @@
             <circle cx="10" cy="10" r="8.5" stroke="currentColor" stroke-width="1.3" fill="none"/>
             <path d="m6.5 6.5 7 7m0-7-7 7" stroke="currentColor" stroke-width="1.3" stroke-linecap="round"/>
         </svg>
-        Sign in with Google
+        {{ __('Sign in with Google') }}
     </button>
 
     <p class="mt-5 text-center text-sm text-gray-500">
-        Don't have an account?
-        <a href="{{ url('/register') }}" class="font-semibold text-[#1447E6] hover:underline">Sign up</a>
+        {{ __("Don't have an account?") }}
+        <a href="{{ url('/register') }}" class="font-semibold text-[#1447E6] hover:underline">{{ __('Sign up') }}</a>
     </p>
 </x-auth-layout>

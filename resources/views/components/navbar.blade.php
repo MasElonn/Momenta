@@ -14,37 +14,39 @@
 
         <div class="hidden items-center gap-7 md:flex">
             <a href="{{ url('/#beranda') }}" data-nav-link class="text-sm font-medium text-brand transition-colors hover:text-brand">
-                Beranda
+                {{ __('Home') }}
             </a>
 
             <a href="{{ url('/#cara-kerja') }}" data-nav-link class="text-sm text-ink-soft transition-colors hover:text-brand">
-                Cara Kerja
+                {{ __('How It Works') }}
             </a>
 
             <a href="{{ url('/#fitur') }}" data-nav-link class="text-sm text-ink-soft transition-colors hover:text-brand">
-                Fitur
+                {{ __('Features') }}
             </a>
 
             <a href="{{ url('/#fotografer') }}" data-nav-link class="text-sm text-ink-soft transition-colors hover:text-brand">
-                Fotografer
+                {{ __('Photographers') }}
             </a>
         </div>
 
         <div class="hidden items-center gap-3 md:flex">
+            <x-locale-switcher />
+
             @auth
                 <a href="{{ url('/dashboard') }}"
                    class="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">
-                    Dashboard
+                    {{ __('Dashboard') }}
                 </a>
             @else
                 <a href="{{ route('login') }}"
                    class="rounded-lg border border-line px-5 py-2.5 text-sm font-semibold text-ink transition-colors hover:border-brand hover:text-brand">
-                    Masuk
+                    {{ __('Log in') }}
                 </a>
 
                 <a href="{{ route('register') }}"
                    class="rounded-lg bg-brand px-5 py-2.5 text-sm font-semibold text-white transition-colors hover:bg-brand-dark">
-                    Daftar
+                    {{ __('Register') }}
                 </a>
             @endauth
         </div>
@@ -75,42 +77,46 @@
             <a href="{{ url('/#beranda') }}"
                @click="open = false"
                class="text-base font-medium text-brand">
-                Beranda
+                {{ __('Home') }}
             </a>
 
             <a href="{{ url('/#cara-kerja') }}"
                @click="open = false"
                class="text-base text-ink-soft hover:text-brand">
-                Cara Kerja
+                {{ __('How It Works') }}
             </a>
 
             <a href="{{ url('/#fitur') }}"
                @click="open = false"
                class="text-base text-ink-soft hover:text-brand">
-                Fitur
+                {{ __('Features') }}
             </a>
 
             <a href="{{ url('/#fotografer') }}"
                @click="open = false"
                class="text-base text-ink-soft hover:text-brand">
-                Fotografer
+                {{ __('Photographers') }}
             </a>
+
+            <div class="pt-2">
+                <x-locale-switcher />
+            </div>
 
             <div class="mt-2 flex flex-col gap-2.5 border-t border-line pt-4">
                 @auth
                     <a href="{{ url('/dashboard') }}"
                        class="flex justify-center rounded-lg bg-brand px-5 py-3 text-center text-sm font-semibold text-white hover:bg-brand-dark">
-                        Dashboard
+                        {{ __('Dashboard') }}
                     </a>
                 @else
                     <a href="{{ route('login') }}"
                        class="flex justify-center rounded-lg border border-line px-5 py-3 text-center text-sm font-semibold text-ink hover:border-brand hover:text-brand">
-                        Masuk
+                        {{ __('Log in') }}
                     </a>
 
                     <a href="{{ route('register') }}"
                        class="flex justify-center rounded-lg bg-brand px-5 py-3 text-center text-sm font-semibold text-white hover:bg-brand-dark">
-                        Daftar
+                        {{ __('Register') }}
                     </a>
                 @endauth
             </div>

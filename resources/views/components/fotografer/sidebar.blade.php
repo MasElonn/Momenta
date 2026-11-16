@@ -16,7 +16,7 @@
                     :class="tab === 'overview' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200'"
                     class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors">
                 <x-lucide-layout-grid class="h-5 w-5" />
-                Overview
+                {{ __('Overview') }}
             </button>
 
             <button type="button"
@@ -24,7 +24,7 @@
                     :class="tab === 'paket' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200'"
                     class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors">
                 <x-lucide-package class="h-5 w-5" />
-                Package
+                {{ __('Package') }}
             </button>
 
             <button type="button"
@@ -32,7 +32,7 @@
                     :class="tab === 'booking' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200'"
                     class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors">
                 <x-lucide-calendar class="h-5 w-5" />
-                My Booking
+                {{ __('My Booking') }}
             </button>
 
             <button type="button"
@@ -40,7 +40,7 @@
                     :class="tab === 'gallery' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200'"
                     class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors">
                 <x-lucide-image class="h-5 w-5" />
-                Gallery
+                {{ __('Gallery') }}
             </button>
 
             <button type="button"
@@ -48,7 +48,7 @@
                     :class="tab === 'transaksi' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200'"
                     class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors">
                 <x-lucide-wallet class="h-5 w-5" />
-                Transaksi
+                {{ __('Transactions') }}
             </button>
 
             <button type="button"
@@ -56,7 +56,7 @@
                     :class="tab === 'account' ? 'bg-primary text-primary-foreground' : 'bg-primary-100 text-primary-800 hover:bg-primary-200'"
                     class="flex w-full items-center gap-3 rounded-lg px-4 py-3 text-sm font-medium transition-colors">
                 <x-lucide-user class="h-5 w-5" />
-                My Account
+                {{ __('My Account') }}
             </button>
         </div>
 
@@ -64,7 +64,7 @@
             @csrf
             <button type="submit" class="flex w-full items-center gap-2 rounded-lg border border-red-500 px-4 py-3 text-sm font-medium text-red-500 transition hover:border-red-400 hover:text-red-400 focus:outline-hidden">
                 <x-lucide-log-out class="h-5 w-5" />
-                Logout
+                {{ __('Logout') }}
             </button>
         </form>
     </nav>

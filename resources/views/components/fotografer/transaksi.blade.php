@@ -1,8 +1,8 @@
 <div x-data="{ section: '', filter: 'all',selected: null, rejecting: false, reason: ''}">
     <div x-show="section !== 'transaksi'">
         <div class="flex flex-col my-3 mb-4">
-            <span class="text-2xl font-semibold">Transaction</span>
-            <span class="text-gray-500">Manage All Your Transaction</span>
+            <span class="text-2xl font-semibold">{{ __('Transactions') }}</span>
+            <span class="text-gray-500">{{ __('Manage All Your Transactions') }}</span>
         </div>
 
         <div class="flex gap-4 border-b mb-4 text-sm">
@@ -21,11 +21,11 @@
                 <thead class="bg-gray-50 text-gray-500">
                 <tr>
                     <th class="px-4 py-2 font-medium">ID</th>
-                    <th class="px-4 py-2 font-medium">Customer</th>
-                    <th class="px-4 py-2 font-medium">Package</th>
-                    <th class="px-4 py-2 font-medium">Price</th>
-                    <th class="px-4 py-2 font-medium">Date</th>
-                    <th class="px-4 py-2 font-medium">Status</th>
+                    <th class="px-4 py-2 font-medium">{{ __('Customer') }}</th>
+                    <th class="px-4 py-2 font-medium">{{ __('Package') }}</th>
+                    <th class="px-4 py-2 font-medium">{{ __('Price') }}</th>
+                    <th class="px-4 py-2 font-medium">{{ __('Date') }}</th>
+                    <th class="px-4 py-2 font-medium">{{ __('Status') }}</th>
                 </tr>
                 </thead>
 
